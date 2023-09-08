@@ -35,35 +35,35 @@ public class RegisterTouristicActivity extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterTouristicActivity() {
+		//setteamos los atributos del frame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 460);
+		setBounds(100, 100, 690, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
+		//agregamos boton atrás
+		button = new JButton("<------");
+		button.setBackground(new Color(178, 34, 34));
+		button.setBounds(0, 410, 87, 25);
+		contentPane.add(button);
+		
+		//cargamos PanelActivity
 		panelActivity = new PanelActivity();
-		panelActivity.setBounds(0, 0, 530, 378);
+		panelActivity.setBounds(0, 0, 668, 378);
 		contentPane.add(panelActivity);
 		setContentPane(contentPane);
 		
-		JPanel panelDecor = new JPanel();
-		panelDecor.setBackground(new Color(0, 206, 209));
-		panelDecor.setBounds(546, -26, 96, 466);
-		contentPane.add(panelDecor);
-		panelDecor.setLayout(null);
-		
+		//agregamos botón adelamte
 		JButton btnNewButton = new JButton("OK!");
+		btnNewButton.setBounds(589, 410, 96, 25);
+		contentPane.add(btnNewButton);
 		btnNewButton.setBackground(new Color(60, 179, 113));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(0, 437, 96, 25);
-		panelDecor.add(btnNewButton);
 		
-		button = new JButton("<------");
-		button.setBackground(new Color(178, 34, 34));
-		button.setBounds(0, 410, 87, 25);
-		contentPane.add(button);
+		
 	}
 }

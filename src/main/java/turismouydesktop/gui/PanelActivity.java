@@ -2,19 +2,28 @@ package turismouydesktop.gui;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
-import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+
 import com.toedter.calendar.JCalendar;
+
+import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
+import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
+import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
+
 public class PanelActivity extends JPanel {
 	private JTextField txtNombre;
 	private JTextField txtCity;
@@ -25,22 +34,67 @@ public class PanelActivity extends JPanel {
 	public PanelActivity() {
 		setLayout(null);
 		
-	
+		//llamo al controlador y le pido los DT de departamento y proveedor.
+		IController controller = ControllerFactory.getIController();
+		List<DtProvider> dtProviders = controller.getListProvider();
+		List<DtDepartment> dtDepartments = controller.getListDepartment(false);
 		
-		JList listProvider = new JList();
-		listProvider.setFont(new Font("Dialog", Font.PLAIN, 12));
-		listProvider.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listProvider.setBounds(312, 53, 195, 98);
-		listProvider.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Uruguay Turismo", "Centro Rocha", "Universidad ORT"};
+		//creo los Array de String.
+		String[] providerStringArray = new String[dtProviders.size()];
+		String[] departmentStringArray = new String[dtDepartments.size()];
+		
+		//itero sobre los DT para darles valor a las array de String
+		int i = 0;
+		for(DtProvider prov : dtProviders) {
+			providerStringArray[i] = prov.getNickname();
+			i++;
+		}
+		
+		i = 0;
+		for(DtDepartment depa : dtDepartments) {
+			departmentStringArray[i] = depa.getName();
+			i++;
+		}
+		
+		JScrollPane scrollPaneProvider = new JScrollPane();
+		scrollPaneProvider.setBounds(301, 70, 164, 98);
+		add(scrollPaneProvider);
+		
+			JList listProvider = new JList();
+			scrollPaneProvider.setViewportView(listProvider);
+			listProvider.setFont(new Font("Dialog", Font.PLAIN, 12));
+			listProvider.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			listProvider.setModel(new AbstractListModel() {
+				String[] values = providerStringArray;
+				
+				public int getSize() {
+					return values.length;
+				}
+				
+				public Object getElementAt(int index) {
+					return values[index];
+				}
+			});
+		
+		JScrollPane scrollPaneDepartment = new JScrollPane();
+		scrollPaneDepartment.setBounds(488, 70, 164, 98);
+		add(scrollPaneDepartment);
+		
+		JList listDepartment = new JList();
+		scrollPaneDepartment.setViewportView(listDepartment);
+		listDepartment.setModel(new AbstractListModel() {
+			String[] values = departmentStringArray;
+			
 			public int getSize() {
 				return values.length;
 			}
+			
 			public Object getElementAt(int index) {
 				return values[index];
 			}
 		});
-		add(listProvider);
+		listDepartment.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listDepartment.setFont(new Font("Dialog", Font.PLAIN, 12));
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(12, 43, 60, 15);
@@ -106,30 +160,16 @@ public class PanelActivity extends JPanel {
 		add(lblFechaDeAlta);
 		
 		JLabel lblSeleccioneProveedor = new JLabel("Seleccione Proveedor:");
-		lblSeleccioneProveedor.setBounds(312, 33, 171, 15);
+		lblSeleccioneProveedor.setBounds(302, 43, 171, 15);
 		add(lblSeleccioneProveedor);
 		
 		JLabel lblSeleccionDepartamento = new JLabel("Seleccioné Departamento:");
-		lblSeleccionDepartamento.setBounds(312, 173, 195, 15);
+		lblSeleccionDepartamento.setBounds(478, 43, 195, 15);
 		add(lblSeleccionDepartamento);
-		
-		JList listDepartment = new JList();
-		listDepartment.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Maldonado", "Montevideo", "Salto", "MELO CARAJO", "Rio Negro"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		listDepartment.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listDepartment.setFont(new Font("Dialog", Font.PLAIN, 12));
-		listDepartment.setBounds(312, 192, 195, 92);
-		add(listDepartment);
 		
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(55, 226, 237, 159);
 		add(calendar);
+		
 	}
 }
