@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
@@ -24,24 +25,24 @@ import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 
-public class PanelActivity extends JPanel {
+public class PanelActivity extends JPanel implements ListDepartmentListener {
 	private JTextField txtNombre;
 	private JTextField txtCity;
+	private ListDepartment jListDepartment;
+	private JLabel label = new JLabel("");
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelActivity() {
 		setLayout(null);
-		
 		//llamo al controlador y le pido los DT de departamento y proveedor.
 		IController controller = ControllerFactory.getIController();
 		List<DtProvider> dtProviders = controller.getListProvider();
-		List<DtDepartment> dtDepartments = controller.getListDepartment(false);
 		
 		//creo los Array de String.
 		String[] providerStringArray = new String[dtProviders.size()];
-		String[] departmentStringArray = new String[dtDepartments.size()];
+		//String[] departmentStringArray = new String[dtDepartments.size()];
 		
 		//itero sobre los DT para darles valor a las array de String
 		int i = 0;
@@ -50,15 +51,18 @@ public class PanelActivity extends JPanel {
 			i++;
 		}
 		
-		i = 0;
-		for(DtDepartment depa : dtDepartments) {
-			departmentStringArray[i] = depa.getName();
-			i++;
-		}
-		
+//		i = 0;
+//		for(DtDepartment depa : dtDepartments) {
+//			departmentStringArray[i] = depa.getName();
+//			i++;
+//		}
+		jListDepartment = new ListDepartment();
+		jListDepartment.setBounds(477, 70, 212, 110);
+		add(jListDepartment);
 		JScrollPane scrollPaneProvider = new JScrollPane();
 		scrollPaneProvider.setBounds(301, 70, 164, 98);
 		add(scrollPaneProvider);
+		jListDepartment.setListener(this);
 		
 			JList listProvider = new JList();
 			scrollPaneProvider.setViewportView(listProvider);
@@ -75,27 +79,6 @@ public class PanelActivity extends JPanel {
 					return values[index];
 				}
 			});
-		
-		JScrollPane scrollPaneDepartment = new JScrollPane();
-		scrollPaneDepartment.setBounds(488, 70, 164, 98);
-		add(scrollPaneDepartment);
-		
-		JList listDepartment = new JList();
-		scrollPaneDepartment.setViewportView(listDepartment);
-		listDepartment.setModel(new AbstractListModel() {
-			String[] values = departmentStringArray;
-			
-			public int getSize() {
-				return values.length;
-			}
-			
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		listDepartment.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listDepartment.setFont(new Font("Dialog", Font.PLAIN, 12));
-		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(12, 43, 60, 15);
 		add(lblNombre);
@@ -171,5 +154,19 @@ public class PanelActivity extends JPanel {
 		calendar.setBounds(55, 226, 237, 159);
 		add(calendar);
 		
+		label.setBounds(395, 272, 237, 20);
+		add(label);
+		
+		//agregamos botón adelamte
+		JButton btnOk = new JButton("OK!");
+		btnOk.setBounds(589, 410, 96, 25);
+		add(btnOk);
+		btnOk.setBackground(new Color(60, 179, 113));
+	}
+
+	@Override
+	public void onListDepartmentSelected(Long id) {
+		// TODO Auto-generated method stub
+		label.setText("el id de Departamento es: " + id);
 	}
 }

@@ -1,5 +1,6 @@
 package turismouydesktop.gui;
 
 public interface ListDepartmentListener {
-	public void onListDepartmentSelected(long id);
+	
+	public void onListDepartmentSelected(Long id);
 }
