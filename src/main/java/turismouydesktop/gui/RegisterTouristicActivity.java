@@ -15,6 +15,7 @@ public class RegisterTouristicActivity extends JFrame {
 	private JPanel contentPane;
 	private PanelActivity panelActivity;
 	private JButton button;
+	
 	/**
 	 * Launch the application.
 	 */
