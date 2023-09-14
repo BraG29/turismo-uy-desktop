@@ -7,16 +7,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import turismouydesktop.gui.panels.ListUser;
+import turismouydesktop.gui.panels.ListUserListener;
 import turismouydesktop.gui.panels.ShowUserData;
 import turismouydesktop.gui.panels.ShowUserDataListener;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 
-public class ConsultUser extends JFrame implements ShowUserDataListener {
+public class ConsultUser extends JFrame implements ShowUserDataListener, ListUserListener {
 
 	private JPanel contentPane;
 	private ShowUserData showUserData;
+	private ListUser listUser;
 
 
 	/**
@@ -40,28 +43,23 @@ public class ConsultUser extends JFrame implements ShowUserDataListener {
 	 */
 	public ConsultUser() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 655, 324);
+		setBounds(100, 100, 870, 322);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 
 		setContentPane(contentPane);
 		
-		IController controller = ControllerFactory.getIController();
-		
 		showUserData = new ShowUserData();
 		showUserData.setListener(this);
-		showUserData.setBounds(12, 12, 621, 270);
+		showUserData.setBounds(276, 12, 572, 270);
 		contentPane.add(showUserData);
 		
-		DtUser userData = controller.getUserData(11L);
-		
-		
-		try {
-			showUserData.loadData(userData);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+		listUser = new ListUser();
+		listUser.setBounds(0,  0, 264, 282);
+		listUser.setListener(this);
+		contentPane.add(listUser);
+
 	}
 
 	@Override
@@ -73,6 +71,22 @@ public class ConsultUser extends JFrame implements ShowUserDataListener {
 	@Override
 	public void onSelectDeparture(Long id) {
 		System.out.println("Salida de id: " + id);
+		
+	}
+
+	/**
+	 * Señal recibida de ListUser
+	 */
+	@Override
+	public void onSelectUser(Long id) {
+		IController controller = ControllerFactory.getIController();
+		DtUser userData = controller.getUserData(id);
+		
+		try {
+			showUserData.loadData(userData);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 
