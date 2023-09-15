@@ -44,7 +44,7 @@ public class PopUpWindow extends JFrame {
 		JButton btnOK = new JButton("Ok");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				dispose();
 			}
 		});
 		btnOK.setBounds(105, 163, 117, 25);

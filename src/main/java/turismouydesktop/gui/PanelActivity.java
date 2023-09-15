@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 
 import com.toedter.calendar.JCalendar;
 
+import turismouydesktop.gui.frames.PopUpWindow;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
@@ -53,7 +54,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	 */
 	public PanelActivity() {
 		setLayout(null);
-
+//----------------------------Inicialización de elementos Swing--------------------------------------------------------
 		jListDepartment = new ListDepartment();
 		jListDepartment.setBounds(199, 243, 212, 110);
 		add(jListDepartment);
@@ -130,6 +131,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		JLabel lblSeleccionDepartamento = new JLabel("Seleccioné Departamento:");
 		lblSeleccionDepartamento.setBounds(189, 216, 195, 15);
 		add(lblSeleccionDepartamento);
+//----------------------------Inicialización de elementos Swing--------------------------------------------------------
 
 		// agregamos botón adelamte
 		JButton btnOk = new JButton("OK!");
@@ -164,6 +166,8 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 				} catch (Exception e2) {
 					// tirar ventana con exception
 					System.out.println(e2);
+					PopUpWindow ventanaError = new PopUpWindow("ERROR!",e2.toString(),Color.RED);
+					ventanaError.setVisible(true);
 				}
 
 			}
