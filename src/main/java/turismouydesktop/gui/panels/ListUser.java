@@ -74,7 +74,6 @@ public class ListUser extends JPanel {
 				return values[index];
 			}
 		});
-		
 	}
 
 	public void setListener(ListUserListener listener) {
