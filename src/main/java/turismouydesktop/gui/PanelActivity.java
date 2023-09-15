@@ -144,9 +144,21 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 					TACostPerTourist = (Double) spinnerCost.getValue();
 					TACity = txtCity.getText();
 					TAUploadDate = LocalDate.now();
-					DtTouristicActivity DTA = new DtTouristicActivity(null, TAName, TADescription, TADuration,
-							TACostPerTourist, TACity, TAUploadDate, TAProvider, TADepartment, null, null);
+					
+					DtTouristicActivity DTA = new DtTouristicActivity(
+												null, 
+												TAName, 
+												TADescription, 
+												TADuration,
+												TACostPerTourist, 
+												TACity, 
+												TAUploadDate, 
+												TAProvider, 
+												TADepartment, 
+												null,
+												null);
 					checkEmptyValues(DTA);
+					
 					IController controller = ControllerFactory.getIController();
 					controller.registeTouristicActivity(DTA);
 				} catch (Exception e2) {
