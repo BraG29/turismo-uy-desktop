@@ -26,13 +26,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
 public class ShowUserData extends JPanel {
-
-	private ShowUserDataListener listener;
-	
-	private DtUser userData;
-	
-	private List<DtTouristicActivity> actvitiesData;
-	private List<DtTouristicDeparture> departuresData;
 	
 	private JTextArea textAreaNickname;
 	private JScrollPane scrollPaneEmail;
@@ -41,10 +34,7 @@ public class ShowUserData extends JPanel {
 	private JTextArea textAreaLastName;
 	private JTextArea textAreaBirthDate;
 	
-	//Lista de Actividades o Salidas
-	private JLabel lblActivityOrDeparture;
-	private JList listActivityOrDeparture;
-	private JScrollPane scrollPaneList;
+
 	
 	//Para Proveedor:
 	
@@ -134,11 +124,7 @@ public class ShowUserData extends JPanel {
 		textAreaNacionality.setEditable(false);
 		add(textAreaNacionality);
 		
-		listActivityOrDeparture = new JList<String>();
-		
-		scrollPaneList = new JScrollPane(listActivityOrDeparture);
-		scrollPaneList.setBounds(319, 37, 240, 201);
-		add(scrollPaneList);
+
 		
 		//Para Proveedor
 		
@@ -174,62 +160,6 @@ public class ShowUserData extends JPanel {
 		scrollPaneDescription.setBounds(108, 174, 179, 95);
 		add(scrollPaneDescription);
 		
-		lblActivityOrDeparture = new JLabel("");
-		lblActivityOrDeparture.setBounds(319, 12, 240, 15);
-		add(lblActivityOrDeparture);
-		
-		JButton btnShowActivityOrDepartureData = new JButton("Mostrar Datos");
-		btnShowActivityOrDepartureData.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Guardo el Nombre seleccionado
-				String selectedName = (String) listActivityOrDeparture.getSelectedValue();
-				//Checkeo que userData y listener no sean null para evitar cualquier problema
-				if(userData != null && listener != null) {
-					//Checkeo si estoy tratando con Actividades o Salidas
-					//Si el usuario es un Proveedor se que estoy tratando con actividades
-					if(userData instanceof DtProvider) {
-						//Checkeo por las dudas
-						if(actvitiesData != null) {
-							Long id = actvitiesData
-									.stream()
-									.filter(activity -> activity.getName().equalsIgnoreCase(selectedName))
-									.findFirst()
-									.get()
-									.getId();			
-							listener.onSelectActivity(id);
-	
-						}
-					//Si el usuario sea un Turista se que estoy tratando con Salidas
-					}else {
-						//Checkeo por las dudas
-						if(departuresData != null) {
-							Long id = departuresData
-									.stream()
-									.filter(departure -> departure.getName().equalsIgnoreCase(selectedName))
-									.findFirst()
-									.get()
-									.getId();							
-							listener.onSelectDeparture(id);
-						}
-					}
-				}
-			}
-		});
-		btnShowActivityOrDepartureData.setEnabled(false);
-		btnShowActivityOrDepartureData.setToolTipText("Elija un elemento de la lista");
-
-		btnShowActivityOrDepartureData.setBounds(370, 244, 143, 25);
-		add(btnShowActivityOrDepartureData);
-		
-		listActivityOrDeparture.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				if(listActivityOrDeparture.getSelectedValue() != null) {
-					btnShowActivityOrDepartureData.setEnabled(true);
-					btnShowActivityOrDepartureData.setToolTipText(null);
-				}
-			}
-		});
-		
 		setProviderDataVisibilityFalse();
 		setTouristDataVisibilityFalse();
 		
@@ -242,9 +172,6 @@ public class ShowUserData extends JPanel {
 	 * @throws Exception Si se envia un DtUser
 	 */
 	public void loadData(DtUser userData) throws Exception {
-		//Guardo el usuario en una variable local de la clase para poder usarlo en el scope del Boton dentro del constructor (linea 188)
-		this.userData = userData;
-		
 		//Carga de datos generales:
 		
 		textAreaNickname.setText(userData.getNickname());
@@ -270,7 +197,7 @@ public class ShowUserData extends JPanel {
 			
 			DtProvider providerData = (DtProvider) userData;
 			
-			lblActivityOrDeparture.setText("Actividades de " + userData.getName() + ":");
+			
 			
 			//Carga de datos de Proveedor
 			
@@ -283,19 +210,6 @@ public class ShowUserData extends JPanel {
 			scrollPaneWebSite.setVisible(true);
 			scrollPaneDescription.setVisible(true);
 			
-			//Carga de Lista:
-			List<DtTouristicActivity> activitiesData = providerData.getTouristicActivities();
-
-			//Guardo el la lista de actividades en una variable local de la clase para poder usarlo en el scope del Boton dentro del constructor (linea 188)
-			this.actvitiesData = activitiesData;
-			
-			String[] activitiesName = activitiesData.stream()
-	                .map(DtTouristicActivity::getName)
-	                .collect(Collectors.toList())
-	                .toArray(new String[0]);
-			
-			loadList(activitiesName);
-			
 		}
 		//Se muestran datos extras de Turista
 		else if(userData instanceof DtTourist) {
@@ -303,7 +217,6 @@ public class ShowUserData extends JPanel {
 			
 			DtTourist touristData = (DtTourist) userData;
 			
-			lblActivityOrDeparture.setText("Inscripciones de " + userData.getName() + ":");
 			
 			//Carga de datos Turista
 
@@ -311,19 +224,7 @@ public class ShowUserData extends JPanel {
 			
 			lblNacionality.setVisible(true);
 			textAreaNacionality.setVisible(true);
-			
-			//Carga de lista
-			List<DtTouristicDeparture> departuresData = touristData.getDepartures();
-			
-			//Guardo el la lista de salidas en una variable local de la clase para poder usarlo en el scope del Boton dentro del constructor (linea 188)
-			this.departuresData = departuresData;
-			
-			String[] departuresName = departuresData.stream()
-	                .map(DtTouristicDeparture::getName)
-	                .collect(Collectors.toList())
-	                .toArray(new String[0]);
-			
-			loadList(departuresName);
+
 		}
 		//En caso de que se reciba un DtUser
 		else {
@@ -342,25 +243,5 @@ public class ShowUserData extends JPanel {
 	private void setTouristDataVisibilityFalse() {
 		lblNacionality.setVisible(false);
 		textAreaNacionality.setVisible(false);
-	}
-	
-	private void loadList(String[] loadData) {
-		listActivityOrDeparture.setModel(new AbstractListModel() {
-			String[] values = loadData;
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});	
-	}
-	
-
-	//Setter del listener
-	public void setListener(ShowUserDataListener listener) {
-		this.listener = listener;
 	}
 }
