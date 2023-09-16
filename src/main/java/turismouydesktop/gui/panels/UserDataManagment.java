@@ -32,10 +32,15 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.event.ListSelectionEvent;
 
+enum ForWhat{
+	REGISTER,
+	UPDATE
+}
+
 public class UserDataManagment extends JPanel {
 
 	private DtUser userData;
-
+	
 	private JTextArea textAreaNickname;
 	private JScrollPane scrollPaneEmail;
 	private JTextArea textAreaEmail;
@@ -168,6 +173,7 @@ public class UserDataManagment extends JPanel {
 		setTouristDataVisibilityFalse();
 
 	}
+	
 
 	/**
 	 * Carga de Datos
@@ -234,29 +240,33 @@ public class UserDataManagment extends JPanel {
 
 	}
 	
-	private void setTouristDataVisibilityTrue() {
+	public void setTouristDataVisibilityTrue() {
 		lblNacionality.setVisible(true);
 		textAreaNacionality.setVisible(true);
+		
 	}
 	
-	private void setProviderDataVisibilityTrue() {
+	public void setProviderDataVisibilityTrue() {
 		lblWebSite.setVisible(true);
 		lblDescription.setVisible(true);
 
 		scrollPaneWebSite.setVisible(true);
 		scrollPaneDescription.setVisible(true);
+		
 	}
 
-	private void setProviderDataVisibilityFalse() {
+	public void setProviderDataVisibilityFalse() {
 		lblDescription.setVisible(false);
 		lblWebSite.setVisible(false);
 		scrollPaneDescription.setVisible(false);
 		scrollPaneWebSite.setVisible(false);
+		
 	}
 
-	private void setTouristDataVisibilityFalse() {
+	public void setTouristDataVisibilityFalse() {
 		lblNacionality.setVisible(false);
 		textAreaNacionality.setVisible(false);
+		
 	}
 
 	public void enableToEditForUpdate() {
@@ -295,48 +305,102 @@ public class UserDataManagment extends JPanel {
 	public DtUser getModifiedData() {
 		DtUser userDataOutput = null;
 
-		LocalDate birthDate = dateChooserBirthDate.getDate()
-			.toInstant()
-			.atZone(ZoneId.systemDefault())
-			.toLocalDate();
 		
-		if(!areChanges(birthDate)) {
+		if(!areChanges()) {
 			return userDataOutput;
 		}
 
 		if (userData instanceof DtProvider) {
-			userDataOutput = new DtProvider(
-					userData.getId(),
-					textAreaName.getText(),
-					textAreaNickname.getText(),
-					textAreaEmail.getText(),
-					textAreaLastName.getText(),
-					birthDate,
-					textAreaWebSite.getText(),
-					textAreaDescription.getText(),
-					null
-					);
+			userDataOutput = getProviderData(ForWhat.UPDATE);
 		} else if (userData instanceof DtTourist) {
-			userDataOutput = new DtTourist(
-					userData.getId(),
-					textAreaName.getText(),
-					textAreaNickname.getText(),
-					textAreaEmail.getText(),
-					textAreaLastName.getText(),
-					birthDate,
-					textAreaNacionality.getText(),
-					null
-					);
+			userDataOutput = getTouristData(ForWhat.REGISTER);
 		}
 		
 		return userDataOutput;
 	}
 	
-	public Boolean areChanges(LocalDate convertedBirthDate) {
+	public DtTourist getTouristData(ForWhat forWhat) {
+		Long id = 0L;
+
+		switch(forWhat){
+			case REGISTER:
+				id = null;
+				break;
+			case UPDATE:
+				id = userData.getId();
+		}
+		LocalDate birthDate = null;
+		if(dateChooserBirthDate.getDate() != null) {
+			birthDate = dateChooserBirthDate.getDate()
+					.toInstant()
+					.atZone(ZoneId.systemDefault())
+					.toLocalDate();
+		}
+		
+		DtTourist touristDataOutput = new DtTourist(
+				id,
+				textAreaName.getText(),
+				textAreaNickname.getText(),
+				textAreaEmail.getText(),
+				textAreaLastName.getText(),
+				birthDate,
+				textAreaNacionality.getText(),
+				null
+				);
+		
+		return touristDataOutput;	
+	}
+	
+	public DtProvider getProviderData(ForWhat forWhat) {
+		Long id = 0L;
+		
+		switch(forWhat){
+			case REGISTER:
+				id = null;
+				break;
+			case UPDATE:
+				id = userData.getId();
+		}
+		
+		
+		LocalDate birthDate = null;
+		if(dateChooserBirthDate.getDate() != null) {
+			birthDate = dateChooserBirthDate.getDate()
+					.toInstant()
+					.atZone(ZoneId.systemDefault())
+					.toLocalDate();
+		}
+		
+		DtProvider providerDataOutput = new DtProvider(
+				id,
+				textAreaName.getText(),
+				textAreaNickname.getText(),
+				textAreaEmail.getText(),
+				textAreaLastName.getText(),
+				birthDate,
+				textAreaWebSite.getText(),
+				textAreaDescription.getText(),
+				null
+				);
+		
+		return providerDataOutput;
+		
+	}
+	
+	
+	public Boolean areChanges() {
+		LocalDate birthDate = null;
+		if(dateChooserBirthDate.getDate() != null) {
+			birthDate = dateChooserBirthDate.getDate()
+					.toInstant()
+					.atZone(ZoneId.systemDefault())
+					.toLocalDate();
+		}
+		
 		if(
 			userData.getName().equalsIgnoreCase(textAreaName.getText()) &&
 			userData.getLastName().equalsIgnoreCase(textAreaLastName.getText()) &&
-			userData.getBirthDate().isEqual(convertedBirthDate)) {
+			userData.getBirthDate().isEqual(birthDate)) {
 			
 			if(userData instanceof DtProvider) {
 				DtProvider providerData = (DtProvider) userData;
