@@ -1,6 +1,7 @@
 package turismouydesktop.gui.frames;
 
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,7 +20,8 @@ import javax.swing.event.ListSelectionListener;
 
 import turismouydesktop.gui.panels.ListUser;
 import turismouydesktop.gui.panels.ListUserListener;
-import turismouydesktop.gui.panels.ShowUserData;
+import turismouydesktop.gui.panels.ShowDepartureData;
+import turismouydesktop.gui.panels.UserDataManagment;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
@@ -36,7 +38,8 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	private List<DtTouristicDeparture> departuresData;
 	
 	private JPanel contentPane;
-	private ShowUserData showUserData;
+	private UserDataManagment userDataPanel;
+	private ShowDepartureData departureDataPanel;
 	private ListUser listUser;
 	
 	//Lista de Actividades o Salidas
@@ -66,6 +69,7 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	 */
 	public ConsultUser() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 870, 322);
 		setBounds(100, 100, 870, 322);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,18 +77,18 @@ public class ConsultUser extends JFrame implements ListUserListener {
 
 		setContentPane(contentPane);
 		
-		showUserData = new ShowUserData();
-		showUserData.setBounds(276, 12, 572, 270);
-		contentPane.add(showUserData);
+		userDataPanel = new UserDataManagment();
+		userDataPanel.setBounds(276, 12, 572, 270);
+		contentPane.add(userDataPanel);
 		
 		listActivityOrDeparture = new JList<String>();
 		
 		scrollPaneList = new JScrollPane(listActivityOrDeparture);
 		scrollPaneList.setBounds(320, 12, 240, 201);
-		showUserData.add(scrollPaneList);
+		userDataPanel.add(scrollPaneList);
 		JButton btnShowActivityOrDepartureData = new JButton("Mostrar Datos");
 		btnShowActivityOrDepartureData.setBounds(366, 233, 143, 25);
-		showUserData.add(btnShowActivityOrDepartureData);
+		userDataPanel.add(btnShowActivityOrDepartureData);
 		btnShowActivityOrDepartureData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Guardo el Nombre seleccionado
@@ -139,8 +143,8 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		contentPane.add(listUser);
 		
 		lblActivityOrDeparture = new JLabel("");
-		lblActivityOrDeparture.setBounds(319, 12, 240, 15);
-		getContentPane().add(lblActivityOrDeparture);
+		lblActivityOrDeparture.setBounds(594, 12, 240, 15);
+		contentPane.add(lblActivityOrDeparture);
 		
 
 	}
@@ -154,7 +158,7 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		userData = controller.getUserData(id);
 		
 		try {
-			showUserData.loadData(userData);
+			userDataPanel.loadData(userData);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -212,9 +216,19 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	}
 	
 	private void initDepartureData(Long id) {
-		//TODO : Expandir ventana para mostrar el panel abajo
-		//TODO : Buscar la Salida en concreto e inicializar el panel de ShowDepartureData
+		IController controller = ControllerFactory.getIController();
+		DtTouristicDeparture departureData = controller.getTouristicDepartureData(id);
+		//10,294  294 X 179
 		
+		Rectangle contentDimensions = this.getBounds();
+		//x,y,widht,height
+		contentDimensions.height += 179;
+		
+		this.setBounds(contentDimensions);
+		
+		departureDataPanel = new ShowDepartureData();
+		departureDataPanel.setBounds(10, 294, 294, 179);
+		departureDataPanel.loadData(departureData);
+		contentPane.add(departureDataPanel);
 	}
-
 }
