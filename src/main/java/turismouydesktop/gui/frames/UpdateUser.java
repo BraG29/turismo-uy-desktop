@@ -63,7 +63,7 @@ public class UpdateUser extends JFrame implements ListUserListener {
 		
 		userDataPanel = new UserDataManagment();
 		userDataPanel.setBounds(276, 0, 321, 271);
-		userDataPanel.enableToEdit();
+		userDataPanel.enableToEditForUpdate();
 		
 		contentPane.add(userDataPanel);
 		
