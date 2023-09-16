@@ -21,7 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import turismouydesktop.gui.panels.ListUser;
 import turismouydesktop.gui.panels.ListUserListener;
 import turismouydesktop.gui.panels.ShowDepartureData;
-import turismouydesktop.gui.panels.ShowUserData;
+import turismouydesktop.gui.panels.UserDataManagment;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
@@ -38,7 +38,7 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	private List<DtTouristicDeparture> departuresData;
 	
 	private JPanel contentPane;
-	private ShowUserData userDataPanel;
+	private UserDataManagment userDataPanel;
 	private ShowDepartureData departureDataPanel;
 	private ListUser listUser;
 	
@@ -77,7 +77,7 @@ public class ConsultUser extends JFrame implements ListUserListener {
 
 		setContentPane(contentPane);
 		
-		userDataPanel = new ShowUserData();
+		userDataPanel = new UserDataManagment();
 		userDataPanel.setBounds(276, 12, 572, 270);
 		contentPane.add(userDataPanel);
 		

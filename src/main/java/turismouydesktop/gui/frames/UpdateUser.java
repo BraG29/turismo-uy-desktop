@@ -9,7 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import turismouydesktop.gui.panels.ListUser;
 import turismouydesktop.gui.panels.ListUserListener;
-import turismouydesktop.gui.panels.ShowUserData;
+import turismouydesktop.gui.panels.UserDataManagment;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
@@ -25,7 +25,7 @@ public class UpdateUser extends JFrame implements ListUserListener {
 	
 	private JPanel contentPane;
 	private ListUser userListPanel;
-	private ShowUserData userDataPanel;
+	private UserDataManagment userDataPanel;
 
 	/**
 	 * Launch the application.
@@ -61,7 +61,7 @@ public class UpdateUser extends JFrame implements ListUserListener {
 		
 		contentPane.add(userListPanel);
 		
-		userDataPanel = new ShowUserData();
+		userDataPanel = new UserDataManagment();
 		userDataPanel.setBounds(276, 0, 321, 271);
 		userDataPanel.enableToEdit();
 		
