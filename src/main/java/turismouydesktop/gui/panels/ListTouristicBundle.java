@@ -77,7 +77,7 @@ public class ListTouristicBundle extends JPanel {
 	public ListTouristicBundle(DtTouristicActivity DTA) {
 		setLayout(null);
 		
-listBundlesJList = new JList<String>();
+		listBundlesJList = new JList<String>();
 		
 		JScrollPane listScrollPane = new JScrollPane(listBundlesJList);
 		listScrollPane.setBounds(0, -1, 202, 276);
