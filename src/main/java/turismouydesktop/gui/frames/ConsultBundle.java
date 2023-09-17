@@ -41,7 +41,8 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 
 
 	public ConsultBundle() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Consulta de Paquete");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 738, 523);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

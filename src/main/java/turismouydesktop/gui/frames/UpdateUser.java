@@ -47,7 +47,8 @@ public class UpdateUser extends JFrame implements ListUserListener {
 	 * Create the frame.
 	 */
 	public UpdateUser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("UpdateUser");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 619, 336);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

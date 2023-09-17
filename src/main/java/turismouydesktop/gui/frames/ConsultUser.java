@@ -68,7 +68,8 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	 * Create the frame.
 	 */
 	public ConsultUser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Consulta Usuario");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//setBounds(100, 100, 870, 322);
 		setBounds(100, 100, 870, 322);
 		contentPane = new JPanel();
