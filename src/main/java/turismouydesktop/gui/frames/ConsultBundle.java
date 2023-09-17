@@ -22,7 +22,6 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 
 	private JPanel contentPane;
 	private ListTouristicBundle touristicBundleList;
-	private JLabel lblPrueba;
 	private ShowBundleData bundleData;
 
 
@@ -43,6 +42,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	public ConsultBundle() {
 		setTitle("Consulta de Paquete");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 		setBounds(100, 100, 738, 523);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,20 +54,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 		touristicBundleList.setBounds(12, 12, 200, 145);
 		touristicBundleList.setListener(this);
 		contentPane.add(touristicBundleList);
-		
-		lblPrueba = new JLabel();
-		lblPrueba.setBounds(22, 178, 122, 42);
-		contentPane.add(lblPrueba);
-		
-		/*
-		LocalDate date = LocalDate.now(); 
-		String name = "Felipe Sanchez";
-		String description = "Prueba de una descripcion extremadamente larga para que entre en un textarea con scrollpanel fachero facherito";
-		Long validityPeriod = 10l;
-		Long discount = 20l;
-		List<String> actividades = Arrays.asList("Caminar", "Correr", "algo");
-		*/
-		
+
 		bundleData = new ShowBundleData();
 		bundleData.setBounds(265, 12, 391, 481);
 		contentPane.add(bundleData);
