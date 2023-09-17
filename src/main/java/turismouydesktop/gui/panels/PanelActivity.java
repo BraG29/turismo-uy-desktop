@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.panels;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -55,12 +55,12 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	public PanelActivity() {
 		setLayout(null);
 //----------------------------Inicialización de elementos Swing--------------------------------------------------------
-		jListDepartment = new ListDepartment();
+		jListDepartment = new ListDepartment(180,100);
 		jListDepartment.setBounds(199, 243, 212, 110);
 		add(jListDepartment);
 		jListDepartment.setListener(this);
 
-		jListProvider = new ListProvider();
+		jListProvider = new ListProvider(180,100);
 		jListProvider.setBounds(12, 243, 212, 110);
 		add(jListProvider);
 		jListProvider.setListener(this);
@@ -193,8 +193,11 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
 		this.TADepartment = department;
-	}
-
+		}
+	
+	/*
+	 * checkea que los datos insertados por el usuario no estén vacios
+	 */
 	public void checkEmptyValues(DtTouristicActivity DTA) throws Exception {
 
 		if (DTA.getName().isEmpty()) {

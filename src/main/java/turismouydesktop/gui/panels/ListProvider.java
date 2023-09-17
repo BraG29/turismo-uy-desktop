@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.panels;
 
 import java.awt.Font;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ListProvider extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ListProvider() {
+	public ListProvider(int width, int height) {
 		setLayout(null);
 		
 		//llamo al controlador y le pido los DT de departamento y proveedor.
@@ -41,7 +41,7 @@ public class ListProvider extends JPanel {
 
 		
 		JScrollPane scrollPaneProvider = new JScrollPane();
-		scrollPaneProvider.setBounds(0, 0, 179, 98);
+		scrollPaneProvider.setBounds(0, 0, width, height);
 		add(scrollPaneProvider);
 		
 		JList listProvider = new JList();
