@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.panels;
 
 
 import javax.swing.JPanel;
@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
 import javax.swing.JLabel;
 import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
+
+import turismouydesktop.gui.frames.PopUpWindow;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
@@ -34,7 +37,9 @@ public class InsertBundleData extends JPanel {
 	private JTextField textFieldDiscount;
 	private JTextField textFieldValidity;
 	private JTextField textFieldDays;
-
+	private JDateChooser uploadDate;
+	private PopUpWindow window;
+	
 	public InsertBundleData() {
 		setLayout(null);
 		
@@ -133,7 +138,7 @@ public class InsertBundleData extends JPanel {
 		lbluploadDate.setBounds(12, 206, 87, 15);
 		add(lbluploadDate);
 		
-		JDateChooser uploadDate = new JDateChooser();
+		uploadDate = new JDateChooser();
 		uploadDate.setBounds(117, 206, 319, 19);
 		add(uploadDate);
 		
@@ -148,11 +153,6 @@ public class InsertBundleData extends JPanel {
 				Long validityDays = dateDifference(creationDate, finishDate);
 				
 				Long value = Math.abs(validityDays);
-				if (value <= 0){
-					
-					//error de fecha invalida.
-				}	
-				else {
 					if (value <= 1) {
 						textFieldValidity.setText(value+"");
 						textFieldDays.setText("Dia");
@@ -160,15 +160,12 @@ public class InsertBundleData extends JPanel {
 						textFieldValidity.setText(value+"");
 						textFieldDays.setText("Días");
 					}	
-				}
 						
 			}
 		});
 		btnValidity.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnValidity.setBounds(165, 327, 150, 25);
 		add(btnValidity);
-		
-		
 				
 	}
 
@@ -188,27 +185,33 @@ public class InsertBundleData extends JPanel {
 		//traer lo del textfield
 		String validityDaysStr = textFieldValidity.getText();
 		Integer validityDays = Integer.parseInt(validityDaysStr);
-	
 		return validityDays;
 	}
 	
 
 	public LocalDate getCreationDate() {
-		LocalDate today = LocalDate.now();
-		return today;
+		ZoneId zoneId = ZoneId.systemDefault();
+		Date convert = uploadDate.getDate();
+		LocalDate creationDate = convert.toInstant().atZone(zoneId).toLocalDate();	
+		return creationDate;
 	}
+	
 	
 	public String getName() {
 		return textFieldname.getText();
 	}
 	
+	
 	public String getDescription() {
 		return textAreaDescription.getText();
 	}
+	
 	
 	public Double getDiscount(){
 		String discountStr = textFieldDiscount.getText();
 		Double discount = Double.parseDouble(discountStr);
 		return discount;
 	}
+	
+	
 }
