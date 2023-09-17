@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.panels;
 
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 

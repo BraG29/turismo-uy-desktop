@@ -1,12 +1,17 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.frames;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import turismouydesktop.gui.panels.PanelActivity;
+
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RegisterTouristicActivity extends JFrame {
 
@@ -44,6 +49,11 @@ public class RegisterTouristicActivity extends JFrame {
 		
 		//agregamos boton atrás
 		button = new JButton("<------");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		button.setBounds(0, 410, 87, 25);
 		button.setBackground(new Color(178, 34, 34));
 		contentPane.add(button);

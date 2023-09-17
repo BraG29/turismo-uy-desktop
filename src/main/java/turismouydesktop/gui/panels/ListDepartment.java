@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.panels;
 
 import java.awt.Font;
 import java.util.List;
@@ -24,12 +24,12 @@ public class ListDepartment extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ListDepartment() {
+	public ListDepartment(int width, int height) {
 		setLayout(null);
 		
 		//llamo al controlador y le pido DT de departamento
 		IController controller = ControllerFactory.getIController();
-		List<DtDepartment> dtDepartments = controller.getListDepartment(false);
+		List<DtDepartment> dtDepartments = controller.getListDepartment(true);
 		
 		//creo los Array de String.
 		String[] departmentStringArray = new String[dtDepartments.size()];
@@ -41,7 +41,7 @@ public class ListDepartment extends JPanel {
 				i++;
 		}
 		
-		scrollPaneDepartment.setBounds(0, 0, 179, 98);
+		scrollPaneDepartment.setBounds(0, 0, width, height);
 		add(scrollPaneDepartment);
 		scrollPaneDepartment.setViewportView(listDepartment);
 		
@@ -81,6 +81,63 @@ public class ListDepartment extends JPanel {
 			}
 		});
 	}
+	
+	public ListDepartment() {
+        setLayout(null);
+
+        //llamo al controlador y le pido DT de departamento
+        IController controller = ControllerFactory.getIController();
+        List<DtDepartment> dtDepartments = controller.getListDepartment(false);
+
+        //creo los Array de String.
+        String[] departmentStringArray = new String[dtDepartments.size()];
+
+        //itero sobre el DT para darles valor a las array de String
+        int i = 0;
+        for(DtDepartment depa : dtDepartments) {
+                departmentStringArray[i] = depa.getName();
+                i++;
+        }
+
+        scrollPaneDepartment.setBounds(0, 0, 179, 98);
+        add(scrollPaneDepartment);
+        scrollPaneDepartment.setViewportView(listDepartment);
+listDepartment.setModel(new AbstractListModel() {
+            String[] values = departmentStringArray;
+
+            public int getSize() {
+                return values.length;
+            }
+
+            public Object getElementAt(int index) {
+                return values[index];
+            }
+        });
+        listDepartment.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        listDepartment.setFont(new Font("Dialog", Font.PLAIN, 12));
+
+        listDepartment.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+
+                String departmentName = (String) listDepartment.getSelectedValue();
+                if (listener != null && departmentName != null) {
+
+                    Long id = dtDepartments
+                            .stream()
+                            .filter(department -> department.getName().equalsIgnoreCase(departmentName))
+                            .findFirst()
+                            .get()
+                            .getId();
+
+                    DtDepartment dtDepartamento = dtDepartments.get(listDepartment.getSelectedIndex());
+                    listener.onListDepartmentSelected(id);
+                    listener.onListDepartmentSelectedDt(dtDepartamento);
+
+                }
+            }
+        });
+    }
 	
 	public void setListener(ListDepartmentListener listener) {
 		this.listener = listener;
