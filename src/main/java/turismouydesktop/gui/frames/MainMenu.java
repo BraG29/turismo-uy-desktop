@@ -56,6 +56,7 @@ public class MainMenu extends JFrame {
 				registerUserGUI.setVisible(rootPaneCheckingEnabled);
 			}
 		});
+		
 		btnRegisterUser.setBounds(22, 32, 182, 25);
 		contentPane.add(btnRegisterUser);
 		
@@ -66,6 +67,7 @@ public class MainMenu extends JFrame {
 				consultUserGUI.setVisible(rootPaneCheckingEnabled);
 			}
 		});
+		
 		btnConsultUser.setBounds(22, 69, 182, 25);
 		contentPane.add(btnConsultUser);
 		
@@ -76,6 +78,7 @@ public class MainMenu extends JFrame {
 				updateUserGUI.setVisible(rootPaneCheckingEnabled);
 			}
 		});
+		
 		btnUpdateUser.setBounds(22, 106, 182, 25);
 		contentPane.add(btnUpdateUser);
 		
@@ -88,10 +91,24 @@ public class MainMenu extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnRegisterTuristicBundle = new JButton("Crear Paquete");
+		btnRegisterTuristicBundle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateBundle createBundleGUI = new CreateBundle();
+				createBundleGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		
 		btnRegisterTuristicBundle.setBounds(22, 170, 182, 25);
 		contentPane.add(btnRegisterTuristicBundle);
 		
 		JButton btnAddActivityToBundle = new JButton("Agregar a Paquete ");
+		btnAddActivityToBundle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddActivityToBundle addActivityTobundleGUI = new AddActivityToBundle();
+				addActivityTobundleGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		
 		btnAddActivityToBundle.setBounds(22, 207, 182, 25);
 		contentPane.add(btnAddActivityToBundle);
 		
@@ -102,6 +119,7 @@ public class MainMenu extends JFrame {
 				consultBundleGUI.setVisible(rootPaneCheckingEnabled);
 			}
 		});
+		
 		btnConsultBundle.setBounds(22, 244, 182, 25);
 		contentPane.add(btnConsultBundle);
 		
@@ -122,6 +140,7 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
 		btnCreateTouristicDeparture.setBounds(239, 170, 210, 25);
 		contentPane.add(btnCreateTouristicDeparture);
 		

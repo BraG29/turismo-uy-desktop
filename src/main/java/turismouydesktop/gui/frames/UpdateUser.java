@@ -28,22 +28,6 @@ public class UpdateUser extends JFrame implements ListUserListener {
 	private UserDataManagment userDataPanel;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					UpdateUser frame = new UpdateUser();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public UpdateUser() {

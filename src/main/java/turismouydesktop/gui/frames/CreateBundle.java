@@ -53,7 +53,7 @@ public class CreateBundle extends JFrame {
 		IController controller = ControllerFactory.getIController();
 		
 		setTitle("Crear paquete turístico");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 518, 485);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
