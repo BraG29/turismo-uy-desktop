@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.frames;
 
 
 
@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import turismouydesktop.gui.frames.PopUpWindow;
+import turismouydesktop.gui.panels.InsertBundleData;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
@@ -24,6 +26,7 @@ public class CreateBundle extends JFrame {
 
 	private JPanel contentPane;
 	private InsertBundleData insertBundleData;
+	private PopUpWindow window;
 	
 	/**
 	 * Launch the application.
@@ -60,33 +63,31 @@ public class CreateBundle extends JFrame {
 		insertBundleData = new InsertBundleData();
 		insertBundleData.setBounds(31, 12, 460, 367);
 		contentPane.add(insertBundleData);
-		//insertBundleData.setVisible(true);
-		
-		
+
 		
 		JButton btnCreate = new JButton("Crear");
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				String name = insertBundleData.getName();
-				String desc = insertBundleData.getDescription();
-				Double disc = insertBundleData.getDiscount();
-				Integer days = insertBundleData.getValidityBundle();
-				LocalDate creationDate = insertBundleData.getCreationDate();
-
-				if (name == null || desc == null || disc == null || days == null || creationDate == null){
-					//ventana error campo o campos vacios.
-				}else {
-
+				try {
+					
+					String name = insertBundleData.getName();
+					String desc = insertBundleData.getDescription();
+					Double disc = insertBundleData.getDiscount();
+					Integer days = insertBundleData.getValidityBundle();
+					LocalDate creationDate = insertBundleData.getCreationDate();
+					
 					DtTouristicBundle touristicbundle = new DtTouristicBundle(null, name, desc, days, disc , creationDate, null);	
 					controller.registerTouristicBundle(touristicbundle);
 					
-					//si no tira excepción llamamo a la ventana de confirmacion.
+				    window = new PopUpWindow("Éxito", "El Paquete fue dado de alta con éxito.", Color.GREEN);
+					window.setVisible(true);
 					
+				}catch (Exception e1) {
+					window = new PopUpWindow("Campo/s vacío/s", "Por favor rellene los campos vacíos", Color.RED);
+					window.setVisible(true);
 				}
-				
-				
+					
 			}
 		});
 		btnCreate.setBounds(292, 406, 117, 25);

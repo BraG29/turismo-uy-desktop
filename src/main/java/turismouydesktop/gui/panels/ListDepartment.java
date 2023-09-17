@@ -1,4 +1,4 @@
-package turismouydesktop.gui;
+package turismouydesktop.gui.panels;
 
 import java.awt.Font;
 import java.util.List;
@@ -24,7 +24,7 @@ public class ListDepartment extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ListDepartment() {
+	public ListDepartment(int width, int height) {
 		setLayout(null);
 		
 		//llamo al controlador y le pido DT de departamento
@@ -41,7 +41,7 @@ public class ListDepartment extends JPanel {
 				i++;
 		}
 		
-		scrollPaneDepartment.setBounds(0, 0, 179, 98);
+		scrollPaneDepartment.setBounds(0, 0, width, height);
 		add(scrollPaneDepartment);
 		scrollPaneDepartment.setViewportView(listDepartment);
 		
