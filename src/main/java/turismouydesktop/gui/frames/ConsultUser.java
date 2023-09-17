@@ -211,13 +211,9 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		
 		this.setBounds(contentDimensions);
 		
-		if(departureDataPanel == null) {
-			departureDataPanel = new ShowDepartureData();
-			departureDataPanel.setBounds(10, 294, 294, 179);			
-		}
+		departureDataPanel = new ShowDepartureData();
+		departureDataPanel.setBounds(10, 294, 294, 179);
 		departureDataPanel.loadData(departureData);
 		contentPane.add(departureDataPanel);
-		contentPane.revalidate();
-		contentPane.repaint();
 	}
 }

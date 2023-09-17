@@ -116,13 +116,6 @@ public class ShowDepartureData extends JPanel {
 		//Fromatos de Fecha
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyy");
 		DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyy - HH:mm");
-
-		textAreaName.setText("");
-		textAreaMaxToursit.setText("");
-		textAreaUploadDate.setText("");
-		textAreaDartureDateTime.setText("");
-		textAreaPlace.setText("");
-		textAreaActivity.setText("");
 		
 		textAreaName.setText(departureData.getName());
 		textAreaMaxToursit.setText(departureData.getMaxTourist().toString());
