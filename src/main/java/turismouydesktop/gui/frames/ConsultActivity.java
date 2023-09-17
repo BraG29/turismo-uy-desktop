@@ -81,9 +81,6 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		getContentPane().add(jListDepartment);
 		jListDepartment.setListener(this);
 		
-		
-		
-		
 		JLabel lblSeleccioneDepartamento = new JLabel("Departamento a elegir:");
 		lblSeleccioneDepartamento.setBounds(0, 26, 200, 15);
 		getContentPane().add(lblSeleccioneDepartamento);
@@ -105,10 +102,10 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 				
 				if(showActivityVentana == null) {
 					reDimensionWindow(0,170);
-//					jListBundle = new ListTouristicBundle(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
-//					jListBundle.setBounds(0, 42, 179, 200);
-//					getContentPane().add(jListBundle);
-//					jListBundle.setVisible(true);
+					jListBundle = new ListTouristicBundle(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
+					jListBundle.setBounds(350, 240, 150, 200);
+					getContentPane().add(jListBundle);
+					jListBundle.setVisible(true);
 //					
 					showActivityVentana = new ShowActivityData(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
 					showActivityVentana.setBounds(10, 240, 600, 200);
