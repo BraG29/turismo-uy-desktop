@@ -8,6 +8,7 @@ import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -60,6 +61,8 @@ public class PanelConsultActivity extends JPanel implements ListDepartmentListen
 				add(showActivityVentana);
 				showActivityVentana.setBounds(100, 200, 140, 200);
 				showActivityVentana.setVisible(true);
+				
+				reDimensionWindow(180);
 			}
 		});
 	
@@ -108,5 +111,15 @@ public class PanelConsultActivity extends JPanel implements ListDepartmentListen
 		});
 		listActivities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listActivities.setFont(new Font("Dialog", Font.PLAIN, 12));
+	}
+	
+	private void reDimensionWindow(int height) {
+		
+		Rectangle contentDimensions = this.getBounds();
+		//x,y,widht,height
+		contentDimensions.height += 500;
+		contentDimensions.width += 500;
+		
+		this.setBounds(contentDimensions);
 	}
 }
