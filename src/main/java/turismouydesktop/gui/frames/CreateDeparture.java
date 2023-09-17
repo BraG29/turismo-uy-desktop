@@ -11,9 +11,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import turismouydesktop.gui.ListDepartment;
-import turismouydesktop.gui.ListDepartmentListener;
+
 import turismouydesktop.gui.panels.InsertDepartureData;
+import turismouydesktop.gui.panels.ListDepartment;
+import turismouydesktop.gui.panels.ListDepartmentListener;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
@@ -28,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -37,11 +39,16 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 	private JPanel contentPane;
 	private InsertDepartureData departureData;
 	private ListDepartment departmentsList;
+	
 	private JLabel lblDepartmentActivities;
 	private JList listDepartmentActivities;
+	
 	private PopUpWindow window;
 	private DtTouristicActivity activity;
 	
+	
+	private List<DtTouristicActivity> activities;
+	private DtTouristicActivity activityData;
 	/**
 	 * Launch the application.
 	 */
@@ -96,20 +103,27 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 		contentPane.add(lblDepartamentos);
 		
 		
+		
+		
 		JScrollPane scrollPaneDeptActivities = new JScrollPane();
 		scrollPaneDeptActivities.setBounds(12, 171, 182, 119);
 		contentPane.add(scrollPaneDeptActivities);	
 		listDepartmentActivities = new JList();
 		listDepartmentActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				//actividad a la que le creo la salida
-				activity = (DtTouristicActivity) listDepartmentActivities.getSelectedValue();								
+				
+				String selectedActivity = (String) listDepartmentActivities.getSelectedValue();
+
+				activityData = activities
+						.stream()
+						.filter(bundle -> bundle.getName().equalsIgnoreCase(selectedActivity))
+						.findFirst()
+						.get();
+				
 				
 			}
 		});
 		scrollPaneDeptActivities.setViewportView(listDepartmentActivities);
-		
-		
 		
 		
 		JButton btnCreate = new JButton("Crear");
@@ -123,14 +137,26 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 					String place = departureData.getPlace();
 					Integer maxTourists = departureData.getMaxTourists();
 					LocalDate creationDate = departureData.getCreationDate();
+
+					//obtuve la hora mediante un textField
+					String timeConvert = departureData.getTime();
 					
-					LocalDate day = departureData.getMeetingDate();
-					LocalTime hour = departureData.getSpinnerSchedule();
+					LocalDate meeting = departureData.getMeetingDate();
 					
-					//armar local datetime de reunion.
-					LocalDateTime meetingSchedule = day.atTime(hour);
+					try {
+						LocalTime scheduleTime = LocalTime.parse(timeConvert);
+						
+
+					}catch(DateTimeParseException ex){
+						//window = new PopUpWindow("ERROR!", "Formato de fecha Incorrecto. Use: HH:mm", Color.RED);
+						//window.setVisible(true);
+					}
 					
-					DtTouristicDeparture departure = new DtTouristicDeparture(null, name, maxTourists, creationDate, meetingSchedule, place, activity, null);
+					LocalTime scheduleTime = LocalTime.parse(timeConvert);
+					
+					LocalDateTime meetingDate = meeting.atTime(scheduleTime);
+
+					DtTouristicDeparture departure = new DtTouristicDeparture(null, name, maxTourists, creationDate, meetingDate, place, activityData, null);
 					
 					ctrl.registerTouristicDeparture(departure);
 					
@@ -138,7 +164,10 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 					window.setVisible(true);
 					
 				}catch (Exception e1) {
-					window = new PopUpWindow("Campo/s vacío/s", "Por favor rellene los campos vacíos", Color.RED);
+					// "Por favor rellene los campos vacíos" + 
+					window = new PopUpWindow("ERROR!","Campo/s vacío/s o fecha Incorrecta" , Color.RED);
+					System.out.println(e1);
+					
 					window.setVisible(true);
 				}			
 			}
@@ -147,42 +176,38 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 	}
 
 	
-	
-	
-	@Override
 	public void onListDepartmentSelected(Long id) {
-		IController ctrl = ControllerFactory.getIController();
-		List<DtDepartment> department = ctrl.getListDepartment(true);
-		
-		//busco el departamento q selecciono.
-		for (int i = 0; i < department.size(); i++) {
-			if (department.get(i).getId() == id) {
-				List<DtTouristicActivity> activities = department.get(i).getActivities();
-				
-				String[] activitiesName = activities.stream()
-		                .map(DtTouristicActivity::getName)
-		                .collect(Collectors.toList())
-		                .toArray(new String[0]);
-					
-				listDepartmentActivities.setModel(new AbstractListModel() {
-					String[] values = activitiesName;
-
-					public int getSize() {
-						return values.length;
-					}
-
-					public Object getElementAt(int index) {
-						return values[index];
-					}
-				});		
-			}
-		}
-		 
+		/*
+		 */
 	}
 
-	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
-		// TODO Auto-generated method stub
+
+		activities = department.getActivities();
 		
+		if(!department.getActivities().isEmpty()) {
+			
+			//obtengo nombre de las actividades del departamento.
+			String [] departmentsActivities = department
+					.getActivities()
+					.stream()
+					.map(DtTouristicActivity::getName)
+					.collect(Collectors.toList())
+					.toArray(new String[0]);
+			
+			
+			listDepartmentActivities.setModel(new AbstractListModel() {
+				String[] values = departmentsActivities;
+
+				public int getSize() {
+					return values.length;
+				}
+
+				public Object getElementAt(int index) {
+					return values[index];
+				}
+			});
+		}
+				
 	}
 }
