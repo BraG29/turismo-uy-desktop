@@ -48,7 +48,8 @@ public class RegisterUser extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterUser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Registrar Usuario");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 334, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

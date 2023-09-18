@@ -32,17 +32,23 @@ import java.awt.event.ActionEvent;
 public class AddActivityToBundle extends JFrame implements ListTouristicBundleListener, ListDepartmentListener  {
 
 	private JPanel contentPane;
-	private ListTouristicBundle touristicBundleList;
-	private JLabel lblTouristicBundles;
+
 	
-	private JLabel lblDepartments;
+	private ListTouristicBundle touristicBundleList;
 	private ListDepartment departmentsList;
+	
+	
+	private JLabel lblTouristicBundles;
+	private JLabel lblDepartments;
 	private JLabel lblBundleActivities;
 	private JLabel lblDepartmentActivities;
+
 	
-	private JList bundleActivities;
-	private JList departmentActivities;
 	private JScrollPane scrollPaneDeptActivities;
+	private JList departmentActivities;
+	private JList bundleActivities; //jlist 
+	private List<DtTouristicActivity> activities; //lista de las actividades
+	
 	private Long actBundId;
 	private Long actDeptId;
 	
@@ -91,8 +97,8 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		bundleActivities = new JList();
 		bundleActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				DtTouristicActivity activity = (DtTouristicActivity) bundleActivities.getSelectedValue();				
-				actBundId = activity.getId();
+				//DtTouristicActivity activity = (DtTouristicActivity) bundleActivities.getSelectedValue();				
+				//actBundId = activity.getId();
 			}
 		});
 		scrollPane.setViewportView(bundleActivities);
@@ -137,8 +143,10 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		departmentActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				//obtengo id
-				DtTouristicActivity activity = (DtTouristicActivity) departmentActivities.getSelectedValue();				
-				actDeptId = activity.getId();
+				//DtTouristicActivity activity = (DtTouristicActivity) departmentActivities.getSelectedValue();				
+				//actDeptId = activity.getId();
+				
+				
 				
 			}
 		});
@@ -158,7 +166,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 					
 				}catch(Exception e1) {
 					
-					window = new PopUpWindow("ERROR", "No se ha podido dar de alta la actividad" + e1.toString(), Color.RED);
+					window = new PopUpWindow("ERROR", "No se ha podido agregar la actividad", Color.RED);
 					window.setVisible(true);
 				}
 			}
@@ -197,37 +205,15 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 
 	@Override
 	public void onListDepartmentSelected(Long id) {
-		IController ctrl = ControllerFactory.getIController();
-		List<DtDepartment> department = ctrl.getListDepartment(true);
-		
-		//busco el departamento q selecciono.
-		for (int i = 0; i < department.size(); i++) {
-			if (department.get(i).getId() == id) {
-				List<DtTouristicActivity> activities = department.get(i).getActivities();
-				
-				String[] activitiesName = activities.stream()
-		                .map(DtTouristicActivity::getName)
-		                .collect(Collectors.toList())
-		                .toArray(new String[0]);
-					
-				departmentActivities.setModel(new AbstractListModel() {
-					String[] values = activitiesName;
-
-					public int getSize() {
-						return values.length;
-					}
-
-					public Object getElementAt(int index) {
-						return values[index];
-					}
-				});		
-			}
-		}
+	
 	}
 
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
-		// TODO Auto-generated method stub
+		
 		
 	}
+
+	
+	
 }

@@ -49,26 +49,11 @@ public class ConsultUser extends JFrame implements ListUserListener {
 
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConsultUser frame = new ConsultUser();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public ConsultUser() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Consulta Usuario");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//setBounds(100, 100, 870, 322);
 		setBounds(100, 100, 870, 322);
 		contentPane = new JPanel();
@@ -226,9 +211,13 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		
 		this.setBounds(contentDimensions);
 		
-		departureDataPanel = new ShowDepartureData();
-		departureDataPanel.setBounds(10, 294, 294, 179);
+		if(departureDataPanel == null) {
+			departureDataPanel = new ShowDepartureData();
+			departureDataPanel.setBounds(10, 294, 294, 179);			
+		}
 		departureDataPanel.loadData(departureData);
 		contentPane.add(departureDataPanel);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 }
