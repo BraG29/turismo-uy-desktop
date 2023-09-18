@@ -15,8 +15,6 @@ import javax.swing.border.EmptyBorder;
 import turismouydesktop.gui.panels.ListDepartment;
 import turismouydesktop.gui.panels.ListDepartmentListener;
 
-
-
 import turismouydesktop.gui.panels.InsertDepartureData;
 import turismouydesktop.gui.panels.ListDepartment;
 import turismouydesktop.gui.panels.ListDepartmentListener;
