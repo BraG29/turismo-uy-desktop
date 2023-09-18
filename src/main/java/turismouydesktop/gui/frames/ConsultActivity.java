@@ -28,6 +28,8 @@ import turismouydesktop.gui.panels.ListTouristicBundle;
 import turismouydesktop.gui.panels.ListTouristicBundleListener;
 
 import turismouydesktop.gui.panels.ShowActivityData;
+import turismouydesktop.gui.panels.ShowBundleData;
+import turismouydesktop.gui.panels.ShowDepartureData;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
@@ -43,6 +45,8 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 	private ListDeparture jListDeparture = new ListDeparture();
 	private ListDepartment jListDepartment;
 	
+	private ShowBundleData bundleVentana = new ShowBundleData();
+	private ShowDepartureData departureVentana = new ShowDepartureData();
 	private ShowActivityData showActivityVentana = null;
 	private List<DtTouristicActivity> actividades = null;
 	
@@ -52,6 +56,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 	private JScrollPane scrollPaneActivities = new JScrollPane();
 	private final JLabel lblActividadAElegir = new JLabel("Actividad a elegir:");
 	private final JLabel lblPquetesTursticos = new JLabel("Páquetes Turísticos:");
+	private final JLabel lblSalidasTuristicas = new JLabel("Salidas Turisticas:");
 
 	/**
 	 * Launch the application.
@@ -82,14 +87,15 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 
-		jListBundle.setListener(this);
 		
-		jListDeparture.setListener(this);
 		
 		jListDepartment = new ListDepartment(140,200);
 		jListDepartment.setBounds(0, 42, 179, 200);
 		getContentPane().add(jListDepartment);
+		
 		jListDepartment.setListener(this);
+		jListDeparture.setListener(this);
+		jListBundle.setListener(this);
 		
 		JLabel lblSeleccioneDepartamento = new JLabel("Departamento a elegir:");
 		lblSeleccioneDepartamento.setBounds(0, 26, 200, 15);
@@ -103,9 +109,13 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		lblActividadAElegir.setBounds(230, 26, 140, 15);
 		getContentPane().add(lblActividadAElegir);
 		
-		lblPquetesTursticos.setBounds(400, 240, 153, 15);
+		lblPquetesTursticos.setBounds(450, 290, 153, 15);
 		getContentPane().add(lblPquetesTursticos);
 		lblPquetesTursticos.setVisible(false);
+		
+		lblSalidasTuristicas.setBounds(650, 290, 153, 15);
+		getContentPane().add(lblSalidasTuristicas);
+		lblSalidasTuristicas.setVisible(false);
 
 
 		
@@ -118,10 +128,10 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 				
 				//controlo si es la primera vez que se llama showActivityVentana.
 				if(showActivityVentana == null) {
-					reDimensionWindow(400,170);
+					reDimensionWindow(400,250);
 					//cargo la lista de Bundles de la actividad
 					jListBundle.reLoadList(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
-					jListBundle.setBounds(400, 260, 140, 200);
+					jListBundle.setBounds(450, 300, 140, 200);
 					getContentPane().add(jListBundle);
 					jListBundle.setVisible(true);
 					lblPquetesTursticos.setVisible(true);
@@ -135,18 +145,16 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 					
 					//cargo lista de salidas de la actividad
 					jListDeparture.reLoadList(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
-					jListDeparture.setBounds(650, 260, 140, 200);
+					jListDeparture.setBounds(650, 310, 140, 200);
 					getContentPane().add(jListDeparture);
 					jListDeparture.setVisible(true);
-					
-					
-					
+					lblSalidasTuristicas.setVisible(true);
+						
 				}else {
 					//recargo las ventanas con la info de Actividad
 					jListBundle.reLoadList(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
 					showActivityVentana.setValues(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
 					jListDeparture.reLoadList(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
-					//lblPquetesTursticos.setVisible(true);
 				}
 			}
 		});
@@ -162,7 +170,6 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
 		
-		System.out.println("uwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuwuiwuw");
 		actividades = department.getActivities();
 		
 		//creo los Array de String.
@@ -174,20 +181,23 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 				activitiesStringArray[i] = acti.getName();
 				i++;
 		}
+		i = 0;
 		loadList(activitiesStringArray,listActivities);
 		
 		scrollPaneActivities.setVisible(true);
 		listActivities.setVisible(true);
 		lblActividadAElegir.setVisible(true);
-		
+		bundleVentana.setVisible(false);
+		departureVentana.setVisible(false);
 		
 		if(showActivityVentana != null) {
 			showActivityVentana.setVisible(false);
 			showActivityVentana = null;
 			jListBundle.setVisible(false);
 			//jListBundle = null;
-			reDimensionWindow(-400,-170);
+			reDimensionWindow(-400,-250);
 			lblPquetesTursticos.setVisible(false);
+			lblSalidasTuristicas.setVisible(false);
 		}
 	}
 	
@@ -212,10 +222,13 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 
 	@Override
 	public void onListTouristicBundle(Long id) {
-		// TODO Auto-generated method stub
-		System.out.println("WAAAAAAAAAAAWAAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		
-		
+		IController controller = ControllerFactory.getIController();
+
+		getContentPane().add(bundleVentana);
+		bundleVentana.setBounds(450,-25,400,300);
+		departureVentana.setVisible(false);
+		bundleVentana.setVisible(true);
+		bundleVentana.setData(controller.getTouristicBundleData(id));	
 	}
 	
 	
@@ -232,8 +245,12 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 
 	@Override
 	public void onSelectedDeparture(DtTouristicDeparture DTP) {
-		// TODO Auto-generated method stub
-		
+		IController controller = ControllerFactory.getIController();
+		getContentPane().add(departureVentana);
+		departureVentana.setBounds(450,20,400,300);
+		bundleVentana.setVisible(false);
+		departureVentana.setVisible(true);
+		departureVentana.loadData(controller.getTouristicDepartureData(DTP.getId()));
 	}
 
 	@Override

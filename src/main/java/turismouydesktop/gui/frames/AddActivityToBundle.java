@@ -47,13 +47,15 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	private JScrollPane scrollPaneDeptActivities;
 	private JList departmentActivities;
 	private JList bundleActivities; //jlist 
-	private List<DtTouristicActivity> activities; //lista de las actividades
 	
-	private Long actBundId;
-	private Long actDeptId;
+	private List<DtTouristicActivity> activitiesDepartment; //lista de las actividades del Departamento seleccionado
+	private List<DtTouristicActivity> activitiesBundle; //lista de las actividades del Paquete seleccionado
+	
+	private Long bundleId;
+	private Long activityId;
 	
 	
-	private PopUpWindow window;
+	private PopUpWindow msgWindow;
 	/**
 	 * Launch the application.
 	 */
@@ -74,10 +76,11 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	 * Create the frame.
 	 */
 	public AddActivityToBundle() {
+		setTitle("Agregar Paquete Turistico");
 		
 		IController controller = ControllerFactory.getIController();
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 487, 405);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -120,7 +123,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		/*********Department*************/
 		
 		
-		departmentsList = new ListDepartment();
+		departmentsList = new ListDepartment(223, 92);
 		departmentsList.setBounds(242, 42, 223, 92);
 		departmentsList.setListener(this);
 		contentPane.add(departmentsList);
@@ -142,12 +145,15 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		departmentActivities = new JList();
 		departmentActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				//obtengo id
-				//DtTouristicActivity activity = (DtTouristicActivity) departmentActivities.getSelectedValue();				
-				//actDeptId = activity.getId();
-				
-				
-				
+				String selectedActivity = (String) departmentActivities.getSelectedValue();
+				if(selectedActivity != null) {
+					activityId = activitiesDepartment
+							.stream()
+							.filter(activity -> activity.getName().equals(selectedActivity))
+							.findFirst()
+							.get()
+							.getId();
+				}
 			}
 		});
 		scrollPaneDeptActivities.setViewportView(departmentActivities);
@@ -156,18 +162,20 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		JButton btnAdd = new JButton("Añadir");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				try {
-					//metodo para añadir actividad a paquete.
+					if(!checkRepeatedActivity()) {
+						throw new IllegalArgumentException("Esa Actividad ya esta en el Paquete");
+					}
 					
-					controller.addTouristicActivityToBundle(actBundId, actDeptId);
-					window = new PopUpWindow("Éxito", "La actividad fue añadida correctamente.", Color.RED);
-					window.setVisible(true);
+					controller.addTouristicActivityToBundle(bundleId, activityId);
 					
-				}catch(Exception e1) {
+				} catch (Exception exception) {
+					msgWindow = new PopUpWindow(
+							"Error", 
+							exception.getMessage(), 
+							Color.RED);
 					
-					window = new PopUpWindow("ERROR", "No se ha podido agregar la actividad", Color.RED);
-					window.setVisible(true);
+					msgWindow.setVisible(true);
 				}
 			}
 		});
@@ -176,16 +184,31 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		
 		
 	}
+	
+	public Boolean checkRepeatedActivity() {
+		for(DtTouristicActivity activity: activitiesBundle) {
+			if(activity.getId() == activityId) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
 
 	@Override
 	public void onListTouristicBundle(Long id) {
+		bundleId = id;
+		
 		IController ctrl = ControllerFactory.getIController();
 		DtTouristicBundle touristicBundle = ctrl.getTouristicBundleData(id);
 		
-		List<DtTouristicActivity> activities = touristicBundle.getActivities();
+		activitiesBundle = touristicBundle.getActivities();
+		
 		//mandar nombres de la actividad a la lista.
 		
-		String[] activitiesName = activities.stream()
+		
+		String[] activitiesName = activitiesBundle
+				.stream()
                 .map(DtTouristicActivity::getName)
                 .collect(Collectors.toList())
                 .toArray(new String[0]);
@@ -211,7 +234,25 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
 		
+		activitiesDepartment = department.getActivities();
 		
+		String[] activitiesName = activitiesDepartment
+				.stream()
+                .map(DtTouristicActivity::getName)
+                .collect(Collectors.toList())
+                .toArray(new String[0]);
+		
+		departmentActivities.setModel(new AbstractListModel() {
+			String[] values = activitiesName;
+
+			public int getSize() {
+				return values.length;
+			}
+
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
 	}
 
 	@Override

@@ -132,9 +132,6 @@ public class RegisterUser extends JFrame {
 		if(userData.getEmail().isBlank()) {
 			throw new NullPointerException("El campo 'Email' no puede ser vacio");
 		}
-		if(userData == null) {
-			throw new NullPointerException("Ha habido un error fatal");
-		}
 	}
 	
 	public void checkForUnique(DtUser userData) {

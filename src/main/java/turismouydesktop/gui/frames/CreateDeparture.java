@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 
+import turismouydesktop.gui.panels.ListDepartment;
+import turismouydesktop.gui.panels.ListDepartmentListener;
+
 import turismouydesktop.gui.panels.InsertDepartureData;
 import turismouydesktop.gui.panels.ListDepartment;
 import turismouydesktop.gui.panels.ListDepartmentListener;
@@ -69,11 +72,12 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 	 * Create the frame.
 	 */
 	public CreateDeparture() {
+		setTitle("Alta Salida Turistica");
 		
 		IController ctrl= ControllerFactory.getIController();
 
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 719, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

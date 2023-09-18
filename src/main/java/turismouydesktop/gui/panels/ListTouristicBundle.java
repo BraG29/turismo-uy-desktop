@@ -111,23 +111,6 @@ public class ListTouristicBundle extends JPanel {
 			}
 		});
 		
-//		listBundlesJList.addListSelectionListener(new ListSelectionListener() {
-//			public void valueChanged(ListSelectionEvent e) {
-//				
-//				String bundleName = (String) listBundlesJList.getSelectedValue();
-//				if (listener != null && bundleName != null) {
-//				
-//					Long id = listBundles
-//							.stream()
-//							.filter(bundle -> bundle.getName().equalsIgnoreCase(bundleName))
-//							.findFirst()
-//							.get()
-//							.getId();
-//					listener.onListTouristicBundle(id);
-//				}
-//			}
-//		});
-//		
 	}
 	
 	public void reLoadList(DtTouristicActivity DTA) {
@@ -152,32 +135,8 @@ public class ListTouristicBundle extends JPanel {
 					return values[index];
 				}
 			});
-//		
-	}
-	
 		
-			
-//			listBundlesJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//			listBundlesJList.setFont(new Font("Dialog", Font.PLAIN, 12));
-//			
-//			listBundlesJList.addListSelectionListener(new ListSelectionListener() {
-//				public void valueChanged(ListSelectionEvent e) {
-//					
-//					String bundleName = (String) listBundlesJList.getSelectedValue();
-//					if (listener != null && bundleName != null) {
-//					
-//						Long id = listBundles
-//								.stream()
-//								.filter(bundle -> bundle.getName().equalsIgnoreCase(bundleName))
-//								.findFirst()
-//								.get()
-//								.getId();
-//						listener.onListTouristicBundle(id);
-//					}
-//				}
-//			});
-//			
-	
+	}
 	
 	public void setListener(ListTouristicBundleListener listener) {
 		this.listener = listener;

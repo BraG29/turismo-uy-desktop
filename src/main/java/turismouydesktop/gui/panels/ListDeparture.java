@@ -21,6 +21,7 @@ public class ListDeparture extends JPanel {
 	
 	private ListDepartureListener listener;
 	private JList jListDeparture;
+	private List<DtTouristicDeparture> listDepartures;
 	/**
 	 * Create the panel.
 	 */
@@ -35,25 +36,30 @@ public class ListDeparture extends JPanel {
 		listScrollPane.setBounds(0, 0, 202, 276);
 		add(listScrollPane);
 		
-		
-		jListDeparture.setModel(new AbstractListModel() {
-			String[] values = {};
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
+		jListDeparture.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				
+				String departureName = (String) jListDeparture.getSelectedValue();
+				if (listener != null && departureName != null) {
+				
+					DtTouristicDeparture DTP = listDepartures
+							.stream()
+							.filter(bundle -> bundle.getName().equalsIgnoreCase(departureName))
+							.findFirst()
+							.get();
+					listener.onSelectedDeparture(DTP);
+				}
 			}
 		});
 		
 	}
 	
+		
+	
 	
 	public void reLoadList(DtTouristicActivity DTA) {	
 		
-		List<DtTouristicDeparture> listDepartures = DTA.getDepartures();
+		listDepartures = DTA.getDepartures();
 				
 		String[] departureName = listDepartures.stream()
 	                .map(DtTouristicDeparture::getName)
@@ -70,7 +76,7 @@ public class ListDeparture extends JPanel {
 			public Object getElementAt(int index) {
 				return values[index];
 			}
-		});
+		});	
 	}
 	
 	
