@@ -62,21 +62,6 @@ public class RegisterInscription extends JFrame implements ListTouristListener, 
 	private JTextField textFieldMaxTourist;
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegisterInscription frame = new RegisterInscription();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

@@ -58,21 +58,6 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 	private final JLabel lblPquetesTursticos = new JLabel("Páquetes Turísticos:");
 	private final JLabel lblSalidasTuristicas = new JLabel("Salidas Turisticas:");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConsultActivity frame = new ConsultActivity();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

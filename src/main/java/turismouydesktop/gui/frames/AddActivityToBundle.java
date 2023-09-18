@@ -56,21 +56,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	
 	
 	private PopUpWindow msgWindow;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddActivityToBundle frame = new AddActivityToBundle();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.

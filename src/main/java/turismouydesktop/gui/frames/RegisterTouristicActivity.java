@@ -19,21 +19,6 @@ public class RegisterTouristicActivity extends JFrame {
 	private PanelActivity panelActivity;
 	private JButton button;
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegisterTouristicActivity frame = new RegisterTouristicActivity();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

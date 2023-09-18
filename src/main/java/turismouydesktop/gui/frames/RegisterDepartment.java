@@ -23,21 +23,6 @@ public class RegisterDepartment extends JFrame {
 	
 	private List<DtDepartment> departments;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RegisterDepartment frame = new RegisterDepartment();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

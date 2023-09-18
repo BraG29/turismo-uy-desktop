@@ -52,21 +52,6 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 	
 	private List<DtTouristicActivity> activities;
 	private DtTouristicActivity activityData;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateDeparture frame = new CreateDeparture();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
