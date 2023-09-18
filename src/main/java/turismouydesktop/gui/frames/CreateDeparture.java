@@ -11,8 +11,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import turismouydesktop.gui.ListDepartment;
-import turismouydesktop.gui.ListDepartmentListener;
+import turismouydesktop.gui.panels.ListDepartment;
+import turismouydesktop.gui.panels.ListDepartmentListener;
 import turismouydesktop.gui.panels.InsertDepartureData;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;

@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import turismouydesktop.gui.ListDepartment;
-import turismouydesktop.gui.ListDepartmentListener;
+import turismouydesktop.gui.panels.ListDepartment;
+import turismouydesktop.gui.panels.ListDepartmentListener;
 import turismouydesktop.gui.panels.ListTouristicBundle;
 import turismouydesktop.gui.panels.ListTouristicBundleListener;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
