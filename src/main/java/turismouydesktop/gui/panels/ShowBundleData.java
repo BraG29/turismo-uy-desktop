@@ -26,7 +26,6 @@ public class ShowBundleData extends JPanel {
 	private JTextField textFieldValidityPeriod;
 	private JTextField textFieldDate;
 	private JTextArea textArea;
-	private JList listActivities;
 
 	
 	public ShowBundleData() {
@@ -47,10 +46,6 @@ public class ShowBundleData extends JPanel {
 		JLabel lblPerodoDeValidez = new JLabel("Período de validez:");
 		lblPerodoDeValidez.setBounds(12, 283, 146, 15);
 		add(lblPerodoDeValidez);
-		
-		JLabel lblActivities = new JLabel("Actividades:");
-		lblActivities.setBounds(12, 343, 95, 19);
-		add(lblActivities);
 		
 		
 		textFieldName = new JTextField();
@@ -94,23 +89,6 @@ public class ShowBundleData extends JPanel {
 		textFieldDate.setColumns(10);
 		textFieldDate.setEditable(false);
 		
-		JScrollPane scrollPaneActivities = new JScrollPane();
-		scrollPaneActivities.setBounds(125, 343, 234, 125);
-		add(scrollPaneActivities);
-		
-		listActivities = new JList();
-		listActivities.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				//obtener id actividad para llamar menu martin
-				
-				DtTouristicActivity activity = (DtTouristicActivity) listActivities.getSelectedValue();				
-				Long id = activity.getId();
-				
-				//magia
-			}
-		});
-		scrollPaneActivities.setViewportView(listActivities);
-		
 	}
 	
 	public void setData(DtTouristicBundle bundle) {
@@ -128,26 +106,6 @@ public class ShowBundleData extends JPanel {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String uploadDateStr = bundle.getUploadDate().format(formatter);
 		textFieldDate.setText(uploadDateStr);
-		
-		List<DtTouristicActivity> activities = bundle.getActivities();
-		//mandar nombres de la actividad a la lista.
-		
-		String[] activitiesName = activities.stream()
-                .map(DtTouristicActivity::getName)
-                .collect(Collectors.toList())
-                .toArray(new String[0]);
-			
-		listActivities.setModel(new AbstractListModel() {
-			String[] values = activitiesName;
-
-			public int getSize() {
-				return values.length;
-			}
-
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});	
 		
 	}
 }

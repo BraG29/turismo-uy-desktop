@@ -4,14 +4,17 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.text.MaskFormatter;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -25,6 +28,7 @@ public class InsertDepartureData extends JPanel {
 	private JDateChooser creationDateChooser;
 	private JDateChooser dateChooserMeeting;
 	private JSpinner scheduleMeeting;
+	private JFormattedTextField textFieldTime;
 	/**
 	 * Create the panel.
 	 */
@@ -50,16 +54,6 @@ public class InsertDepartureData extends JPanel {
 		JLabel lblMeeting = new JLabel("Horario de reunión:");
 		lblMeeting.setBounds(33, 78, 139, 15);
 		add(lblMeeting);
-		
-		scheduleMeeting = new JSpinner();
-		scheduleMeeting.setBounds(317, 76, 112, 20);
-		
-		SpinnerDateModel spinnerModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
-        scheduleMeeting = new JSpinner(spinnerModel);
-        scheduleMeeting.setBounds(310, 79, 119, 19);
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(scheduleMeeting, "HH:mm");
-        scheduleMeeting.setEditor(timeEditor);
-        add(scheduleMeeting);
 		
 		
 		dateChooserMeeting = new JDateChooser();
@@ -122,6 +116,23 @@ public class InsertDepartureData extends JPanel {
 		creationDateChooser = new JDateChooser();
 		creationDateChooser.setBounds(179, 200, 250, 19);
 		add(creationDateChooser);
+		
+	
+		textFieldTime = new JFormattedTextField();
+		textFieldTime.setForeground(Color.gray);
+		textFieldTime.setText("Use HH:mm");
+		textFieldTime.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(textFieldTime.getText().equals("Use HH:mm")) {
+					textFieldTime.setText("");
+					textFieldTime.setForeground(Color.BLACK);
+				}
+			}
+		});
+		textFieldTime.setBounds(317, 78, 114, 19);
+		add(textFieldTime);
+		textFieldTime.setColumns(10);
 
 		
 	}
@@ -145,9 +156,10 @@ public class InsertDepartureData extends JPanel {
 		return meetingDate;
 	}
 	
-	public LocalTime getSpinnerSchedule() {
-		LocalTime selectedSchedule = (LocalTime) scheduleMeeting.getValue();
-		return selectedSchedule;
+	public String getTime() {
+		String timeText = textFieldTime.getText();
+	
+		return timeText;
 	}
 	
 	public Integer getMaxTourists() {
@@ -165,6 +177,4 @@ public class InsertDepartureData extends JPanel {
 	public String getPlace() {
 		return textFieldPlace.getText();
 	}
-	
-	
 }
