@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import turismouydesktop.gui.panels.RegisterUser;
 import turismouydesktop.gui.frames.ConsultUser;
+import turismouydesktop.gui.frames.RegisterTouristicActivity;
+import turismouydesktop.gui.frames.ConsultActivity;
 
 public class MainMenu extends JFrame {
 
@@ -49,7 +51,7 @@ public class MainMenu extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnRegisterUser = new JButton("Alta Usuario");
+		JButton btnRegisterUser = new JButton("Registrar Usuario");
 		btnRegisterUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterUser registerUserGUI = new RegisterUser();
@@ -60,7 +62,7 @@ public class MainMenu extends JFrame {
 		btnRegisterUser.setBounds(22, 32, 182, 25);
 		contentPane.add(btnRegisterUser);
 		
-		JButton btnConsultUser = new JButton("Consulta Usuario");
+		JButton btnConsultUser = new JButton("Consultar Usuario");
 		btnConsultUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ConsultUser consultUserGUI = new ConsultUser();
@@ -128,16 +130,32 @@ public class MainMenu extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		JButton btnRegisterTouristicActivity = new JButton("Alta Actividad ");
+		btnRegisterTouristicActivity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterTouristicActivity registerActivityGUI = new RegisterTouristicActivity();
+				registerActivityGUI.setVisible(true);
+			}
+		});
+		
 		btnRegisterTouristicActivity.setBounds(239, 32, 210, 25);
 		contentPane.add(btnRegisterTouristicActivity);
 		
 		JButton btnConsultTouristicActivity = new JButton("Consulta Actividad");
+		btnConsultTouristicActivity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultActivity consultActivityGUI = new ConsultActivity();
+				consultActivityGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		
 		btnConsultTouristicActivity.setBounds(239, 69, 210, 25);
 		contentPane.add(btnConsultTouristicActivity);
 		
 		JButton btnCreateTouristicDeparture = new JButton("Alta Salida Turistica");
 		btnCreateTouristicDeparture.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CreateDeparture createDepartureGUI = new CreateDeparture();
+				createDepartureGUI.setVisible(rootPaneCheckingEnabled);
 			}
 		});
 		
@@ -145,6 +163,13 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnCreateTouristicDeparture);
 		
 		JButton btnConsultTouristicDeparture = new JButton("Consulta Salida Turistica");
+		btnConsultTouristicDeparture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultDeparture consultDepartureGUI = new ConsultDeparture();
+				consultDepartureGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		
 		btnConsultTouristicDeparture.setBounds(239, 207, 210, 25);
 		contentPane.add(btnConsultTouristicDeparture);
 		
@@ -153,6 +178,13 @@ public class MainMenu extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		JButton btnRegisterTouristicDeparture = new JButton("Inscripcion a Salida ");
+		btnRegisterTouristicDeparture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterInscription registerInscriptionGUI = new RegisterInscription();
+				registerInscriptionGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		
 		btnRegisterTouristicDeparture.setBounds(239, 244, 210, 25);
 		contentPane.add(btnRegisterTouristicDeparture);
 		
@@ -161,6 +193,13 @@ public class MainMenu extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JButton btnRegisterDepartment = new JButton("Declarar independencia de nuevo departamento");
+		btnRegisterDepartment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegisterDepartment registerDepartmentGUI = new RegisterDepartment();
+				registerDepartmentGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		
 		btnRegisterDepartment.setBounds(22, 302, 427, 25);
 		contentPane.add(btnRegisterDepartment);
 	}

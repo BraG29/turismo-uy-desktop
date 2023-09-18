@@ -82,7 +82,8 @@ public class RegisterInscription extends JFrame implements ListTouristListener, 
 	 * Create the frame.
 	 */
 	public RegisterInscription() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Registrar Inscripcion a Salida");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 716, 564);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

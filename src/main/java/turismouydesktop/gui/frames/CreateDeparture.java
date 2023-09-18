@@ -72,11 +72,12 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 	 * Create the frame.
 	 */
 	public CreateDeparture() {
+		setTitle("Alta Salida Turistica");
 		
 		IController ctrl= ControllerFactory.getIController();
 
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 719, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
