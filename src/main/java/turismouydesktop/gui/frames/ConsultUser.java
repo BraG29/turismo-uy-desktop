@@ -205,13 +205,13 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		DtTouristicDeparture departureData = controller.getTouristicDepartureData(id);
 		//10,294  294 X 179
 		
-		Rectangle contentDimensions = this.getBounds();
-		//x,y,widht,height
-		contentDimensions.height += 179;
-		
-		this.setBounds(contentDimensions);
 		
 		if(departureDataPanel == null) {
+			Rectangle contentDimensions = this.getBounds();
+			//x,y,widht,height
+			contentDimensions.height += 179;
+			
+			this.setBounds(contentDimensions);
 			departureDataPanel = new ShowDepartureData();
 			departureDataPanel.setBounds(10, 294, 294, 179);			
 		}
