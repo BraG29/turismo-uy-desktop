@@ -45,18 +45,6 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	private List<DtTouristicActivity> activities;
 	private ShowActivityData activityPanel;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConsultBundle frame = new ConsultBundle();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public ConsultBundle() {
 		setTitle("Consulta de Paquetes de actividades turisticas");

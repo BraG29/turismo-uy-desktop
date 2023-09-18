@@ -28,22 +28,6 @@ public class CreateBundle extends JFrame {
 	private InsertBundleData insertBundleData;
 	private PopUpWindow window;
 	
-	/**
-	 * Launch the application.
-	 */
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateBundle frame = new CreateBundle();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	 
 	/**
 	 * Create the frame.
