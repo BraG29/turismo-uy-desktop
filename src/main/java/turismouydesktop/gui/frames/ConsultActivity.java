@@ -32,6 +32,7 @@ import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
+import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
 
 public class ConsultActivity extends JFrame implements ListDepartmentListener, ListTouristicBundleListener, ListDepartureListener{
@@ -231,6 +232,18 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 
 	@Override
 	public void onSelectedDeparture(DtTouristicDeparture DTP) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reLoadListBundle(DtTouristicBundle bundle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onListTouristicBundleDt(DtTouristicBundle dtBundle) {
 		// TODO Auto-generated method stub
 		
 	}

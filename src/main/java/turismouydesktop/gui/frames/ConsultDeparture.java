@@ -98,7 +98,6 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener{
 						.getId();
 				
 				IController ctrl = ControllerFactory.getIController();
-				
 				DtTouristicDeparture departure = ctrl.getTouristicDepartureData(activityId);
 				departureData.loadData(departure);
 				

@@ -214,6 +214,18 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		
 	}
 
+	@Override
+	public void reLoadListBundle(DtTouristicBundle bundle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onListTouristicBundleDt(DtTouristicBundle dtBundle) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

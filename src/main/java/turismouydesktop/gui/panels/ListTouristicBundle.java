@@ -12,6 +12,7 @@ import javax.swing.ListSelectionModel;
 
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
 import javax.swing.event.ListSelectionListener;
@@ -71,7 +72,11 @@ public class ListTouristicBundle extends JPanel {
 							.findFirst()
 							.get()
 							.getId();
+					
+					DtTouristicBundle BundleDt= controller.getTouristicBundleData(id);				
+					listener.onListTouristicBundleDt(BundleDt);
 					listener.onListTouristicBundle(id);
+					
 				}
 			}
 		});
@@ -147,7 +152,11 @@ public class ListTouristicBundle extends JPanel {
 					return values[index];
 				}
 			});
-//			
+//		
+	}
+	
+		
+			
 //			listBundlesJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 //			listBundlesJList.setFont(new Font("Dialog", Font.PLAIN, 12));
 //			
@@ -168,7 +177,7 @@ public class ListTouristicBundle extends JPanel {
 //				}
 //			});
 //			
-	}
+	
 	
 	public void setListener(ListTouristicBundleListener listener) {
 		this.listener = listener;
