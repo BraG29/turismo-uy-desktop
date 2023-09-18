@@ -39,9 +39,10 @@ public class RegisterTouristicActivity extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterTouristicActivity() {
+		setTitle("Alta de Actividad Turistica");
 		
 		//setteamos los atributos del frame
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 690, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
