@@ -48,16 +48,16 @@ public class RegisterTouristicActivity extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		
-		//agregamos boton atrás
-		button = new JButton("<------");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		button.setBounds(0, 410, 87, 25);
-		button.setBackground(new Color(178, 34, 34));
-		contentPane.add(button);
+//		//agregamos boton atrás
+//		button = new JButton("<------");
+//		button.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				dispose();
+//			}
+//		});
+//		button.setBounds(0, 410, 87, 25);
+//		button.setBackground(new Color(178, 34, 34));
+//		contentPane.add(button);
 		
 		//cargamos PanelActivity
 		panelActivity = new PanelActivity();

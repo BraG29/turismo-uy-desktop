@@ -20,6 +20,7 @@ import javax.swing.event.ListSelectionListener;
 
 import turismouydesktop.gui.panels.ListUser;
 import turismouydesktop.gui.panels.ListUserListener;
+import turismouydesktop.gui.panels.ShowActivityData;
 import turismouydesktop.gui.panels.ShowDepartureData;
 import turismouydesktop.gui.panels.UserDataManagment;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
@@ -46,6 +47,8 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	private JLabel lblActivityOrDeparture;
 	private JList listActivityOrDeparture;
 	private JScrollPane scrollPaneList;
+	
+	private ShowActivityData activityVentana;
 
 
 	/**
@@ -198,6 +201,31 @@ public class ConsultUser extends JFrame implements ListUserListener {
 	private void initActivityData(Long id) {
 		//TODO : Expandir ventana para mostrar el panel abajo
 		//TODO : Buscar la Actividad en concreto e inicializar el panel de ShowActivityData
+		IController controller = ControllerFactory.getIController();
+		DtTouristicActivity DTA = controller.getTouristicActivityData(id);
+		
+		
+		if(departureDataPanel != null) {
+			departureDataPanel.setVisible(false);
+		}
+		
+		if(activityVentana == null) {
+			activityVentana = new ShowActivityData(DTA);
+			activityVentana.setBounds(10, 294, 294, 179);
+			
+			if(departureDataPanel == null) {
+				Rectangle contentDimensions = this.getBounds();
+				//x,y,widht,height
+				contentDimensions.height += 179;
+				
+				this.setBounds(contentDimensions);
+			}
+			
+		}
+		activityVentana.setValues(DTA);
+		contentPane.add(activityVentana);
+		contentPane.revalidate();
+		contentPane.repaint();
 	}
 	
 	private void initDepartureData(Long id) {
@@ -205,15 +233,22 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		DtTouristicDeparture departureData = controller.getTouristicDepartureData(id);
 		//10,294  294 X 179
 		
-		Rectangle contentDimensions = this.getBounds();
-		//x,y,widht,height
-		contentDimensions.height += 179;
 		
-		this.setBounds(contentDimensions);
+		if(activityVentana != null) {
+			activityVentana.setVisible(false);
+		}
+		
 		
 		if(departureDataPanel == null) {
 			departureDataPanel = new ShowDepartureData();
-			departureDataPanel.setBounds(10, 294, 294, 179);			
+			departureDataPanel.setBounds(10, 294, 294, 179);
+			
+			if(activityVentana == null) {
+				Rectangle contentDimensions = this.getBounds();
+				//x,y,widht,height
+				contentDimensions.height += 179;
+				this.setBounds(contentDimensions);
+			}
 		}
 		departureDataPanel.loadData(departureData);
 		contentPane.add(departureDataPanel);
