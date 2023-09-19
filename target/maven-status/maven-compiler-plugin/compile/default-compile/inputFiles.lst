@@ -1,4 +1,5 @@
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDepartment.java
+/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDeparture.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDepartmentListener.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/RegisterTouristicActivity.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListUserListener.java
@@ -12,11 +13,13 @@
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/CreateDeparture.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListUser.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListTouristListener.java
+/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDepartureListener.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/ConsultUser.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/RegisterDepartment.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/CreateBundle.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ShowBundleData.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/PanelActivity.java
+/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/ConsultDeparture.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListTouristicBundle.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ShowDepartureData.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListActivityListener.java

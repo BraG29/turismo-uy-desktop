@@ -1,5 +1,17 @@
 Manifest-Version: 1.0
 Built-By: prog-app
 Build-Jdk: 17.0.6
+Class-Path: libs/servidor-central-0.0.1-SNAPSHOT.jar libs/hibernate-core
+ -6.2.7.Final.jar libs/jakarta.persistence-api-3.1.0.jar libs/jakarta.tr
+ ansaction-api-2.0.1.jar libs/jboss-logging-3.5.0.Final.jar libs/hiberna
+ te-commons-annotations-6.0.6.Final.jar libs/jandex-3.0.5.jar libs/class
+ mate-1.5.1.jar libs/byte-buddy-1.12.18.jar libs/jakarta.xml.bind-api-4.
+ 0.0.jar libs/jakarta.activation-api-2.1.0.jar libs/jaxb-runtime-4.0.2.j
+ ar libs/jaxb-core-4.0.2.jar libs/angus-activation-2.0.0.jar libs/txw2-4
+ .0.2.jar libs/istack-commons-runtime-4.1.1.jar libs/jakarta.inject-api-
+ 2.0.1.jar libs/antlr4-runtime-4.10.1.jar libs/mysql-connector-j-8.0.33.
+ jar libs/protobuf-java-3.21.9.jar libs/jgoodies-forms-1.9.0.jar libs/jg
+ oodies-common-1.8.1.jar libs/jcalendar-1.4.jar
+Main-Class: turismouydesktop.gui.frames.MainMenu
 Created-By: Maven Integration for Eclipse
 
