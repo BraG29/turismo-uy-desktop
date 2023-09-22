@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import turismouydesktop.gui.panels.RegisterUser;
+
 import turismouydesktop.gui.frames.ConsultUser;
 import turismouydesktop.gui.frames.RegisterTouristicActivity;
 import turismouydesktop.gui.frames.ConsultActivity;

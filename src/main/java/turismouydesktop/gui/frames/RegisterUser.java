@@ -1,4 +1,4 @@
-package turismouydesktop.gui.panels;
+package turismouydesktop.gui.frames;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import turismouydesktop.gui.frames.PopUpWindow;
+import turismouydesktop.gui.panels.UserDataManagment;
+import turismouydesktop.gui.panels.UserDataManagment.ForWhat;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
@@ -40,10 +41,6 @@ public class RegisterUser extends JFrame {
 		contentPane.setLayout(null);
 
 		setContentPane(contentPane);
-		
-		IController controller = ControllerFactory.getIController();
-		
-		users = controller.getListUser();
 		
 		userDataPanel = new UserDataManagment();
 		userDataPanel.enableToEditForRegister();
@@ -79,6 +76,10 @@ public class RegisterUser extends JFrame {
 		JButton btnConfirm = new JButton("Confirmar");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				refreshUsers();
+				String message = "";
+				String title = "";
+				Color color = Color.BLACK;
 				DtUser userData;
 				try {
 					if(comboBoxUserType.getSelectedIndex() == 1) {
@@ -94,19 +95,36 @@ public class RegisterUser extends JFrame {
 					checkForNull(userData);
 					checkForUnique(userData);
 					
+					IController controller = ControllerFactory.getIController();
+					
 					controller.registerUser(userData);
+					
+					title = "Exito";
+					message = "Se ha dado de alta al usuario: " + userData.getNickname() + " con exito.";
+					color = Color.GREEN;
 				} catch (Exception exception) {	
-						PopUpWindow msgWindows = new PopUpWindow(
-						"Error",
-						exception.getMessage(),
-						Color.RED);
-				
-						msgWindows.setVisible(true);
+					title = "Error";
+					message = exception.getMessage();
+					color = Color.RED;
 				}
+
+				PopUpWindow msgWindows = new PopUpWindow(
+					title,
+					message,
+					color);
+		
+				msgWindows.setVisible(true);
+				
+				
 			}
 		});
 		btnConfirm.setBounds(195, 327, 117, 25);
 		contentPane.add(btnConfirm);
+	}
+	
+	private void refreshUsers() {
+		IController controller = ControllerFactory.getIController();
+		users = controller.getListUser();
 	}
 	
 	private void checkForNull(DtUser userData) throws NullPointerException{

@@ -32,12 +32,13 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.event.ListSelectionEvent;
 
-enum ForWhat{
-	REGISTER,
-	UPDATE
-}
 
 public class UserDataManagment extends JPanel {
+	
+	public 	enum ForWhat{
+		REGISTER,
+		UPDATE
+	}
 
 	private DtUser userData;
 	

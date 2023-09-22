@@ -48,14 +48,11 @@ public class ListUser extends JPanel {
 		//Evento lanzado cuano se seleccione un usuario en la lista
 		listUsers.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				String selectedUser = (String) listUsers.getSelectedValue();
+				Integer selectedUser = listUsers.getSelectedIndex();
 				if(listener != null && selectedUser != null) {
 					Long id = usersData
-							.stream()
-							.filter(user -> selectedUser.contains(user.getNickname()))
-							.findFirst()
-							.get()
-							.getId();
+							.get(selectedUser)
+							.getId();					
 					listener.onSelectUser(id);
 				}
 			}
