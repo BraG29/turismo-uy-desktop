@@ -24,6 +24,7 @@ import com.toedter.calendar.JCalendar;
 import turismouydesktop.gui.frames.PopUpWindow;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
@@ -31,14 +32,15 @@ import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PanelActivity extends JPanel implements ListDepartmentListener, ListProviderListener {
+public class PanelActivity extends JPanel implements ListDepartmentListener, ListProviderListener, ListCategoryListener {
 	private JTextField txtNombre;
 	private JTextField txtCity;
 
 	// paneles con listener
 	private ListDepartment jListDepartment;
 	private ListProvider jListProvider;
-
+	private ListCategory jListCategory;
+//  private ListCategory jListCategory
 	// atributos de la Actividad Turística
 	private String TAName = null;
 	private String TADescription = null;
@@ -48,7 +50,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	private LocalDate TAUploadDate = null;
 	private DtProvider TAProvider = null;
 	private DtDepartment TADepartment = null;
-
+	private List<DtCategory> categories = new ArrayList<DtCategory>();
 	/**
 	 * Create the panel.
 	 */
@@ -56,15 +58,21 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		setLayout(null);
 //----------------------------Inicialización de elementos Swing--------------------------------------------------------
 		jListDepartment = new ListDepartment(180,100);
-		jListDepartment.setBounds(199, 243, 212, 110);
+		jListDepartment.setBounds(199, 243, 212, 130);
 		add(jListDepartment);
 		jListDepartment.setListener(this);
 
 		jListProvider = new ListProvider(180,100);
-		jListProvider.setBounds(12, 243, 212, 110);
+		jListProvider.setBounds(12, 243, 212, 130);
 		add(jListProvider);
 		jListProvider.setListener(this);
-
+		
+		//----------------------------------codigo agregado : LT
+		jListCategory = new ListCategory();
+		jListCategory.setBounds(437, 61, 189, 286);
+		add(jListCategory);
+		jListCategory.setListener(this);
+		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(12, 43, 60, 15);
 		add(lblNombre);
@@ -158,7 +166,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 												TAProvider, 
 												TADepartment, 
 												null,
-												null);
+												null,categories);
 					checkEmptyValues(DTA);
 					
 					IController controller = ControllerFactory.getIController();
@@ -172,9 +180,14 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 
 			}
 		});
-		btnOk.setBounds(454, 328, 96, 25);
+		btnOk.setBounds(285, 146, 96, 25);
 		add(btnOk);
 		btnOk.setBackground(new Color(60, 179, 113));
+		
+		//codigo agregado : LT
+		JLabel lblSelectCategories = new JLabel("Seleccione categoria/s:");
+		lblSelectCategories.setBounds(437, 41, 189, 15);
+		add(lblSelectCategories);
 	}
 
 	@Override
@@ -194,6 +207,13 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	public void onListDepartmentSelectedDt(DtDepartment department) {
 		this.TADepartment = department;
 		}
+	
+	@Override
+	public void onListCategorySelected(DtCategory categoriesSelected) { 
+		if(!this.categories.contains(categoriesSelected)) {			
+			this.categories.add(categoriesSelected);		
+		}
+	}
 	
 	/*
 	 * checkea que los datos insertados por el usuario no estén vacios
@@ -223,5 +243,10 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		if (DTA.getProvider() == null) {
 			throw new Exception("Debe seleccionar un Proveedor");
 		}
+		if (DTA.getCategories() == null) {
+			throw new Exception("Debe seleccionar una/s categoria/s");
+		}
+		
 	}
+
 }

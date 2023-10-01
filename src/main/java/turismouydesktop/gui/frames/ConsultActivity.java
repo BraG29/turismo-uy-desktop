@@ -123,7 +123,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 					
 					//cargo la ventana que muestra la info de la actividad
 					showActivityVentana = new ShowActivityData(controller.getTouristicActivityData(actividades.get(listActivities.getSelectedIndex()).getId()));
-					showActivityVentana.setBounds(10, 240, 400, 200);
+					showActivityVentana.setBounds(10, 240, 400, 350);//estaba en 200 el valor que esta en 350.
 					//x, y ,width, height
 					getContentPane().add(showActivityVentana);
 					showActivityVentana.setVisible(true);

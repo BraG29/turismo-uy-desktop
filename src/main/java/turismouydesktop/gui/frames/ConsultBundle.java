@@ -2,11 +2,13 @@ package turismouydesktop.gui.frames;
 
 import java.awt.EventQueue;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,6 +21,7 @@ import turismouydesktop.gui.panels.ShowActivityData;
 import turismouydesktop.gui.panels.ShowBundleData;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
 
@@ -44,12 +47,16 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	private DtTouristicActivity activityData;
 	private List<DtTouristicActivity> activities;
 	private ShowActivityData activityPanel;
+	private JLabel lblCategories;
+	private JScrollPane scrollPaneCategories;
+	private JList listCategories;
+	private List<DtCategory> categories = new ArrayList<DtCategory>();
 	
 
 	public ConsultBundle() {
 		setTitle("Consulta de Paquetes de actividades turisticas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1200, 406);
+		setBounds(100, 100, 1192, 517);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,7 +80,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 		
 		//lista paquetes
 		touristicBundleList = new ListTouristicBundle();
-		touristicBundleList.setBounds(12, 42, 200, 312);
+		touristicBundleList.setBounds(12, 42, 200, 433);
 		touristicBundleList.setListener(this);
 		contentPane.add(touristicBundleList);
 		
@@ -83,7 +90,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 		bundleData.setBounds(224, 42, 391, 312);
 		contentPane.add(bundleData);
 		scrollPaneActivities = new JScrollPane();
-		scrollPaneActivities.setBounds(640, 41, 144, 313);
+		scrollPaneActivities.setBounds(640, 41, 144, 434);
 		contentPane.add(scrollPaneActivities);
 		listBundleActivities = new JList();
 		listBundleActivities.addListSelectionListener(new ListSelectionListener() {
@@ -103,11 +110,22 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 				IController ctrl = ControllerFactory.getIController();
 				activityPanel = new ShowActivityData(ctrl.getTouristicActivityData(id));
 				contentPane.add(activityPanel);
-				activityPanel.setBounds(800, 42, 391, 312);
+				activityPanel.setBounds(800, 42, 391, 350);
 				activityPanel.setVisible(true);
 			}
 		});
 		scrollPaneActivities.setViewportView(listBundleActivities);
+		
+		lblCategories = new JLabel("Categorias:");
+		lblCategories.setBounds(230, 366, 110, 15);
+		contentPane.add(lblCategories);
+		
+		scrollPaneCategories = new JScrollPane();
+		scrollPaneCategories.setBounds(376, 366, 207, 109);
+		contentPane.add(scrollPaneCategories);
+		
+		listCategories = new JList();
+		scrollPaneCategories.setViewportView(listCategories);
 		
 	}
 
@@ -144,7 +162,24 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 		bundleData.setData(dtBundle);
 		
 		activities = dtBundle.getActivities();
+		
+		
+		 //null pointer exception aca.
+		DefaultListModel listModel = new DefaultListModel();
+		
+		for(int i = 0; i < activities.size(); i++) {
+			this.categories = activities.get(i).getCategories(); // obtengo lista de categorias de las actividades.		
+		}
+		
+		for (int i = 0; i < this.categories.size(); i++) { //recorro categorias y las añado al jList
 			
+			if(!listModel.contains(this.categories.get(i).getName())) { //evito repeticion de categorias.
+				listModel.add(i, this.categories.get(i).getName());				
+				listCategories.setModel(listModel);
+			}
+		}
+		
+		
 		if(!dtBundle.getActivities().isEmpty()) {
 	
 			//obtengo nombre de las actividades del paquete..

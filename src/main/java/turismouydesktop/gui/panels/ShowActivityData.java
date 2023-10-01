@@ -2,11 +2,17 @@ package turismouydesktop.gui.panels;
 
 import javax.swing.JPanel;
 
+import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import javax.swing.JTextPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
 
 public class ShowActivityData extends JPanel {
 	
@@ -17,6 +23,8 @@ public class ShowActivityData extends JPanel {
 	JLabel lblDepartment = new JLabel();
 	JLabel lblCity = new JLabel();	
 	JLabel lblUpload = new JLabel();
+	private JLabel lblCategories = new JLabel("Categorias:");
+	private List<DtCategory> categories;
 	/**
 	 * Create the panel.
 	 */
@@ -84,6 +92,28 @@ public class ShowActivityData extends JPanel {
 		lblUpload.setBounds(125, 183, 220, 15);
 		add(lblUpload);
 		
+		/********************************************************/		
+		lblCategories.setBounds(36, 210, 87, 15);
+		add(lblCategories);
+		
+		JScrollPane scrollPaneCategories = new JScrollPane();
+		scrollPaneCategories.setBounds(135, 210, 163, 137);
+		add(scrollPaneCategories);
+
+		JList listCategories = new JList();
+		scrollPaneCategories.setViewportView(listCategories);		
+		
+		categories = DTA.getCategories();
+		
+		DefaultListModel listModel = new DefaultListModel();
+		
+		for (int i = 0; i < categories.size(); i++) {
+			
+			listModel.add(i, categories.get(i).getName());
+		}
+		listCategories.setModel(listModel);
+		
+		/********************************************************/	
 	}
 	
 	public void setValues(DtTouristicActivity DTA) {

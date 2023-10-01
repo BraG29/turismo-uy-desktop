@@ -1,24 +1,19 @@
 package turismouydesktop.gui.panels;
-import java.time.LocalDate;
+
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.AbstractListModel;
-import javax.swing.JComboBox;
+
 import javax.swing.JTextField;
 
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
+
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
-import uy.turismo.servidorcentral.logic.entities.TouristicActivity;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JList;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+
 
 public class ShowBundleData extends JPanel {
 	private JTextField textFieldName;
@@ -89,6 +84,7 @@ public class ShowBundleData extends JPanel {
 		textFieldDate.setColumns(10);
 		textFieldDate.setEditable(false);
 		
+
 	}
 	
 	public void setData(DtTouristicBundle bundle) {
