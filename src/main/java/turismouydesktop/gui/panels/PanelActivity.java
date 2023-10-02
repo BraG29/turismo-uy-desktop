@@ -68,7 +68,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		jListProvider.setListener(this);
 		
 		//----------------------------------codigo agregado : LT
-		jListCategory = new ListCategory();
+		jListCategory = new ListCategory(true);
 		jListCategory.setBounds(437, 61, 189, 286);
 		add(jListCategory);
 		jListCategory.setListener(this);

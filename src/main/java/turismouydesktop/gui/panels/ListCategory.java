@@ -26,7 +26,7 @@ public class ListCategory extends JPanel {
 	private Object lastSelected;
 	
 	
-	public ListCategory() {
+	public ListCategory(boolean selectionMode) {
 		IController controller = ControllerFactory.getIController();
 		lastSelected = null;
 		setLayout(null);
@@ -34,7 +34,14 @@ public class ListCategory extends JPanel {
 		
 		
 		jListCategory = new JList<String>();
-		jListCategory.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		
+		if(selectionMode == false) {
+			jListCategory.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		}else {
+			jListCategory.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);			
+		}
+		
 		jListCategory.setBounds(52, 48, 123, 142);
 		
 		JScrollPane listScrollPane = new JScrollPane(jListCategory);
