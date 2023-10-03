@@ -6,11 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import turismouydesktop.gui.panels.ListCategory;
+import turismouydesktop.gui.panels.ListCategoryListener;
 import turismouydesktop.gui.panels.ListDepartment;
 import turismouydesktop.gui.panels.ListDepartmentListener;
 import turismouydesktop.gui.panels.ShowDepartureData;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
@@ -30,30 +33,29 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JComboBox;
 
-public class ConsultDeparture extends JFrame implements ListDepartmentListener{
+public class ConsultDeparture extends JFrame implements ListDepartmentListener, ListCategoryListener{
 
 	private JPanel contentPane;
 	private ShowDepartureData departureDataPanel;
 	
 	private ListDepartment departmentsList; //panel
-	private JList listDepartmentsActivities;
+	private ListCategory categoriesList;
+	private JList listActivities;
 	
 	private List<DtTouristicActivity> activities;
 	private List<DtTouristicDeparture> departures;
-	
+	private List<DtCategory> categories;
 	private JComboBox comboBoxDepartures;
 	
 	private String[] emptySet = {"-"};
 	
-	
-
 	/**
 	 * Create the frame.
 	 */
 	public ConsultDeparture() {
 		setTitle("Consulta Salida Turistica");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 626, 335);
+		setBounds(100, 100, 577, 488);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -61,32 +63,37 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener{
 		contentPane.setLayout(null);
 		
 		departureDataPanel = new ShowDepartureData();
-		departureDataPanel.setBounds(264, 69, 300, 224);
+		departureDataPanel.setBounds(248, 265, 300, 180);
 		contentPane.add(departureDataPanel);
 		
 		departmentsList = new ListDepartment();
-		departmentsList.setBounds(12, 45, 182, 113);
+		departmentsList.setBounds(12, 45, 182, 150);
 		contentPane.add(departmentsList);
 		departmentsList.setListener(this);
 		
+		categoriesList = new ListCategory(false);
+		categoriesList.setBounds(266, 50, 203, 145);
+		contentPane.add(categoriesList);
+		categoriesList.setListener(this);
+
 		
-		JLabel lblDepartamentos = new JLabel("Departamentos:");
-		lblDepartamentos.setBounds(12, 12, 117, 15);
-		contentPane.add(lblDepartamentos);
+		JLabel lblDepartments = new JLabel("Departamentos:");
+		lblDepartments.setBounds(29, 25, 117, 15);
+		contentPane.add(lblDepartments);
 		
-		JLabel lblActividadesDeDepartamento = new JLabel("Actividades de departamento:");
-		lblActividadesDeDepartamento.setBounds(12, 170, 221, 15);
-		contentPane.add(lblActividadesDeDepartamento);
+		JLabel lblActivities = new JLabel("Actividades:");
+		lblActivities.setBounds(12, 207, 221, 15);
+		contentPane.add(lblActivities);
 		
 		JScrollPane scrollPaneActDep = new JScrollPane();
-		scrollPaneActDep.setBounds(12, 197, 208, 99);
+		scrollPaneActDep.setBounds(12, 236, 182, 211);
 		contentPane.add(scrollPaneActDep);
 		
-		listDepartmentsActivities = new JList();
-		listDepartmentsActivities.addListSelectionListener(new ListSelectionListener() {
+		listActivities = new JList();
+		listActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 							
-				String selectedActivity = (String) listDepartmentsActivities.getSelectedValue();
+				String selectedActivity = (String) listActivities.getSelectedValue();
 				
 				Long activityId = activities
 						.stream()
@@ -101,7 +108,7 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener{
 				
 			}
 		});
-		scrollPaneActDep.setViewportView(listDepartmentsActivities);
+		scrollPaneActDep.setViewportView(listActivities);
 		
 		comboBoxDepartures = new JComboBox();
 		comboBoxDepartures.addActionListener(new ActionListener() {
@@ -124,9 +131,25 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener{
 				}
 			}
 		});
-		comboBoxDepartures.setBounds(343, 23, 215, 24);
+		comboBoxDepartures.setBounds(323, 202, 215, 24);
 		comboBoxDepartures.setModel(new DefaultComboBoxModel(emptySet));
 		contentPane.add(comboBoxDepartures);
+		
+		JLabel lblDepartureData = new JLabel("Datos de salida:");
+		lblDepartureData.setBounds(341, 238, 146, 15);
+		contentPane.add(lblDepartureData);
+		
+		JLabel lblDepartures = new JLabel("Salidas:");
+		lblDepartures.setBounds(248, 207, 70, 15);
+		contentPane.add(lblDepartures);
+		
+		JLabel lblOption = new JLabel("Seleccione departamento o categoría:");
+		lblOption.setBounds(137, 0, 300, 15);
+		contentPane.add(lblOption);
+		
+		JLabel lblCategories = new JLabel("Categorias:");
+		lblCategories.setBounds(295, 25, 117, 15);
+		contentPane.add(lblCategories);
 		
 	}
 	
@@ -168,7 +191,7 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener{
 					.toArray(new String[0]);
 			
 			
-			listDepartmentsActivities.setModel(new AbstractListModel() {
+			listActivities.setModel(new AbstractListModel() {
 				String[] values = departmentsActivities;
 
 				public int getSize() {
@@ -181,5 +204,34 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener{
 			});
 		}
 		
+	}
+
+	@Override
+	public void onListCategorySelected(DtCategory categoriesSelected) {
+		activities = categoriesSelected.getActivities();
+	
+		if(!categoriesSelected.getActivities().isEmpty()) {
+					
+					//obtengo nombre de las actividades de las categorias.
+					String [] categoriesActivities = categoriesSelected
+							.getActivities()
+							.stream()
+							.map(DtTouristicActivity::getName)
+							.collect(Collectors.toList())
+							.toArray(new String[0]);
+				
+					listActivities.setModel(new AbstractListModel() {
+						String[] values = categoriesActivities;
+		
+						public int getSize() {
+							return values.length;
+						}
+		
+						public Object getElementAt(int index) {
+							return values[index];
+						}
+					});
+				}
+
 	}
 }
