@@ -60,8 +60,17 @@ public class CreateBundle extends JFrame {
 					Double disc = insertBundleData.getDiscount();
 					Integer days = insertBundleData.getValidityBundle();
 					LocalDate creationDate = insertBundleData.getCreationDate();
-					
-					DtTouristicBundle touristicbundle = new DtTouristicBundle(null, name, desc, days, disc , creationDate, null);	
+					//meti null en activities y categories
+					DtTouristicBundle touristicbundle = new DtTouristicBundle(
+							null,
+							name,
+							desc,
+							days,
+							disc,
+							creationDate,
+							null,
+							null,
+							null);	
 					controller.registerTouristicBundle(touristicbundle);
 					
 				    window = new PopUpWindow("Éxito", "El Paquete fue dado de alta con éxito.", Color.GREEN);

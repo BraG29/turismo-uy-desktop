@@ -110,6 +110,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		lblTouristicBundle.setBounds(450, 290, 153, 15);
 		getContentPane().add(lblTouristicBundle);
 		lblTouristicBundle.setVisible(false);
+
 		
 		lblTouristicDepartures.setBounds(650, 290, 153, 15);
 		getContentPane().add(lblTouristicDepartures);
@@ -175,6 +176,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
 		
+
 		activities = department.getActivities();
 		
 		//creo los Array de String.
@@ -191,7 +193,9 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		
 		scrollPaneActivities.setVisible(true);
 		listActivities.setVisible(true);
+		
 		lblActivityToChoose.setVisible(true);
+
 		bundleVentana.setVisible(false);
 		departureVentana.setVisible(false);
 		

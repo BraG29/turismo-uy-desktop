@@ -33,17 +33,14 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 
 	private JPanel contentPane;
 
-	
 	private ListTouristicBundle touristicBundleList;
 	private ListDepartment departmentsList;
-	
 	
 	private JLabel lblTouristicBundles;
 	private JLabel lblDepartments;
 	private JLabel lblBundleActivities;
 	private JLabel lblDepartmentActivities;
 
-	
 	private JScrollPane scrollPaneDeptActivities;
 	private JList departmentActivities;
 	private JList bundleActivities; //jlist 
@@ -54,7 +51,6 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	private Long bundleId;
 	private Long activityId;
 	
-	
 	private PopUpWindow msgWindow;
 
 
@@ -64,6 +60,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	public AddActivityToBundle() {
 		setTitle("Agregar Paquete Turistico");
 		
+		//llamo al controlador
 		IController controller = ControllerFactory.getIController();
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -74,14 +71,17 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//asigno la lista de paquetes
 		touristicBundleList = new ListTouristicBundle();
 		touristicBundleList.setBounds(12, 42, 183, 92);
 		touristicBundleList.setListener(this);
 		contentPane.add(touristicBundleList);
 		
+		//añado la lista a un ScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 185, 183, 99);
 		contentPane.add(scrollPane);
+		
 		
 		bundleActivities = new JList();
 		bundleActivities.addListSelectionListener(new ListSelectionListener() {
@@ -107,10 +107,9 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		
 		
 		/*********Department*************/
-		
-		
 		departmentsList = new ListDepartment(223, 92);
 		departmentsList.setBounds(242, 42, 223, 92);
+		
 		departmentsList.setListener(this);
 		contentPane.add(departmentsList);
 		
@@ -128,6 +127,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		scrollPaneDeptActivities.setBounds(242, 185, 223, 99);
 		contentPane.add(scrollPaneDeptActivities);
 		
+		//creo la lista de Actividades de Departamento
 		departmentActivities = new JList();
 		departmentActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -149,6 +149,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					//porqué diferente?
 					if(!checkRepeatedActivity()) {
 						throw new IllegalArgumentException("Esa Actividad ya esta en el Paquete");
 					}

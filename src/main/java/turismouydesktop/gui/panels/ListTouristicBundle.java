@@ -1,6 +1,7 @@
 package turismouydesktop.gui.panels;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,72 @@ public class ListTouristicBundle extends JPanel {
 		add(listScrollPane);
 		
 		List<DtTouristicBundle> listBundles = controller.getListTouristicBundle();
+		
+		String[] bundlesName = listBundles.stream()
+                .map(DtTouristicBundle::getName)
+                .collect(Collectors.toList())
+                .toArray(new String[0]);
+		
+		listBundlesJList.setModel(new AbstractListModel() {
+			String[] values = bundlesName;
+
+			public int getSize() {
+				return values.length;
+			}
+
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		
+		listBundlesJList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				
+				String bundleName = (String) listBundlesJList.getSelectedValue();
+				if (listener != null && bundleName != null) {
+				
+					Long id = listBundles
+							.stream()
+							.filter(bundle -> bundle.getName().equalsIgnoreCase(bundleName))
+							.findFirst()
+							.get()
+							.getId();
+					
+					DtTouristicBundle BundleDt= controller.getTouristicBundleData(id);				
+					listener.onListTouristicBundleDt(BundleDt);
+					listener.onListTouristicBundle(id);
+					
+				}
+			}
+		});
+		
+	}
+	
+	public ListTouristicBundle(Boolean bool) {
+		IController controller = ControllerFactory.getIController();
+		
+		setLayout(null);
+	
+		listBundlesJList = new JList<String>();
+		listBundlesJList.setToolTipText("");
+		listBundlesJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		
+		JScrollPane listScrollPane = new JScrollPane(listBundlesJList);
+		listScrollPane.setBounds(12, 12, 202, 276);
+		add(listScrollPane);
+		
+		List<DtTouristicBundle> listBundles = controller.getListTouristicBundle();
+		List<DtTouristicBundle> listVirginBundles = new ArrayList<DtTouristicBundle>();
+		
+		for(DtTouristicBundle bundle : listBundles) {
+			//busco el DtBundle completo del bundle donde estoy parado, y pregunto si tiene actividades
+			if(controller.getTouristicBundleData(bundle.getId()).getActivities().isEmpty()) {
+				//aca debería conseguir los bundles sin compras
+			}
+			
+		}
+		
+		
 		
 		String[] bundlesName = listBundles.stream()
                 .map(DtTouristicBundle::getName)

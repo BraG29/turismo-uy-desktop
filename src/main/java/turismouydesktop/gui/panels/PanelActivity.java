@@ -28,6 +28,7 @@ import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
+import uy.turismos.servidorcentral.logic.enums.ActivityState;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -40,7 +41,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	private ListDepartment jListDepartment;
 	private ListProvider jListProvider;
 	private ListCategory jListCategory;
-//  private ListCategory jListCategory
+	//private ListCategory jListCategory
 	// atributos de la Actividad Turística
 	private String TAName = null;
 	private String TADescription = null;
@@ -154,19 +155,23 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 					TACostPerTourist = (Double) spinnerCost.getValue();
 					TACity = txtCity.getText();
 					TAUploadDate = LocalDate.now();
-					
+					ActivityState TAstate = ActivityState.ADDED;
+					//null con las imagenes por ahora
 					DtTouristicActivity DTA = new DtTouristicActivity(
 												null, 
 												TAName, 
 												TADescription, 
 												TADuration,
 												TACostPerTourist, 
-												TACity, 
+												TACity,
+												null,
+												TAstate,
 												TAUploadDate, 
 												TAProvider, 
 												TADepartment, 
 												null,
-												null,categories);
+												null,
+												categories);
 					checkEmptyValues(DTA);
 					
 					IController controller = ControllerFactory.getIController();
