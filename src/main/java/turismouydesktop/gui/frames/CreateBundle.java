@@ -60,6 +60,7 @@ public class CreateBundle extends JFrame {
 					Double disc = insertBundleData.getDiscount();
 					Integer days = insertBundleData.getValidityBundle();
 					LocalDate creationDate = insertBundleData.getCreationDate();
+					
 					//meti null en activities y categories
 					DtTouristicBundle touristicbundle = new DtTouristicBundle(
 							null,

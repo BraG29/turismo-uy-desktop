@@ -5,6 +5,7 @@ turismouydesktop/gui/panels/ListTourist.class
 turismouydesktop/gui/panels/ListDepartmentListener.class
 turismouydesktop/gui/panels/ListProvider$2.class
 turismouydesktop/gui/panels/ListActivities.class
+turismouydesktop/gui/panels/UserDataManagment$2.class
 turismouydesktop/gui/frames/RegisterDepartment$1.class
 turismouydesktop/gui/frames/MainMenu$4.class
 turismouydesktop/gui/panels/ListDepartment$1.class
@@ -18,6 +19,7 @@ turismouydesktop/gui/frames/ConsultBundle$2.class
 turismouydesktop/gui/panels/PanelActivity.class
 turismouydesktop/gui/frames/AddActivityToBundle$3.class
 turismouydesktop/gui/frames/RegisterInscription.class
+turismouydesktop/gui/frames/RegisterUser$2.class
 turismouydesktop/gui/panels/ListDeparture$1.class
 turismouydesktop/gui/frames/CreateDeparture$1.class
 turismouydesktop/gui/frames/CreateBundle$1.class
@@ -27,6 +29,7 @@ turismouydesktop/gui/panels/ListTouristicBundle.class
 turismouydesktop/gui/panels/InsertBundleData$4.class
 turismouydesktop/gui/frames/UpdateUser.class
 turismouydesktop/gui/frames/RegisterInscription$1.class
+turismouydesktop/gui/frames/RegisterUser$1.class
 turismouydesktop/gui/frames/MainMenu$6.class
 turismouydesktop/gui/panels/InsertBundleData.class
 turismouydesktop/gui/panels/UserDataManagment.class
@@ -44,8 +47,6 @@ turismouydesktop/gui/panels/ListDepartment.class
 turismouydesktop/gui/frames/CreateBundle.class
 turismouydesktop/gui/frames/MainMenu$10.class
 turismouydesktop/gui/panels/ListProvider$1.class
-turismouydesktop/gui/panels/ForWhat.class
-turismouydesktop/gui/panels/RegisterUser$2.class
 turismouydesktop/gui/panels/InsertDepartureData$3.class
 turismouydesktop/gui/panels/UserDataManagment$1.class
 turismouydesktop/gui/panels/DepartmentDataManagment.class
@@ -54,8 +55,10 @@ turismouydesktop/gui/frames/CreateDeparture.class
 turismouydesktop/gui/panels/ListUser$1.class
 turismouydesktop/gui/frames/ConsultActivity$2.class
 turismouydesktop/gui/frames/MainMenu$8.class
+turismouydesktop/gui/frames/RegisterUser.class
 turismouydesktop/gui/frames/AddActivityToBundle$2.class
 turismouydesktop/gui/panels/ListDepartment$2.class
+turismouydesktop/gui/frames/FileChooserImage$2.class
 turismouydesktop/gui/frames/RegisterDepartment.class
 turismouydesktop/gui/frames/ConsultActivity.class
 turismouydesktop/gui/panels/ListTouristicBundle$1.class
@@ -67,7 +70,6 @@ turismouydesktop/gui/panels/ListActivityListener.class
 turismouydesktop/gui/panels/ListUserListener.class
 turismouydesktop/gui/panels/ListDeparture$2.class
 turismouydesktop/gui/panels/PanelConsultActivity.class
-turismouydesktop/gui/panels/RegisterUser$1.class
 turismouydesktop/gui/panels/ListTouristicBundle$4.class
 turismouydesktop/gui/frames/CreateBundle$2.class
 turismouydesktop/gui/frames/MainMenu$2.class
@@ -76,6 +78,7 @@ turismouydesktop/gui/panels/ListUser.class
 turismouydesktop/gui/panels/InsertDepartureData$1.class
 turismouydesktop/gui/frames/ConsultUser$3.class
 turismouydesktop/gui/frames/ConsultDeparture$1.class
+turismouydesktop/gui/frames/FileChooserImageListener.class
 turismouydesktop/gui/panels/ListDepartureListener.class
 turismouydesktop/gui/frames/RegisterTouristicActivity.class
 turismouydesktop/gui/panels/InsertBundleData$3.class
@@ -83,16 +86,17 @@ turismouydesktop/gui/frames/MainMenu$12.class
 turismouydesktop/gui/panels/ListDeparture.class
 turismouydesktop/gui/panels/PanelActivity$1.class
 turismouydesktop/gui/frames/MainMenu$5.class
+turismouydesktop/gui/frames/FileChooserImage.class
 turismouydesktop/gui/panels/ListTourist$2.class
 turismouydesktop/gui/panels/ListTouristicBundleListener.class
 turismouydesktop/gui/frames/MainMenu$3.class
 turismouydesktop/gui/frames/AddActivityToBundle$4.class
-turismouydesktop/gui/panels/RegisterUser.class
 turismouydesktop/gui/panels/ListTouristicBundle$2.class
 turismouydesktop/gui/frames/ConsultDeparture$2.class
 turismouydesktop/gui/frames/PopUpWindow$1.class
 turismouydesktop/gui/frames/ConsultUser$1.class
 turismouydesktop/gui/frames/MainMenu$9.class
+turismouydesktop/gui/frames/FileChooserImage$1.class
 turismouydesktop/gui/frames/ConsultActivity$1.class
 turismouydesktop/gui/panels/ListTourist$1.class
 turismouydesktop/gui/panels/ShowBundleData.class
@@ -100,6 +104,7 @@ turismouydesktop/gui/frames/CreateDeparture$2.class
 turismouydesktop/gui/frames/ConsultUser$2.class
 turismouydesktop/gui/panels/ListTouristListener.class
 turismouydesktop/gui/frames/AddActivityToBundle.class
+turismouydesktop/gui/panels/UserDataManagment$ForWhat.class
 turismouydesktop/gui/panels/InsertBundleData$1.class
 turismouydesktop/gui/panels/ListProviderListener.class
 turismouydesktop/gui/frames/ConsultDeparture$3.class

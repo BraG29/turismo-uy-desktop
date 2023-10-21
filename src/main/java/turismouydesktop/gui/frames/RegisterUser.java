@@ -35,7 +35,7 @@ public class RegisterUser extends JFrame {
 	public RegisterUser() {
 		setTitle("Registrar Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 334, 386);
+		setBounds(100, 100, 545, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -44,7 +44,7 @@ public class RegisterUser extends JFrame {
 		
 		userDataPanel = new UserDataManagment();
 		userDataPanel.enableToEditForRegister();
-		userDataPanel.setBounds(0, 45, 315, 270);
+		userDataPanel.setBounds(0, 45, 531, 270);
 		
 		contentPane.add(userDataPanel);
 		
@@ -106,16 +106,18 @@ public class RegisterUser extends JFrame {
 					title = "Error";
 					message = exception.getMessage();
 					color = Color.RED;
+					
+					System.err.println("Error en RegisterPanel: " + message);
 				}
 
 				PopUpWindow msgWindows = new PopUpWindow(
 					title,
 					message,
 					color);
-		
+	
 				msgWindows.setVisible(true);
-				
-				
+			
+			
 			}
 		});
 		btnConfirm.setBounds(195, 327, 117, 25);

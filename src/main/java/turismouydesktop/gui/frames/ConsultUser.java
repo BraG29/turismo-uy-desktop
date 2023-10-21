@@ -58,7 +58,7 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		setTitle("Consulta Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//setBounds(100, 100, 870, 322);
-		setBounds(100, 100, 870, 322);
+		setBounds(100, 100, 1069, 322);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -66,17 +66,36 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		setContentPane(contentPane);
 		
 		userDataPanel = new UserDataManagment();
-		userDataPanel.setBounds(276, 12, 572, 270);
+		userDataPanel.setBounds(276, 12, 525, 270);
 		contentPane.add(userDataPanel);
 		
 		listActivityOrDeparture = new JList<String>();
 		
 		scrollPaneList = new JScrollPane(listActivityOrDeparture);
-		scrollPaneList.setBounds(320, 12, 240, 201);
-		userDataPanel.add(scrollPaneList);
+		scrollPaneList.setBounds(813, 12, 240, 201);
+		getContentPane().add(scrollPaneList);
+
 		JButton btnShowActivityOrDepartureData = new JButton("Mostrar Datos");
-		btnShowActivityOrDepartureData.setBounds(366, 233, 143, 25);
-		userDataPanel.add(btnShowActivityOrDepartureData);
+		btnShowActivityOrDepartureData.setBounds(864, 225, 143, 25);
+		contentPane.add(btnShowActivityOrDepartureData);
+		
+		listActivityOrDeparture.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(listActivityOrDeparture.getSelectedValue() != null) {
+					btnShowActivityOrDepartureData.setEnabled(true);
+					btnShowActivityOrDepartureData.setToolTipText(null);
+				}
+			}
+		});
+		
+		listUser = new ListUser();
+		listUser.setBounds(0,  0, 264, 282);
+		listUser.setListener(this);
+		contentPane.add(listUser);
+		
+		lblActivityOrDeparture = new JLabel("");
+		lblActivityOrDeparture.setBounds(594, 12, 240, 15);
+		contentPane.add(lblActivityOrDeparture);
 		btnShowActivityOrDepartureData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Guardo el Nombre seleccionado
@@ -115,24 +134,6 @@ public class ConsultUser extends JFrame implements ListUserListener {
 		});
 		btnShowActivityOrDepartureData.setEnabled(false);
 		btnShowActivityOrDepartureData.setToolTipText("Elija un elemento de la lista");
-		
-		listActivityOrDeparture.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent e) {
-				if(listActivityOrDeparture.getSelectedValue() != null) {
-					btnShowActivityOrDepartureData.setEnabled(true);
-					btnShowActivityOrDepartureData.setToolTipText(null);
-				}
-			}
-		});
-		
-		listUser = new ListUser();
-		listUser.setBounds(0,  0, 264, 282);
-		listUser.setListener(this);
-		contentPane.add(listUser);
-		
-		lblActivityOrDeparture = new JLabel("");
-		lblActivityOrDeparture.setBounds(594, 12, 240, 15);
-		contentPane.add(lblActivityOrDeparture);
 		
 
 	}

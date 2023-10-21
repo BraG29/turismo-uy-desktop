@@ -1,5 +1,6 @@
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDepartment.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDeparture.java
+/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/FileChooserImage.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListDepartmentListener.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/RegisterTouristicActivity.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListUserListener.java
@@ -9,7 +10,7 @@
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListProvider.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/ConsultActivity.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListTourist.java
-/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/RegisterUser.java
+/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/RegisterUser.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/CreateDeparture.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListUser.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ListTouristListener.java
@@ -27,6 +28,7 @@
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/DepartmentDataManagment.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/RegisterInscription.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/InsertBundleData.java
+/home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/FileChooserImageListener.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/ConsultBundle.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/frames/PopUpWindow.java
 /home/prog-app/eclipse-workspace/turismo-uy-desktop/src/main/java/turismouydesktop/gui/panels/ShowActivityData.java

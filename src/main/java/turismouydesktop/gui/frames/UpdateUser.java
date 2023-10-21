@@ -33,7 +33,7 @@ public class UpdateUser extends JFrame implements ListUserListener {
 	public UpdateUser() {
 		setTitle("Modificar usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 619, 336);
+		setBounds(100, 100, 816, 336);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -47,7 +47,7 @@ public class UpdateUser extends JFrame implements ListUserListener {
 		contentPane.add(userListPanel);
 		
 		userDataPanel = new UserDataManagment();
-		userDataPanel.setBounds(276, 0, 321, 271);
+		userDataPanel.setBounds(276, 0, 528, 271);
 		userDataPanel.enableToEditForUpdate();
 		
 		contentPane.add(userDataPanel);

@@ -1,12 +1,18 @@
 package turismouydesktop.gui.panels;
 
 import javax.swing.JPanel;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -25,21 +31,35 @@ import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.DataBufferInt;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.toedter.calendar.JDateChooser;
 
+import turismouydesktop.gui.frames.FileChooserImage;
+import turismouydesktop.gui.frames.FileChooserImageListener;
+
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.SwingConstants;
 
 
-public class UserDataManagment extends JPanel {
+public class UserDataManagment extends JPanel implements FileChooserImageListener {
 	
 	public 	enum ForWhat{
 		REGISTER,
 		UPDATE
 	}
 
+	private FileChooserImage fileChooserImage;
+	
 	private DtUser userData;
 	
 	private JTextArea textAreaNickname;
@@ -50,6 +70,10 @@ public class UserDataManagment extends JPanel {
 	private JTextArea textAreaBirthDate;
 
 	private JDateChooser dateChooserBirthDate;
+	
+	private JLabel lblImage;
+	
+	JButton btnDisplayFileChooser;
 
 	// Para Proveedor:
 
@@ -64,6 +88,8 @@ public class UserDataManagment extends JPanel {
 	// Para Turist:
 	JLabel lblNacionality;
 	private JTextArea textAreaNacionality;
+
+	private BufferedImage selectedImage;
 
 	/**
 	 * Crea el panel para mostrar los datos de un usuario
@@ -169,7 +195,26 @@ public class UserDataManagment extends JPanel {
 		scrollPaneDescription.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneDescription.setBounds(108, 174, 179, 95);
 		add(scrollPaneDescription);
-
+		
+		lblImage = new JLabel("");
+		lblImage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImage.setBounds(305, 12, 200, 200);
+		add(lblImage);
+		
+		fileChooserImage = new FileChooserImage();
+		fileChooserImage.setListener(this);
+		
+		btnDisplayFileChooser = new JButton("");
+		btnDisplayFileChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileChooserImage.setVisible(true);
+			}
+		});
+		btnDisplayFileChooser.setBounds(315, 224, 190, 25);
+		btnDisplayFileChooser.setEnabled(false);
+//		add(btnSeleccionarImagen);
+		
+		
 		setProviderDataVisibilityFalse();
 		setTouristDataVisibilityFalse();
 
@@ -184,14 +229,17 @@ public class UserDataManagment extends JPanel {
 	 */
 	public void loadData(DtUser userData) throws Exception {
 		this.userData = userData;
+		selectedImage = null;
 
 		// Carga de datos generales:
-
+		
 		textAreaNickname.setText(userData.getNickname());
 		textAreaEmail.setText(userData.getEmail());
 		textAreaName.setText(userData.getName());
 		textAreaLastName.setText(userData.getLastName());
-
+		loadImage(userData.getImage());
+		
+		
 		if (dateChooserBirthDate.isEnabled()) {
 			Date birthDate = Date
 					.from(userData.getBirthDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -204,6 +252,7 @@ public class UserDataManagment extends JPanel {
 			// Saco la fecha ya formateada como se explico antes
 			String birthDateStr = userData.getBirthDate().format(format);
 			textAreaBirthDate.setText(birthDateStr);
+			
 		}
 
 		// Se Muestran datos extra de Proveedor
@@ -241,6 +290,43 @@ public class UserDataManagment extends JPanel {
 
 	}
 	
+	public BufferedImage scalateImage(BufferedImage baseImage) {
+		double scaleX = (double) 200 / baseImage.getWidth();
+		double scaleY = (double) 200 / baseImage.getHeight();
+		AffineTransform at = AffineTransform.getScaleInstance(scaleX, scaleY);
+		
+		// Crear una operación de transformación
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		
+		// Crear una nueva imagen escalada
+		BufferedImage scaletedImage = new BufferedImage(200, 200, baseImage.getType());
+		
+		// Aplicar la operación de transformación para escalar la imagen
+		Graphics2D g2d = scaletedImage.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.drawImage(baseImage, op, 0, 0);
+		g2d.dispose();
+		
+		return scaletedImage;
+		
+	}
+	
+	public void loadImage(BufferedImage imageForLoad){
+		ImageIcon image = null;
+		
+		if(imageForLoad != null) {
+			BufferedImage scaletedImage = scalateImage(imageForLoad);
+			image = new ImageIcon(scaletedImage);
+		}else {
+//			lblImage.setIcon(image);
+			lblImage.setText("No Image");
+			lblImage.setForeground(Color.RED);
+		}
+		lblImage.setIcon(image);
+			
+
+	}
+	
 	public void setTouristDataVisibilityTrue() {
 		lblNacionality.setVisible(true);
 		textAreaNacionality.setVisible(true);
@@ -272,10 +358,23 @@ public class UserDataManagment extends JPanel {
 
 	public void enableToEditForUpdate() {
 
+		btnDisplayFileChooser.setText("Cambiar Imagen");
+		
 		// General
 		textAreaName.setEditable(true);
 		textAreaLastName.setEditable(true);
 
+		Rectangle birthDateBounds = textAreaBirthDate.getBounds();
+		textAreaBirthDate.setEnabled(false);
+		remove(textAreaBirthDate);
+		
+		dateChooserBirthDate.setBounds(birthDateBounds);
+		dateChooserBirthDate.setEnabled(true);
+		add(dateChooserBirthDate);
+		
+		btnDisplayFileChooser.setEnabled(true);
+		add(btnDisplayFileChooser);
+		
 		// Para Proveedor:
 
 		textAreaWebSite.setEditable(true);
@@ -285,13 +384,6 @@ public class UserDataManagment extends JPanel {
 
 		textAreaNacionality.setEditable(true);
 
-		Rectangle birthDateBounds = textAreaBirthDate.getBounds();
-		textAreaBirthDate.setEnabled(false);
-		remove(textAreaBirthDate);
-
-		dateChooserBirthDate.setBounds(birthDateBounds);
-		dateChooserBirthDate.setEnabled(true);
-		add(dateChooserBirthDate);
 	}
 	
 	public void enableToEditForRegister() {
@@ -300,6 +392,7 @@ public class UserDataManagment extends JPanel {
 		textAreaEmail.setEditable(true);
 		
 		enableToEditForUpdate();
+		btnDisplayFileChooser.setText("Seleccionar Imagen");
 	}
 	
 
@@ -314,7 +407,7 @@ public class UserDataManagment extends JPanel {
 		if (userData instanceof DtProvider) {
 			userDataOutput = getProviderData(ForWhat.UPDATE);
 		} else if (userData instanceof DtTourist) {
-			userDataOutput = getTouristData(ForWhat.REGISTER);
+			userDataOutput = getTouristData(ForWhat.UPDATE);
 		}
 		
 		return userDataOutput;
@@ -345,6 +438,7 @@ public class UserDataManagment extends JPanel {
 				textAreaEmail.getText(),
 				textAreaLastName.getText(),
 				birthDate,
+				selectedImage,
 				textAreaNacionality.getText(),
 				null
 				);
@@ -379,6 +473,7 @@ public class UserDataManagment extends JPanel {
 				textAreaEmail.getText(),
 				textAreaLastName.getText(),
 				birthDate,
+				selectedImage,
 				textAreaWebSite.getText(),
 				textAreaDescription.getText(),
 				null
@@ -401,7 +496,8 @@ public class UserDataManagment extends JPanel {
 		if(
 			userData.getName().equalsIgnoreCase(textAreaName.getText()) &&
 			userData.getLastName().equalsIgnoreCase(textAreaLastName.getText()) &&
-			userData.getBirthDate().isEqual(birthDate)) {
+			userData.getBirthDate().isEqual(birthDate) && 
+			isSame(userData.getImage())) {
 			
 			if(userData instanceof DtProvider) {
 				DtProvider providerData = (DtProvider) userData;
@@ -421,11 +517,66 @@ public class UserDataManagment extends JPanel {
 				}
 			}
 			
-		
 		}
 		
 		return true;
 			
 	}
+	
+	/**
+	 * Compara dos imagenes de tipo BufferedImage y Icon, si son la misma devuelve true
+	 * @param bufferedImage
+	 * @param imageIcon
+	 * @return
+	 */
+	public Boolean isSame(BufferedImage userImage) {
+		if(selectedImage != null  && userImage != null) {
+			
+			if (userImage.getWidth() != selectedImage.getWidth() || userImage.getHeight() != userImage.getHeight()) {
+				return false;
+			}
+			
+			DataBufferByte dfByteUser = (DataBufferByte) userImage.getRaster().getDataBuffer();
+			DataBufferByte dfByteNew = (DataBufferByte) selectedImage.getRaster().getDataBuffer();
+			
+			// Convierte las imágenes en matrices de bytes
+			byte[] pixelsUser = dfByteUser.getData();
+			byte[] pixelsNew = dfByteNew.getData();
+			
+			// Compara los píxeles de ambas imágenes
+			for (int i = 0; i < pixelsUser.length; i++) {
+				if (pixelsUser[i] != pixelsNew[i]) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		if(selectedImage == null) {
+			return true;
+		}
+		
+		return false;
 
+
+		
+	}
+
+	@Override
+	public void onImageSelected(File image) {
+//		System.out.println("Path: " + image.getAbsolutePath()
+//				+ "\nNombre: " + image.getName());
+		try {
+			selectedImage = ImageIO.read(image);
+		
+			
+		} catch (Exception e) {
+			loadImage(selectedImage);
+			System.out.println("Error: " + e.getMessage());
+		}
+		loadImage(selectedImage);
+		
+		
+	}
 }
