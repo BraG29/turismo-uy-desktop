@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import turismouydesktop.gui.frames.ConsultUser;
 import turismouydesktop.gui.frames.RegisterTouristicActivity;
 import turismouydesktop.gui.frames.ConsultActivity;
+import javax.swing.SwingConstants;
 
 public class MainMenu extends JFrame {
 
@@ -192,7 +193,7 @@ public class MainMenu extends JFrame {
 		lblNewLabel_4.setBounds(12, 281, 172, 15);
 		contentPane.add(lblNewLabel_4);
 		
-		JButton btnRegisterDepartment = new JButton("Declarar independencia de nuevo departamento");
+		JButton btnRegisterDepartment = new JButton("Declarar independencia");
 		btnRegisterDepartment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RegisterDepartment registerDepartmentGUI = new RegisterDepartment();
@@ -200,7 +201,21 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnRegisterDepartment.setBounds(22, 302, 427, 25);
+		btnRegisterDepartment.setBounds(22, 302, 182, 25);
 		contentPane.add(btnRegisterDepartment);
+		
+		JButton btnCreateCategory = new JButton("Alta Categoria");
+		btnCreateCategory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RegisterCategory registerCategoriGUI = new RegisterCategory();
+				registerCategoriGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		btnCreateCategory.setBounds(239, 106, 210, 25);
+		contentPane.add(btnCreateCategory);
+		
+		JButton btnAcceptDeparture = new JButton("Aceptar/Rechazar Salida");
+		btnAcceptDeparture.setBounds(239, 281, 210, 25);
+		contentPane.add(btnAcceptDeparture);
 	}
 }

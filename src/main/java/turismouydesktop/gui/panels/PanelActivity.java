@@ -3,11 +3,15 @@ package turismouydesktop.gui.panels;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.SystemColor;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +25,8 @@ import javax.swing.JScrollPane;
 
 import com.toedter.calendar.JCalendar;
 
+import turismouydesktop.gui.frames.FileChooserImage;
+import turismouydesktop.gui.frames.FileChooserImageListener;
 import turismouydesktop.gui.frames.PopUpWindow;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
@@ -31,9 +37,16 @@ import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismos.servidorcentral.logic.enums.ActivityState;
 
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import javax.swing.JFormattedTextField;
+import javax.swing.JScrollBar;
 
-public class PanelActivity extends JPanel implements ListDepartmentListener, ListProviderListener, ListCategoryListener {
+public class PanelActivity extends JPanel implements ListDepartmentListener, ListProviderListener, ListCategoryListener, FileChooserImageListener {
 	private JTextField txtNombre;
 	private JTextField txtCity;
 
@@ -52,25 +65,43 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	private DtProvider TAProvider = null;
 	private DtDepartment TADepartment = null;
 	private List<DtCategory> categories = new ArrayList<DtCategory>();
+	
+	private JLabel lblImage;
+	private FileChooserImage fileChooserImage;
+	private BufferedImage selectedImage;
+	
+	private PopUpWindow window;
+	
 	/**
 	 * Create the panel.
 	 */
 	public PanelActivity() {
 		setLayout(null);
-//----------------------------Inicialización de elementos Swing--------------------------------------------------------
+		
+		//----------------------------Inicialización de elementos Swing--------------------------------------------------------
+		// agregamos botón adelamte
+		JButton btnOk = new JButton("OK!");
+		btnOk.setBounds(12, 368, 96, 25);
+		add(btnOk);
+		
+		JButton btnAddImage = new JButton("Agregar Imagen");	
+		btnAddImage.setBounds(200, 368, 150, 25);
+		add(btnAddImage);
+		
+		btnOk.setBackground(new Color(60, 179, 113));
 		jListDepartment = new ListDepartment(180,100);
-		jListDepartment.setBounds(199, 243, 212, 130);
+		jListDepartment.setBounds(200, 263, 212, 130);
 		add(jListDepartment);
 		jListDepartment.setListener(this);
 
 		jListProvider = new ListProvider(180,100);
-		jListProvider.setBounds(12, 243, 212, 130);
+		jListProvider.setBounds(12, 263, 212, 130);
 		add(jListProvider);
 		jListProvider.setListener(this);
 		
 		//----------------------------------codigo agregado : LT
 		jListCategory = new ListCategory(true);
-		jListCategory.setBounds(437, 61, 189, 286);
+		jListCategory.setBounds(414, 216, 189, 286);
 		add(jListCategory);
 		jListCategory.setListener(this);
 		
@@ -79,7 +110,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		add(lblNombre);
 
 		JLabel lblDescripcion = new JLabel("Descripción:");
-		lblDescripcion.setBounds(12, 70, 87, 15);
+		lblDescripcion.setBounds(12, 151, 87, 15);
 		add(lblDescripcion);
 
 		txtNombre = new JTextField();
@@ -95,60 +126,69 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		add(lblAltaDeActividad);
 
 		JLabel lblDuration = new JLabel("Duración:");
-		lblDuration.setBounds(12, 127, 70, 15);
+		lblDuration.setBounds(12, 70, 70, 15);
 		add(lblDuration);
 
 		JSpinner spinnerDuration = new JSpinner();
 		spinnerDuration.setModel(new SpinnerNumberModel(Double.valueOf(0), Double.valueOf(0), null, Double.valueOf(1)));
-		spinnerDuration.setBounds(119, 125, 57, 20);
+		spinnerDuration.setBounds(119, 68, 57, 20);
 		add(spinnerDuration);
 
 		JLabel lblHrs = new JLabel("Hrs.");
-		lblHrs.setBounds(180, 129, 70, 15);
+		lblHrs.setBounds(180, 70, 70, 15);
 		add(lblHrs);
 
 		JLabel lblCostPerTourist = new JLabel("Costo/Turista:");
-		lblCostPerTourist.setBounds(12, 156, 100, 15);
+		lblCostPerTourist.setBounds(12, 94, 100, 15);
 		add(lblCostPerTourist);
 
 		JSpinner spinnerCost = new JSpinner();
 		spinnerCost.setModel(new SpinnerNumberModel(Double.valueOf(0), Double.valueOf(0), null, Double.valueOf(10)));
-		spinnerCost.setBounds(119, 154, 57, 20);
+		spinnerCost.setBounds(119, 92, 57, 20);
 		add(spinnerCost);
 
 		JLabel lblCost = new JLabel("$");
-		lblCost.setBounds(180, 156, 23, 15);
+		lblCost.setBounds(180, 94, 23, 15);
 		add(lblCost);
 
 		JTextArea txtAreaDescription = new JTextArea();
-		txtAreaDescription.setBounds(118, 70, 171, 45);
+		txtAreaDescription.setLineWrap(true);
+		txtAreaDescription.setBounds(117, 151, 171, 73);
 		add(txtAreaDescription);
 
 		JLabel lblCiudad = new JLabel("Ciudad:");
-		lblCiudad.setBounds(12, 183, 70, 15);
+		lblCiudad.setBounds(12, 121, 70, 15);
 		add(lblCiudad);
 
 		txtCity = new JTextField();
-		txtCity.setBounds(119, 181, 171, 19);
+		txtCity.setBounds(119, 119, 171, 19);
 		add(txtCity);
 		txtCity.setColumns(10);
 
 		JLabel lblSeleccioneProveedor = new JLabel("Seleccione Proveedor:");
-		lblSeleccioneProveedor.setBounds(13, 216, 171, 15);
+		lblSeleccioneProveedor.setBounds(12, 236, 171, 15);
 		add(lblSeleccioneProveedor);
 
 		JLabel lblSeleccionDepartamento = new JLabel("Seleccioné Departamento:");
-		lblSeleccionDepartamento.setBounds(189, 216, 195, 15);
+		lblSeleccionDepartamento.setBounds(200, 236, 195, 15);
 		add(lblSeleccionDepartamento);
-//----------------------------Inicialización de elementos Swing--------------------------------------------------------
-
-		// agregamos botón adelamte
-		JButton btnOk = new JButton("OK!");
-
+		
+		//codigo agregado : LT
+		JLabel lblSelectCategories = new JLabel("Seleccione categoria/s:");
+		lblSelectCategories.setBounds(437, 189, 189, 15);
+		add(lblSelectCategories);
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(437, 12, 150, 150);
+		add(lblImage);
+				
+		fileChooserImage = new FileChooserImage();
+		fileChooserImage.setListener(this);
+				
 		// cuando clickeo el botón:
 		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
+		public void actionPerformed(ActionEvent e2) {
+			try {
 					TAName = txtNombre.getText();
 					TADescription = txtAreaDescription.getText();
 					TADuration = (Double) spinnerDuration.getValue();
@@ -158,41 +198,43 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 					ActivityState TAstate = ActivityState.ADDED;
 					//null con las imagenes por ahora
 					DtTouristicActivity DTA = new DtTouristicActivity(
-												null, 
-												TAName, 
-												TADescription, 
-												TADuration,
-												TACostPerTourist, 
-												TACity,
-												null,
-												TAstate,
-												TAUploadDate, 
-												TAProvider, 
-												TADepartment, 
-												null,
-												null,
-												categories);
-					checkEmptyValues(DTA);
-					
-					IController controller = ControllerFactory.getIController();
-					controller.registeTouristicActivity(DTA);
-				} catch (Exception e2) {
-					// tirar ventana con exception
-					System.out.println(e2);
-					PopUpWindow ventanaError = new PopUpWindow("ERROR!",e2.toString(),Color.RED);
-					ventanaError.setVisible(true);
-				}
-
-			}
-		});
-		btnOk.setBounds(285, 146, 96, 25);
-		add(btnOk);
-		btnOk.setBackground(new Color(60, 179, 113));
+													null, 
+													TAName, 
+													TADescription, 
+													TADuration,
+													TACostPerTourist, 
+													TACity,
+													selectedImage,
+													TAstate,
+													TAUploadDate, 
+													TAProvider, 
+													TADepartment, 
+													null,
+													null,
+													categories);
+						checkEmptyValues(DTA);
+							
+						IController controller = ControllerFactory.getIController();
+						controller.registeTouristicActivity(DTA);
+						
+						window = new PopUpWindow("Éxito", "La Actividad fue dada de alta con éxito.", Color.GREEN);
+						window.setVisible(true);
+						
+					} catch (Exception e1) {
+						// tirar ventana con exception
+						System.out.println(e1);
+						window = new PopUpWindow("ERROR!",e1.getLocalizedMessage(),Color.RED);
+						window.setVisible(true);
+					}
 		
-		//codigo agregado : LT
-		JLabel lblSelectCategories = new JLabel("Seleccione categoria/s:");
-		lblSelectCategories.setBounds(437, 41, 189, 15);
-		add(lblSelectCategories);
+				}
+			});
+			btnAddImage.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					fileChooserImage.setVisible(true);
+				}
+			});
+//----------------------------Inicialización de elementos Swing--------------------------------------------------------
 	}
 
 	@Override
@@ -253,5 +295,55 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 		}
 		
 	}
-
+	
+	
+	public BufferedImage scalateImage(BufferedImage baseImage) {
+		double scaleX = (double) lblImage.getWidth() / baseImage.getWidth();
+		double scaleY = (double) lblImage.getHeight() / baseImage.getHeight();
+		AffineTransform at = AffineTransform.getScaleInstance(scaleX, scaleY);
+		
+		// Crear una operación de transformación
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		
+		// Crear una nueva imagen escalada
+		BufferedImage scaletedImage = new BufferedImage(200, 200, baseImage.getType());
+		
+		// Aplicar la operación de transformación para escalar la imagen
+		Graphics2D g2d = scaletedImage.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.drawImage(baseImage, op, 0, 0);
+		g2d.dispose();
+		return scaletedImage;
+	}
+	
+	public void loadImage(BufferedImage imageForLoad){
+		ImageIcon image = null;
+		
+		if(imageForLoad != null) {
+			BufferedImage scaletedImage = scalateImage(imageForLoad);
+			image = new ImageIcon(scaletedImage);
+		}else {
+//			lblImage.setIcon(image);
+			lblImage.setText("No Image");
+			lblImage.setForeground(Color.RED);
+		}
+		lblImage.setIcon(image);		
+	}
+	
+	@Override
+	public void onImageSelected(File image) {
+//		System.out.println("Path: " + image.getAbsolutePath()
+//				+ "\nNombre: " + image.getName());
+		try {
+			selectedImage = ImageIO.read(image);
+		
+			
+		} catch (Exception e) {
+			loadImage(selectedImage);
+			System.out.println("Error: " + e.getMessage());
+		}
+		loadImage(selectedImage);
+		
+		
+	}
 }

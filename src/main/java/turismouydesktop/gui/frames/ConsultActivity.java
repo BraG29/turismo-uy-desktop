@@ -134,7 +134,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 				
 				//controlo si es la primera vez que se llama showActivityVentana.
 				if(showActivityVentana == null) {
-					reDimensionWindow(400,250);
+					reDimensionWindow(550,250);
 					//cargo la lista de Bundles de la actividad
 					jListBundle.reLoadList(controller.getTouristicActivityData(activities.get(listActivities.getSelectedIndex()).getId()));
 					jListBundle.setBounds(450, 300, 140, 200);
@@ -204,7 +204,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 			showActivityVentana = null;
 			jListBundle.setVisible(false);
 			//jListBundle = null;
-			reDimensionWindow(-400,-250);
+			reDimensionWindow(-550,-250);
 			lblTouristicBundle.setVisible(false);
 			lblTouristicDepartures.setVisible(false);
 		}
@@ -234,7 +234,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		IController controller = ControllerFactory.getIController();
 
 		getContentPane().add(bundleVentana);
-		bundleVentana.setBounds(580,-25,400,300);
+		bundleVentana.setBounds(580,-25,550,300);
 		departureVentana.setVisible(false);
 		bundleVentana.setVisible(true);
 		bundleVentana.setData(controller.getTouristicBundleData(id));	
@@ -302,7 +302,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 			showActivityVentana = null;
 			jListBundle.setVisible(false);
 			//jListBundle = null;
-			reDimensionWindow(-400,-250);
+			reDimensionWindow(-550,-250);
 			lblTouristicBundle.setVisible(false);
 			lblTouristicDepartures.setVisible(false);
 		}

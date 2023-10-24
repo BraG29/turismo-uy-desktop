@@ -42,6 +42,7 @@ public class RegisterCategory extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterCategory() {
+		setTitle("Alta Categoria");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 215);
 		contentPane = new JPanel();
@@ -72,7 +73,7 @@ public class RegisterCategory extends JFrame {
 				try {
 					
 					String name = categoryData.getName();					
-					DtCategory category = new DtCategory(null, name, null);
+					DtCategory category = new DtCategory(null, name, null ,null);
 					controller.registerCategory(category);
 					
 					window = new PopUpWindow("Éxito", "La categoria fue dada de alta con éxito.", Color.GREEN);
@@ -80,7 +81,7 @@ public class RegisterCategory extends JFrame {
 					
 				}catch(Exception e1) {
 					
-					window = new PopUpWindow("Campo vacío", "Por favor rellene el campo vacío", Color.RED);
+					window = new PopUpWindow("ERROR!",e1.getLocalizedMessage(),Color.RED);
 					window.setVisible(true);
 				
 				}

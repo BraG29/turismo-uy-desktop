@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -52,7 +53,7 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 	
 	private List<DtTouristicActivity> activities;
 	private DtTouristicActivity activityData;
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -63,7 +64,7 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 719, 350);
+		setBounds(100, 100, 885, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -83,7 +84,7 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 		contentPane.add(lblDepartmentActivities);
 
 		departureData = new InsertDepartureData();
-		departureData.setBounds(246, 12, 439, 253);
+		departureData.setBounds(246, 12, 625, 253);
 		contentPane.add(departureData);
 		
 		
@@ -126,6 +127,8 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 					String place = departureData.getPlace();
 					Integer maxTourists = departureData.getMaxTourists();
 					LocalDate creationDate = departureData.getCreationDate();
+					BufferedImage selectedImage = departureData.getSelectedImage();
+					
 
 					//obtuve la hora mediante un textField
 					String timeConvert = departureData.getTime();
@@ -145,7 +148,7 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 					
 					LocalDateTime meetingDate = meeting.atTime(scheduleTime);
 
-					DtTouristicDeparture departure = new DtTouristicDeparture(null, name, maxTourists, creationDate, meetingDate, place, null, activityData, null);
+					DtTouristicDeparture departure = new DtTouristicDeparture(null, name, maxTourists, creationDate, meetingDate, place, selectedImage, activityData, null);
 					
 					ctrl.registerTouristicDeparture(departure);
 					

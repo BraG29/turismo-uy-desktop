@@ -6,8 +6,14 @@ import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import javax.swing.JTextPane;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
@@ -25,11 +31,17 @@ public class ShowActivityData extends JPanel {
 	JLabel lblUpload = new JLabel();
 	private JLabel lblCategories = new JLabel("Categorias:");
 	private List<DtCategory> categories;
+	private JLabel lblImage = new JLabel("");
+	private JList listCategories = null;
+	
 	/**
 	 * Create the panel.
 	 */
 	public ShowActivityData(DtTouristicActivity DTA) {
 		setLayout(null);
+		lblImage.setBounds(262, 74, 120, 120);
+		
+		add(lblImage);
 		
 		JLabel lbl1 = new JLabel("Descripción:");
 		lbl1.setBounds(36, 46, 93, 15);
@@ -100,18 +112,18 @@ public class ShowActivityData extends JPanel {
 		scrollPaneCategories.setBounds(135, 210, 163, 137);
 		add(scrollPaneCategories);
 
-		JList listCategories = new JList();
+		listCategories = new JList();
 		scrollPaneCategories.setViewportView(listCategories);		
 		
-		categories = DTA.getCategories();
-		
-		DefaultListModel listModel = new DefaultListModel();
-		
-		for (int i = 0; i < categories.size(); i++) {
-			
-			listModel.add(i, categories.get(i).getName());
-		}
-		listCategories.setModel(listModel);
+//		categories = DTA.getCategories();
+//		
+//		DefaultListModel listModel = new DefaultListModel();
+//		
+//		for (int i = 0; i < categories.size(); i++) {
+//			
+//			listModel.add(i, categories.get(i).getName());
+//		}
+//		listCategories.setModel(listModel);
 		
 		/********************************************************/	
 	}
@@ -152,5 +164,53 @@ public class ShowActivityData extends JPanel {
 		lblUpload.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblUpload.setBounds(125, 183, 220, 15);
 		add(lblUpload);
+		loadImage(DTA.getImage());
+		
+		categories = DTA.getCategories();
+		
+		DefaultListModel listModel = new DefaultListModel();
+		
+		for (int i = 0; i < categories.size(); i++) {
+			
+			listModel.add(i, categories.get(i).getName());
+		}
+		listCategories.setModel(listModel);
+		
+		
+	}
+	
+	public BufferedImage scalateImage(BufferedImage baseImage) {
+		double scaleX = (double) 200 / baseImage.getWidth();
+		double scaleY = (double) 200 / baseImage.getHeight();
+		AffineTransform at = AffineTransform.getScaleInstance(scaleX, scaleY);
+		
+		// Crear una operación de transformación
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		
+		// Crear una nueva imagen escalada
+		BufferedImage scaletedImage = new BufferedImage(200, 200, baseImage.getType());
+		
+		// Aplicar la operación de transformación para escalar la imagen
+		Graphics2D g2d = scaletedImage.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.drawImage(baseImage, op, 0, 0);
+		g2d.dispose();
+		
+		return scaletedImage;
+		
+	}
+	
+	public void loadImage(BufferedImage imageForLoad){
+		ImageIcon image = null;
+		
+		if(imageForLoad != null) {
+			BufferedImage scaletedImage = scalateImage(imageForLoad);
+			image = new ImageIcon(scaletedImage);
+		}else {
+//			lblImage.setIcon(image);
+			lblImage.setText("No Image");
+			lblImage.setForeground(Color.RED);
+		}
+		lblImage.setIcon(image);		
 	}
 }

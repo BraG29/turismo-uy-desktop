@@ -18,19 +18,31 @@ import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import com.toedter.calendar.JDateChooser;
 
+import turismouydesktop.gui.frames.FileChooserImage;
+import turismouydesktop.gui.frames.FileChooserImageListener;
 import turismouydesktop.gui.frames.PopUpWindow;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class InsertBundleData extends JPanel {
+public class InsertBundleData extends JPanel implements FileChooserImageListener {
 
 	private JTextField textFieldname;
 	private JTextArea textAreaDescription;
@@ -39,6 +51,10 @@ public class InsertBundleData extends JPanel {
 	private JTextField textFieldDays;
 	private JDateChooser uploadDate;
 	private PopUpWindow window;
+	
+	private JLabel lblImage;
+	private FileChooserImage fileChooserImage;
+	private BufferedImage selectedImage;
 	
 	public InsertBundleData() {
 		setLayout(null);
@@ -166,6 +182,22 @@ public class InsertBundleData extends JPanel {
 		btnValidity.setHorizontalAlignment(SwingConstants.RIGHT);
 		btnValidity.setBounds(165, 327, 150, 25);
 		add(btnValidity);
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(450, 12, 150, 150);
+		add(lblImage);
+		
+		fileChooserImage = new FileChooserImage();
+		fileChooserImage.setListener(this);
+		
+		JButton btnAddImage = new JButton("Agregar Imagen");
+		btnAddImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileChooserImage.setVisible(true);
+			}
+		});
+		btnAddImage.setBounds(450, 180, 150, 25);
+		add(btnAddImage);
 				
 	}
 
@@ -213,5 +245,57 @@ public class InsertBundleData extends JPanel {
 		return discount;
 	}
 	
+	public BufferedImage getSelectedImage() {
+		return selectedImage;
+	}
 	
+	public BufferedImage scalateImage(BufferedImage baseImage) {
+		double scaleX = (double) lblImage.getWidth() / baseImage.getWidth();
+		double scaleY = (double) lblImage.getHeight() / baseImage.getHeight();
+		AffineTransform at = AffineTransform.getScaleInstance(scaleX, scaleY);
+		
+		// Crear una operación de transformación
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		
+		// Crear una nueva imagen escalada
+		BufferedImage scaletedImage = new BufferedImage(200, 200, baseImage.getType());
+		
+		// Aplicar la operación de transformación para escalar la imagen
+		Graphics2D g2d = scaletedImage.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.drawImage(baseImage, op, 0, 0);
+		g2d.dispose();
+		return scaletedImage;
+	}
+	
+	public void loadImage(BufferedImage imageForLoad){
+		ImageIcon image = null;
+		
+		if(imageForLoad != null) {
+			BufferedImage scaletedImage = scalateImage(imageForLoad);
+			image = new ImageIcon(scaletedImage);
+		}else {
+//			lblImage.setIcon(image);
+			lblImage.setText("No Image");
+			lblImage.setForeground(Color.RED);
+		}
+		lblImage.setIcon(image);		
+	}
+	
+	@Override
+	public void onImageSelected(File image) {
+//		System.out.println("Path: " + image.getAbsolutePath()
+//				+ "\nNombre: " + image.getName());
+		try {
+			selectedImage = ImageIO.read(image);
+		
+			
+		} catch (Exception e) {
+			loadImage(selectedImage);
+			System.out.println("Error: " + e.getMessage());
+		}
+		loadImage(selectedImage);
+		
+		
+	}
 }

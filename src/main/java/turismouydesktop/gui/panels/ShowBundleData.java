@@ -1,9 +1,16 @@
 package turismouydesktop.gui.panels;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.time.format.DateTimeFormatter;
 
 
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import javax.swing.JTextField;
@@ -21,6 +28,8 @@ public class ShowBundleData extends JPanel {
 	private JTextField textFieldValidityPeriod;
 	private JTextField textFieldDate;
 	private JTextArea textArea;
+	
+	private JLabel lblImage;
 
 	
 	public ShowBundleData() {
@@ -84,6 +93,15 @@ public class ShowBundleData extends JPanel {
 		textFieldDate.setColumns(10);
 		textFieldDate.setEditable(false);
 		
+		lblImage = new JLabel("");
+		lblImage.setBounds(370, 70, 150, 150);
+		add(lblImage);
+		
+		JLabel lblTitleImage = new JLabel("Imagen:");
+		lblTitleImage.setBounds(370, 33, 70, 15);
+		add(lblTitleImage);
+		
+		
 
 	}
 	
@@ -102,6 +120,42 @@ public class ShowBundleData extends JPanel {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String uploadDateStr = bundle.getUploadDate().format(formatter);
 		textFieldDate.setText(uploadDateStr);
+		loadImage(bundle.getImage());
 		
+	}
+	
+	public BufferedImage scalateImage(BufferedImage baseImage) {
+		double scaleX = (double) 200 / baseImage.getWidth();
+		double scaleY = (double) 200 / baseImage.getHeight();
+		AffineTransform at = AffineTransform.getScaleInstance(scaleX, scaleY);
+		
+		// Crear una operación de transformación
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		
+		// Crear una nueva imagen escalada
+		BufferedImage scaletedImage = new BufferedImage(200, 200, baseImage.getType());
+		
+		// Aplicar la operación de transformación para escalar la imagen
+		Graphics2D g2d = scaletedImage.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.drawImage(baseImage, op, 0, 0);
+		g2d.dispose();
+		
+		return scaletedImage;
+		
+	}
+	
+	public void loadImage(BufferedImage imageForLoad){
+		ImageIcon image = null;
+		
+		if(imageForLoad != null) {
+			BufferedImage scaletedImage = scalateImage(imageForLoad);
+			image = new ImageIcon(scaletedImage);
+		}else {
+//			lblImage.setIcon(image);
+			lblImage.setText("No Image");
+			lblImage.setForeground(Color.RED);
+		}
+		lblImage.setIcon(image);		
 	}
 }

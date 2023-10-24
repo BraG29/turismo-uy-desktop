@@ -16,6 +16,7 @@ import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -38,14 +39,14 @@ public class CreateBundle extends JFrame {
 		
 		setTitle("Crear paquete turístico");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 518, 485);
+		setBounds(100, 100, 718, 485);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		insertBundleData = new InsertBundleData();
-		insertBundleData.setBounds(31, 12, 460, 367);
+		insertBundleData.setBounds(31, 12, 673, 367);
 		contentPane.add(insertBundleData);
 
 		
@@ -60,15 +61,18 @@ public class CreateBundle extends JFrame {
 					Double disc = insertBundleData.getDiscount();
 					Integer days = insertBundleData.getValidityBundle();
 					LocalDate creationDate = insertBundleData.getCreationDate();
+					BufferedImage selectedImage = insertBundleData.getSelectedImage();
+					
 					
 					//meti null en activities y categories
 					DtTouristicBundle touristicbundle = new DtTouristicBundle(
-							null,
-							name,
-							desc,
-							days,
+							null, //id
+							name, //name
+							desc, //desc
+							days, //
 							disc,
 							creationDate,
+							selectedImage,
 							null,
 							null,
 							null);	
@@ -78,7 +82,7 @@ public class CreateBundle extends JFrame {
 					window.setVisible(true);
 					
 				}catch (Exception e1) {
-					window = new PopUpWindow("Campo/s vacío/s", "Por favor rellene los campos vacíos", Color.RED);
+					window = new PopUpWindow("ERROR!",e1.getLocalizedMessage(),Color.RED);
 					window.setVisible(true);
 				}
 					

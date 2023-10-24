@@ -63,7 +63,7 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener, 
 		contentPane.setLayout(null);
 		
 		departureDataPanel = new ShowDepartureData();
-		departureDataPanel.setBounds(248, 265, 300, 180);
+		departureDataPanel.setBounds(206, 265, 369, 180);
 		contentPane.add(departureDataPanel);
 		
 		departmentsList = new ListDepartment();

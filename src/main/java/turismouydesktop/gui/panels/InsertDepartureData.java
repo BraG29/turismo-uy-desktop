@@ -3,25 +3,40 @@ package turismouydesktop.gui.panels;
 import javax.swing.JPanel;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
+
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.text.MaskFormatter;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class InsertDepartureData extends JPanel {
+import turismouydesktop.gui.frames.FileChooserImage;
+import turismouydesktop.gui.frames.FileChooserImageListener;
+
+public class InsertDepartureData extends JPanel implements FileChooserImageListener {
 	private JTextField textFieldname;
 	private JTextField textFieldPlace;
 	private JTextField textFieldMaxTourists;
@@ -29,6 +44,10 @@ public class InsertDepartureData extends JPanel {
 	private JDateChooser dateChooserMeeting;
 	private JSpinner scheduleMeeting;
 	private JFormattedTextField textFieldTime;
+	
+	private JLabel lblImage;
+	private FileChooserImage fileChooserImage;
+	private BufferedImage selectedImage;
 	/**
 	 * Create the panel.
 	 */
@@ -133,7 +152,22 @@ public class InsertDepartureData extends JPanel {
 		textFieldTime.setBounds(317, 78, 114, 19);
 		add(textFieldTime);
 		textFieldTime.setColumns(10);
-
+		
+		lblImage = new JLabel("");
+		lblImage.setBounds(450, 35, 150, 150);
+		add(lblImage);
+		
+		fileChooserImage = new FileChooserImage();
+		fileChooserImage.setListener(this);
+		
+		JButton btnDisplayFileChooser = new JButton("Agregar Imagen");
+		btnDisplayFileChooser.setBounds(450, 200, 150, 25);
+		add(btnDisplayFileChooser);
+		btnDisplayFileChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileChooserImage.setVisible(true);
+			}
+		});
 		
 	}
 	
@@ -176,5 +210,59 @@ public class InsertDepartureData extends JPanel {
 	
 	public String getPlace() {
 		return textFieldPlace.getText();
+	}
+	
+	public BufferedImage getSelectedImage() {
+		return selectedImage;
+	}
+	
+	public BufferedImage scalateImage(BufferedImage baseImage) {
+		double scaleX = (double) lblImage.getWidth() / baseImage.getWidth();
+		double scaleY = (double) lblImage.getHeight() / baseImage.getHeight();
+		AffineTransform at = AffineTransform.getScaleInstance(scaleX, scaleY);
+		
+		// Crear una operación de transformación
+		AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		
+		// Crear una nueva imagen escalada
+		BufferedImage scaletedImage = new BufferedImage(200, 200, baseImage.getType());
+		
+		// Aplicar la operación de transformación para escalar la imagen
+		Graphics2D g2d = scaletedImage.createGraphics();
+		g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2d.drawImage(baseImage, op, 0, 0);
+		g2d.dispose();
+		return scaletedImage;
+	}
+	
+	public void loadImage(BufferedImage imageForLoad){
+		ImageIcon image = null;
+		
+		if(imageForLoad != null) {
+			BufferedImage scaletedImage = scalateImage(imageForLoad);
+			image = new ImageIcon(scaletedImage);
+		}else {
+//			lblImage.setIcon(image);
+			lblImage.setText("No Image");
+			lblImage.setForeground(Color.RED);
+		}
+		lblImage.setIcon(image);		
+	}
+	
+	@Override
+	public void onImageSelected(File image) {
+//		System.out.println("Path: " + image.getAbsolutePath()
+//				+ "\nNombre: " + image.getName());
+		try {
+			selectedImage = ImageIO.read(image);
+		
+			
+		} catch (Exception e) {
+			loadImage(selectedImage);
+			System.out.println("Error: " + e.getMessage());
+		}
+		loadImage(selectedImage);
+		
+		
 	}
 }

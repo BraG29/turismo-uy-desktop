@@ -46,7 +46,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	private JLabel lblActivities;
 	private DtTouristicActivity activityData;
 	private List<DtTouristicActivity> activities;
-	private ShowActivityData activityPanel;
+	private ShowActivityData activityPanel = null;
 	private JLabel lblCategories;
 	private JScrollPane scrollPaneCategories;
 	private JList listCategories;
@@ -56,7 +56,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	public ConsultBundle() {
 		setTitle("Consulta de Paquetes de actividades turisticas");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1192, 517);
+		setBounds(100, 100, 1492, 517);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,7 +74,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 		contentPane.add(lblBundleData);
 		
 		lblActivities = new JLabel("Actividades:");
-		lblActivities.setBounds(660, 15, 110, 15);
+		lblActivities.setBounds(783, 15, 110, 15);
 		contentPane.add(lblActivities);
 		
 		
@@ -87,34 +87,52 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 		
 		//panel datos
 		bundleData = new ShowBundleData();
-		bundleData.setBounds(224, 42, 391, 312);
+		bundleData.setBounds(224, 42, 527, 312);
 		contentPane.add(bundleData);
-		scrollPaneActivities = new JScrollPane();
-		scrollPaneActivities.setBounds(640, 41, 144, 434);
-		contentPane.add(scrollPaneActivities);
 		listBundleActivities = new JList();
+		listBundleActivities.setBounds(763, 42, 141, 431);
+		contentPane.add(listBundleActivities);
 		listBundleActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				
-				String selectedActivity = (String) listBundleActivities.getSelectedValue();
+//				String selectedActivity = (String) listBundleActivities.getSelectedValue();
+//				
+//				
+//				Long id = activities
+//						.stream()
+//						.filter(bundle -> bundle.getName().equalsIgnoreCase(selectedActivity))
+//						.findFirst()
+//						.get()
+//						.getId();
+//				
+//				
+//				IController ctrl = ControllerFactory.getIController();
+//				activityPanel = new ShowActivityData(ctrl.getTouristicActivityData(id));
+//				contentPane.add(activityPanel);
+
+				//llamo al controlador para conseguir el DtTouristicActivity entero
+				IController controller = ControllerFactory.getIController();
 				
-				
-				Long id = activities
-						.stream()
-						.filter(bundle -> bundle.getName().equalsIgnoreCase(selectedActivity))
-						.findFirst()
-						.get()
-						.getId();
-				
-				
-				IController ctrl = ControllerFactory.getIController();
-				activityPanel = new ShowActivityData(ctrl.getTouristicActivityData(id));
-				contentPane.add(activityPanel);
-				activityPanel.setBounds(800, 42, 391, 350);
+				//controlo si es la primera vez que se llama showActivityVentana.
+				if(activityPanel == null) {
+				//cargo la ventana que muestra la info de la actividad
+				activityPanel = new ShowActivityData(controller.getTouristicActivityData(activities.get(listBundleActivities.getSelectedIndex()).getId()));
+				activityPanel.setBounds(950, 42, 950, 450);//estaba en 200 el valor que esta en 350.
+				//x, y ,width, height
+				getContentPane().add(activityPanel);
 				activityPanel.setVisible(true);
+				}else {
+					activityPanel.setValues(controller.getTouristicActivityData(activities.get(listBundleActivities.getSelectedIndex()).getId()));
+				}
+				
+//				activityPanel.setBounds(950, 42, 950, 450);
+//				activityPanel.setSize(500, 500);
+//				activityPanel.setVisible(true);
 			}
 		});
-		scrollPaneActivities.setViewportView(listBundleActivities);
+		scrollPaneActivities = new JScrollPane();
+		scrollPaneActivities.setBounds(763, 41, 144, 434);
+		contentPane.add(scrollPaneActivities);
 		
 		lblCategories = new JLabel("Categorias:");
 		lblCategories.setBounds(230, 366, 110, 15);
@@ -161,22 +179,29 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	
 		bundleData.setData(dtBundle);
 		
+		// listing categories, wiping out if no activities 
+		if(!dtBundle.getActivities().isEmpty()) {
 		activities = dtBundle.getActivities();
 		
+			DefaultListModel listModel = new DefaultListModel();
 		
-		 //null pointer exception aca.
-		DefaultListModel listModel = new DefaultListModel();
-		
-		for(int i = 0; i < activities.size(); i++) {
-			this.categories = activities.get(i).getCategories(); // obtengo lista de categorias de las actividades.		
-		}
-		
-		for (int i = 0; i < this.categories.size(); i++) { //recorro categorias y las añado al jList
-			
-			if(!listModel.contains(this.categories.get(i).getName())) { //evito repeticion de categorias.
-				listModel.add(i, this.categories.get(i).getName());				
-				listCategories.setModel(listModel);
+			for(int i = 0; i < activities.size(); i++) {
+				this.categories = activities.get(i).getCategories(); // obtengo lista de categorias de las actividades.		
 			}
+		
+			for (int i = 0; i < this.categories.size(); i++) { //recorro categorias y las añado al jList
+			
+				if(!listModel.contains(this.categories.get(i).getName())) { //evito repeticion de categorias.
+					listModel.add(i, this.categories.get(i).getName());				
+					listCategories.setModel(listModel);
+				}
+			}
+		}
+		else {
+			DefaultListModel listModel = new DefaultListModel();
+			listModel.clear();
+			listCategories.setModel(listModel);
+
 		}
 		
 		
@@ -203,7 +228,25 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 				}
 				
 			});				 
-		}	
+		}
+		else {
+			listBundleActivities.setModel(new AbstractListModel() {
+				String[] values = {};
+
+				public int getSize() {
+					return values.length;
+				}
+				public Object getElementAt(int index) {
+					return values[index];
+				}
+			});
+			activityPanel.setVisible(false);
+			activityPanel = null;
+		}
+		activityPanel.setVisible(false);
+		activityPanel = null;
 	}
+	
+	
 
 }
