@@ -215,6 +215,12 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnCreateCategory);
 		
 		JButton btnAcceptDeparture = new JButton("Aceptar/Rechazar Salida");
+		btnAcceptDeparture.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AcceptOrRejectActivities acceptOrRejectActivitiesGUI = new AcceptOrRejectActivities();
+				acceptOrRejectActivitiesGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
 		btnAcceptDeparture.setBounds(239, 281, 210, 25);
 		contentPane.add(btnAcceptDeparture);
 	}

@@ -74,6 +74,7 @@ public class ConsultActivity extends JFrame implements ListDepartmentListener, L
 		//setteamos los atributos del frame
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 564, 330);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);

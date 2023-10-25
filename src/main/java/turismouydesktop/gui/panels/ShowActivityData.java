@@ -164,6 +164,7 @@ public class ShowActivityData extends JPanel {
 		lblUpload.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblUpload.setBounds(125, 183, 220, 15);
 		add(lblUpload);
+		
 		loadImage(DTA.getImage());
 		
 		categories = DTA.getCategories();
@@ -206,10 +207,14 @@ public class ShowActivityData extends JPanel {
 		if(imageForLoad != null) {
 			BufferedImage scaletedImage = scalateImage(imageForLoad);
 			image = new ImageIcon(scaletedImage);
+			lblImage.revalidate();
+			lblImage.repaint();
 		}else {
 //			lblImage.setIcon(image);
 			lblImage.setText("No Image");
 			lblImage.setForeground(Color.RED);
+			lblImage.revalidate();
+			lblImage.repaint();
 		}
 		lblImage.setIcon(image);		
 	}
