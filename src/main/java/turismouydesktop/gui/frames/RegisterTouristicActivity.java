@@ -46,7 +46,7 @@ public class RegisterTouristicActivity extends JFrame {
 		
 		//cargamos PanelActivity
 		panelActivity = new PanelActivity();
-		panelActivity.setBounds(0, 0, 668, 378);
+		panelActivity.setBounds(0, 0, 668, 423);
 		contentPane.add(panelActivity);
 		setContentPane(contentPane);
 	}

@@ -35,7 +35,7 @@ public class RegisterUser extends JFrame {
 	public RegisterUser() {
 		setTitle("Registrar Usuario");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 545, 386);
+		setBounds(100, 100, 545, 419);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -44,7 +44,7 @@ public class RegisterUser extends JFrame {
 		
 		userDataPanel = new UserDataManagment();
 		userDataPanel.enableToEditForRegister();
-		userDataPanel.setBounds(0, 45, 531, 270);
+		userDataPanel.setBounds(0, 45, 531, 300);
 		
 		contentPane.add(userDataPanel);
 		
@@ -120,7 +120,7 @@ public class RegisterUser extends JFrame {
 			
 			}
 		});
-		btnConfirm.setBounds(195, 327, 117, 25);
+		btnConfirm.setBounds(205, 357, 117, 25);
 		contentPane.add(btnConfirm);
 	}
 	

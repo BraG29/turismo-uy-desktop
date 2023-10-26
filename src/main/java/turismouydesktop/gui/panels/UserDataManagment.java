@@ -68,10 +68,14 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 	private JTextArea textAreaName;
 	private JTextArea textAreaLastName;
 	private JTextArea textAreaBirthDate;
+	private JTextArea textAreaPassword;
 
 	private JDateChooser dateChooserBirthDate;
 	
 	private JLabel lblImage;
+	private JLabel lblPassword;	
+	private BufferedImage selectedImage;
+
 	
 	JButton btnDisplayFileChooser;
 
@@ -88,8 +92,6 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 	// Para Turist:
 	JLabel lblNacionality;
 	private JTextArea textAreaNacionality;
-
-	private BufferedImage selectedImage;
 
 	/**
 	 * Crea el panel para mostrar los datos de un usuario
@@ -157,11 +159,11 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		// Para Turista
 		lblNacionality = new JLabel("Nacionalidad:");
 		lblNacionality.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblNacionality.setBounds(12, 147, 102, 15);
+		lblNacionality.setBounds(12, 174, 102, 15);
 		add(lblNacionality);
 
 		textAreaNacionality = new JTextArea();
-		textAreaNacionality.setBounds(125, 147, 127, 15);
+		textAreaNacionality.setBounds(125, 174, 127, 15);
 		textAreaNacionality.setEditable(false);
 		add(textAreaNacionality);
 
@@ -169,7 +171,7 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 
 		lblWebSite = new JLabel("Sitio Web:");
 		lblWebSite.setFont(new Font("Dialog", Font.BOLD, 12));
-		lblWebSite.setBounds(12, 147, 78, 15);
+		lblWebSite.setBounds(12, 174, 78, 15);
 		add(lblWebSite);
 
 		textAreaWebSite = new JTextArea();
@@ -179,11 +181,11 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		scrollPaneWebSite.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneWebSite.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-		scrollPaneWebSite.setBounds(98, 147, 127, 15);
+		scrollPaneWebSite.setBounds(98, 174, 127, 15);
 		add(scrollPaneWebSite);
 
 		lblDescription = new JLabel("Descripción:");
-		lblDescription.setBounds(12, 174, 87, 15);
+		lblDescription.setBounds(12, 201, 87, 15);
 		add(lblDescription);
 
 		textAreaDescription = new JTextArea();
@@ -193,7 +195,7 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 
 		scrollPaneDescription = new JScrollPane(textAreaDescription);
 		scrollPaneDescription.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneDescription.setBounds(108, 174, 179, 95);
+		scrollPaneDescription.setBounds(108, 201, 179, 95);
 		add(scrollPaneDescription);
 		
 		lblImage = new JLabel("");
@@ -203,6 +205,16 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		
 		fileChooserImage = new FileChooserImage();
 		fileChooserImage.setListener(this);
+		
+		lblPassword = new JLabel("Contraseña:");
+		lblPassword.setBounds(12, 147, 102, 15);
+		add(lblPassword);
+		lblPassword.setVisible(false);
+		
+		textAreaPassword = new JTextArea();
+		textAreaPassword.setEditable(false);
+		textAreaPassword.setBounds(101, 147, 186, 15);
+		add(textAreaPassword);
 		
 		btnDisplayFileChooser = new JButton("");
 		btnDisplayFileChooser.addActionListener(new ActionListener() {
@@ -268,7 +280,6 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 			textAreaDescription.setText(providerData.getDescription());
 			
 			setProviderDataVisibilityTrue();
-
 		}
 		// Se muestran datos extras de Turista
 		else if (userData instanceof DtTourist) {
@@ -390,6 +401,8 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		
 		textAreaNickname.setEditable(true);
 		textAreaEmail.setEditable(true);
+		textAreaPassword.setEditable(true);
+		lblPassword.setVisible(true);
 		
 		enableToEditForUpdate();
 		btnDisplayFileChooser.setText("Seleccionar Imagen");
@@ -413,15 +426,20 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		return userDataOutput;
 	}
 	
-	public DtTourist getTouristData(ForWhat forWhat) {
+	public DtTourist getTouristData(ForWhat forWhat) throws Exception{
+		try {
+			
 		Long id = 0L;
+		String password = "";
 
 		switch(forWhat){
 			case REGISTER:
 				id = null;
+				password = textAreaPassword.getText();
 				break;
 			case UPDATE:
 				id = userData.getId();
+				password = userData.getPassword();
 		}
 		LocalDate birthDate = null;
 		if(dateChooserBirthDate.getDate() != null) {
@@ -430,6 +448,8 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 					.atZone(ZoneId.systemDefault())
 					.toLocalDate();
 		}
+		
+
 		
 		DtTourist touristDataOutput = new DtTourist(
 				id,
@@ -440,21 +460,33 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 				birthDate,
 				selectedImage,
 				textAreaNacionality.getText(),
+				null,
+				password,
+				null,
 				null
 				);
 		
 		return touristDataOutput;	
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e = new Exception("Error on getTouristData:",e);
+			throw e;
+		}
 	}
 	
 	public DtProvider getProviderData(ForWhat forWhat) {
 		Long id = 0L;
+		String password = "";
 		
 		switch(forWhat){
 			case REGISTER:
 				id = null;
+				password = textAreaPassword.getText();
 				break;
 			case UPDATE:
 				id = userData.getId();
+				password = userData.getPassword();
 		}
 		
 		
@@ -476,7 +508,8 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 				selectedImage,
 				textAreaWebSite.getText(),
 				textAreaDescription.getText(),
-				null
+				null,
+				password
 				);
 		
 		return providerDataOutput;
@@ -515,8 +548,7 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 					
 					return false;
 				}
-			}
-			
+			}	
 		}
 		
 		return true;
@@ -558,9 +590,7 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		}
 		
 		return false;
-
-
-		
+	
 	}
 
 	@Override
@@ -576,7 +606,6 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 			System.out.println("Error: " + e.getMessage());
 		}
 		loadImage(selectedImage);
-		
-		
+			
 	}
 }
