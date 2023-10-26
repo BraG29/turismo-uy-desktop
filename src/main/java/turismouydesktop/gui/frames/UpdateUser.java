@@ -80,7 +80,12 @@ public class UpdateUser extends JFrame implements ListUserListener {
 		btnConfirm.setEnabled(true);
 		
 		IController controller = ControllerFactory.getIController();
-		userData = controller.getUserData(id);
+		try {
+			userData = controller.getUserData(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		try {
 			userDataPanel.loadData(userData);

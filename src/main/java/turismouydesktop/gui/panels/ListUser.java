@@ -36,7 +36,13 @@ public class ListUser extends JPanel {
 		
 		IController controller = ControllerFactory.getIController();
 		
-		List<DtUser> usersData = controller.getListUser();
+		List<DtUser> usersData;
+		try {
+			usersData = controller.getListUser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		String[] usersKey = usersData
 		        .stream()

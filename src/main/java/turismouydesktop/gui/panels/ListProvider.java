@@ -17,6 +17,8 @@ import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 
 public class ListProvider extends JPanel {
 	
+	private List<DtProvider> dtProviders = null;
+	
 	private ListProviderListener listener;
 	/**
 	 * Create the panel.
@@ -26,7 +28,12 @@ public class ListProvider extends JPanel {
 		
 		//llamo al controlador y le pido los DT de departamento y proveedor.
 		IController controller = ControllerFactory.getIController();
-		List<DtProvider> dtProviders = controller.getListProvider();
+		try {
+			dtProviders = controller.getListProvider();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//creo los Array de String.
 		String[] providerStringArray = new String[dtProviders.size()];

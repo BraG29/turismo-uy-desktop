@@ -16,6 +16,8 @@ import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
+import uy.turismo.servidorcentral.logic.datatypes.DtPurchase;
+
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
@@ -98,19 +100,22 @@ public class ListTouristicBundle extends JPanel {
 		add(listScrollPane);
 		
 		List<DtTouristicBundle> listBundles = controller.getListTouristicBundle();
-		List<DtTouristicBundle> listVirginBundles = new ArrayList<DtTouristicBundle>();
+		List<DtTouristicBundle> listVirginBundles = listBundles;
+		
+		List<DtPurchase> listPurchases = controller.getPurchaseList();
+		
 		
 		for(DtTouristicBundle bundle : listBundles) {
-			//busco el DtBundle completo del bundle donde estoy parado, y pregunto si tiene actividades
-			if(controller.getTouristicBundleData(bundle.getId()).getActivities().isEmpty()) {
-				//aca debería conseguir los bundles sin compras
-			}
-			
+
+				for(DtPurchase purchase : listPurchases) {
+					
+					if(bundle.getId() == purchase.getBundle().getId()) {
+						listVirginBundles.remove(bundle);
+					}	
+				}	
 		}
-		
-		
-		
-		String[] bundlesName = listBundles.stream()
+			
+		String[] bundlesName = listVirginBundles.stream()
                 .map(DtTouristicBundle::getName)
                 .collect(Collectors.toList())
                 .toArray(new String[0]);

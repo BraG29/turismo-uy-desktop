@@ -21,6 +21,16 @@ public class ListActivities extends JPanel {
 	 */
 	public ListActivities() {
 		setLayout(null);
+		
+		
+		
+		
+		// Unused panel?? completely unfinished in every way
+		
+		
+		
+		
+		
 		//llamo al controlador y le pido DT de departamento
 		IController controller = ControllerFactory.getIController();
 		//getListActivityState thingy thanga

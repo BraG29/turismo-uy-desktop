@@ -19,6 +19,8 @@ public class ListTourist extends JPanel {
 	private JScrollPane scrollPaneList;
 	private ListTouristListener listener;
 	
+	private List<DtTourist> touristsData = null;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -33,7 +35,6 @@ public class ListTourist extends JPanel {
 		add(scrollPaneList);
 		
 		IController controller = ControllerFactory.getIController();
-		List<DtTourist> touristsData = null;
 		
 		try {
 			touristsData = controller.getListTourist();

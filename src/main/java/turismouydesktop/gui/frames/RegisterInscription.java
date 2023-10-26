@@ -332,7 +332,12 @@ public class RegisterInscription extends JFrame implements ListTouristListener, 
 	public void onListTouristSelected(Long id) {
 		IController controller = ControllerFactory.getIController();
 		
-		singleUser = controller.getUserData(id);
+		try {
+			singleUser = controller.getUserData(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		try {
 			userDataPanel.loadData(singleUser);

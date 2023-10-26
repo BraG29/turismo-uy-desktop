@@ -28,6 +28,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
 
 public class AddActivityToBundle extends JFrame implements ListTouristicBundleListener, ListDepartmentListener  {
 
@@ -72,7 +73,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		contentPane.setLayout(null);
 		
 		//asigno la lista de paquetes
-		touristicBundleList = new ListTouristicBundle();
+		touristicBundleList = new ListTouristicBundle(true);
 		touristicBundleList.setBounds(12, 42, 183, 92);
 		touristicBundleList.setListener(this);
 		contentPane.add(touristicBundleList);
@@ -84,6 +85,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		
 		
 		bundleActivities = new JList();
+		bundleActivities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		bundleActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				//DtTouristicActivity activity = (DtTouristicActivity) bundleActivities.getSelectedValue();				
@@ -92,8 +94,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		});
 		scrollPane.setViewportView(bundleActivities);
 		
-		
-		
+				
 		
 		lblTouristicBundles = new JLabel("Lista de Paquetes:");
 		lblTouristicBundles.setBounds(12, 15, 141, 15);
@@ -129,6 +130,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		
 		//creo la lista de Actividades de Departamento
 		departmentActivities = new JList();
+		departmentActivities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		departmentActivities.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				String selectedActivity = (String) departmentActivities.getSelectedValue();
@@ -148,6 +150,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		JButton btnAdd = new JButton("Añadir");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
 					//porqué diferente?
 					if(!checkRepeatedActivity()) {
@@ -155,6 +158,13 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 					}
 					
 					controller.addTouristicActivityToBundle(bundleId, activityId);
+					loadActivities(bundleId);
+					msgWindow = new PopUpWindow(
+							"Exito", 
+							"La Actividad se agrego correctamente", 
+							Color.RED);
+					
+					msgWindow.setVisible(true);
 					
 				} catch (Exception exception) {
 					msgWindow = new PopUpWindow(
@@ -166,6 +176,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 				}
 			}
 		});
+		
 		btnAdd.setBounds(170, 319, 117, 25);
 		contentPane.add(btnAdd);
 		
@@ -183,8 +194,13 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	}
 
 	@Override
-	public void onListTouristicBundle(Long id) {
+	public void onListTouristicBundle(Long id) {// get the Bundle ID on selection
+		
 		bundleId = id;
+		loadActivities(id);
+	}
+	
+	public void loadActivities(Long id) {
 		
 		IController ctrl = ControllerFactory.getIController();
 		DtTouristicBundle touristicBundle = ctrl.getTouristicBundleData(id);
@@ -217,6 +233,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	public void onListDepartmentSelected(Long id) {
 	
 	}
+	 
 
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {

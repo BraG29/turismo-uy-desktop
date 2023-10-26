@@ -126,7 +126,12 @@ public class RegisterUser extends JFrame {
 	
 	private void refreshUsers() {
 		IController controller = ControllerFactory.getIController();
-		users = controller.getListUser();
+		try {
+			users = controller.getListUser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void checkForNull(DtUser userData) throws NullPointerException{
