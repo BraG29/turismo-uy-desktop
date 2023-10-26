@@ -33,7 +33,14 @@ public class ListTourist extends JPanel {
 		add(scrollPaneList);
 		
 		IController controller = ControllerFactory.getIController();
-		List<DtTourist> touristsData = controller.getListTourist();
+		List<DtTourist> touristsData = null;
+		
+		try {
+			touristsData = controller.getListTourist();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		listTourists.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {

@@ -86,11 +86,11 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnUpdateUser);
 		
 		JLabel lblNewLabel = new JLabel("Usuarios:");
-		lblNewLabel.setBounds(12, 5, 70, 15);
+		lblNewLabel.setBounds(22, 5, 70, 15);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Paquetes Turisticos:");
-		lblNewLabel_1.setBounds(12, 143, 172, 15);
+		lblNewLabel_1.setBounds(22, 143, 172, 15);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnRegisterTuristicBundle = new JButton("Crear Paquete");
@@ -175,7 +175,7 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnConsultTouristicDeparture);
 		
 		JLabel lblNewLabel_3 = new JLabel("Salida Turistica:");
-		lblNewLabel_3.setBounds(246, 172, 158, 20);
+		lblNewLabel_3.setBounds(243, 180, 158, 20);
 		contentPane.add(lblNewLabel_3);
 		
 		JButton btnRegisterTouristicDeparture = new JButton("Inscripcion a Salida ");
@@ -186,11 +186,11 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnRegisterTouristicDeparture.setBounds(246, 276, 232, 25);
+		btnRegisterTouristicDeparture.setBounds(246, 281, 232, 25);
 		contentPane.add(btnRegisterTouristicDeparture);
 		
 		JLabel lblNewLabel_4 = new JLabel("Departamentos:");
-		lblNewLabel_4.setBounds(12, 281, 172, 15);
+		lblNewLabel_4.setBounds(22, 281, 172, 15);
 		contentPane.add(lblNewLabel_4);
 		
 		JButton btnRegisterDepartment = new JButton("Declarar independencia");
@@ -211,7 +211,7 @@ public class MainMenu extends JFrame {
 				registerCategoriGUI.setVisible(rootPaneCheckingEnabled);
 			}
 		});
-		btnCreateCategory.setBounds(246, 138, 232, 25);
+		btnCreateCategory.setBounds(246, 143, 232, 25);
 		contentPane.add(btnCreateCategory);
 		
 		JButton btnAcceptDeparture = new JButton("Aceptar/Rechazar Actividad");
