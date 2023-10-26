@@ -130,10 +130,12 @@ public class AcceptOrRejectActivities extends JFrame {
 				controller.changeActivityState(id, state.ACCEPTED);
 				window = new PopUpWindow("Exito!", "Cambio de estado a 'Aceptado' con Exito", Color.green);
 				window.setVisible(true);
+				this.setVisible(false);
 			} else if (comboBoxStatus.getSelectedIndex() == 1) {
 				controller.changeActivityState(id, state.REJECTED);
 				window = new PopUpWindow("Exito!", "Cambio de estado a 'Rechazado' con Exito", Color.green);
 				window.setVisible(true);
+				this.setVisible(false);
 			} else {
 				controller.changeActivityState(id, state.ADDED);
 				window = new PopUpWindow("ERROR!","Como rompes un combo box de esta manera? sos alto hacker o saca la loteria..., intente nuevamente",Color.BLACK);

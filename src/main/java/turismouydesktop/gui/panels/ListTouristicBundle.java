@@ -100,19 +100,23 @@ public class ListTouristicBundle extends JPanel {
 		add(listScrollPane);
 		
 		List<DtTouristicBundle> listBundles = controller.getListTouristicBundle();
-		List<DtTouristicBundle> listVirginBundles = listBundles;
+		List<DtTouristicBundle> listVirginBundles = new ArrayList<DtTouristicBundle>();
+		for(DtTouristicBundle bundle : listBundles) {
+			listVirginBundles.add(bundle);
+		}
 		
 		List<DtPurchase> listPurchases = controller.getPurchaseList();
 		
 		
 		for(DtTouristicBundle bundle : listBundles) {
-
-				for(DtPurchase purchase : listPurchases) {
-					
-					if(bundle.getId() == purchase.getBundle().getId()) {
-						listVirginBundles.remove(bundle);
-					}	
+			
+			for(DtPurchase purchase : listPurchases) {
+				if(purchase.getBundle().equals(bundle)) {
+					listVirginBundles.remove(bundle);
 				}	
+				
+			}
+			
 		}
 			
 		String[] bundlesName = listVirginBundles.stream()

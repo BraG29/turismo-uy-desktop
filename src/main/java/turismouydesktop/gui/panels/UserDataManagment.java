@@ -426,8 +426,7 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 		return userDataOutput;
 	}
 	
-	public DtTourist getTouristData(ForWhat forWhat) throws Exception{
-		try {
+	public DtTourist getTouristData(ForWhat forWhat){
 			
 		Long id = 0L;
 		String password = "";
@@ -463,16 +462,11 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 				null,
 				password,
 				null,
+				null,
 				null
 				);
 		
 		return touristDataOutput;	
-		
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e = new Exception("Error on getTouristData:",e);
-			throw e;
-		}
 	}
 	
 	public DtProvider getProviderData(ForWhat forWhat) {

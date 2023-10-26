@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import turismouydesktop.gui.panels.ListActivities;
+//import turismouydesktop.gui.panels.ListActivities;
 import turismouydesktop.gui.panels.ListActivityListener;
 import turismouydesktop.gui.panels.ListTouristicBundle;
 import turismouydesktop.gui.panels.ListTouristicBundleListener;
@@ -36,7 +36,7 @@ public class ConsultBundle extends JFrame implements ListTouristicBundleListener
 	private JPanel contentPane;
 	private ListTouristicBundle touristicBundleList;
 	private ShowBundleData bundleData;
-	private ListActivities listActivities;
+//	private ListActivities listActivities;
 	
 	private JScrollPane scrollPaneActivities;
 	private JList listBundleActivities;
