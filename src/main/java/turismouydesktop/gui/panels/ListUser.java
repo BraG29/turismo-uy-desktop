@@ -22,6 +22,8 @@ public class ListUser extends JPanel {
 	JScrollPane scrollPaneList;
 	JList listUsers;
 	
+	List<DtUser> usersData = null;
+	
 	/**
 	 * Crea panel de ListUser
 	 */
@@ -36,7 +38,6 @@ public class ListUser extends JPanel {
 		
 		IController controller = ControllerFactory.getIController();
 		
-		List<DtUser> usersData;
 		try {
 			usersData = controller.getListUser();
 		} catch (Exception e) {
