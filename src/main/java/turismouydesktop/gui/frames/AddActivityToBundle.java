@@ -1,7 +1,6 @@
 package turismouydesktop.gui.frames;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 
-public class AddActivityToBundle extends JFrame implements ListTouristicBundleListener, ListDepartmentListener  {
+	public class AddActivityToBundle extends JFrame implements ListTouristicBundleListener, ListDepartmentListener  {
+	private static final long serialVersionUID = -4850562367236178831L;
 
 	private JPanel contentPane;
 
@@ -43,8 +43,10 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	private JLabel lblDepartmentActivities;
 
 	private JScrollPane scrollPaneDeptActivities;
+	@SuppressWarnings("rawtypes")
 	private JList departmentActivities;
-	private JList bundleActivities; //jlist 
+	@SuppressWarnings("rawtypes")
+	private JList bundleActivities;
 	
 	private List<DtTouristicActivity> activitiesDepartment; //lista de las actividades del Departamento seleccionado
 	private List<DtTouristicActivity> activitiesBundle; //lista de las actividades del Paquete seleccionado
@@ -58,6 +60,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("rawtypes")
 	public AddActivityToBundle() {
 		setTitle("Agregar Paquete Turistico");
 		
@@ -200,6 +203,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 		loadActivities(id);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void loadActivities(Long id) {
 		
 		IController ctrl = ControllerFactory.getIController();
@@ -217,6 +221,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
                 .toArray(new String[0]);
 			
 		bundleActivities.setModel(new AbstractListModel() {
+			private static final long serialVersionUID = 1167394817266709513L;
 			String[] values = activitiesName;
 
 			public int getSize() {
@@ -235,6 +240,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
 	}
 	 
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void onListDepartmentSelectedDt(DtDepartment department) {
 		
@@ -247,6 +253,7 @@ public class AddActivityToBundle extends JFrame implements ListTouristicBundleLi
                 .toArray(new String[0]);
 		
 		departmentActivities.setModel(new AbstractListModel() {
+			private static final long serialVersionUID = 7443499441968990204L;
 			String[] values = activitiesName;
 
 			public int getSize() {

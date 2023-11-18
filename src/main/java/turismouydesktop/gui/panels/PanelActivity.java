@@ -2,9 +2,7 @@ package turismouydesktop.gui.panels;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -12,19 +10,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.SystemColor;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
-import javax.swing.JScrollPane;
-
-import com.toedter.calendar.JCalendar;
-
 import turismouydesktop.gui.frames.FileChooserImage;
 import turismouydesktop.gui.frames.FileChooserImageListener;
 import turismouydesktop.gui.frames.PopUpWindow;
@@ -34,7 +24,7 @@ import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
+import uy.turismo.servidorcentral.logic.enums.ActivityState;
 
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
@@ -42,11 +32,10 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
-import javax.swing.JFormattedTextField;
-import javax.swing.JScrollBar;
 
-public class PanelActivity extends JPanel implements ListDepartmentListener, ListProviderListener, ListCategoryListener, FileChooserImageListener {
+
+	public class PanelActivity extends JPanel implements ListDepartmentListener, ListProviderListener, ListCategoryListener, FileChooserImageListener {
+	private static final long serialVersionUID = 2802475867990458278L;
 	private JTextField txtNombre;
 	private JTextField txtCity;
 
@@ -64,7 +53,7 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 	private LocalDate TAUploadDate = null;
 	private DtProvider TAProvider = null;
 	private DtDepartment TADepartment = null;
-	private List<DtCategory> categories = new ArrayList<DtCategory>();
+	private ArrayList<DtCategory> categories = new ArrayList<DtCategory>();
 	
 	private JLabel lblImage;
 	private FileChooserImage fileChooserImage;
@@ -196,7 +185,8 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 					TACity = txtCity.getText();
 					TAUploadDate = LocalDate.now();
 					ActivityState TAstate = ActivityState.ADDED;
-					//null con las imagenes por ahora
+					Integer visits = 0;
+					
 					DtTouristicActivity DTA = new DtTouristicActivity(
 													null, 
 													TAName, 
@@ -211,7 +201,11 @@ public class PanelActivity extends JPanel implements ListDepartmentListener, Lis
 													TADepartment, 
 													null,
 													null,
-													categories);
+													categories,
+													visits,
+													null
+													);
+					
 						checkEmptyValues(DTA);
 							
 						IController controller = ControllerFactory.getIController();

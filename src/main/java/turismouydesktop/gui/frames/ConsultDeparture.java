@@ -25,6 +25,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.awt.event.ActionEvent;
@@ -43,7 +44,7 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener, 
 	private JList listActivities;
 	
 	private List<DtTouristicActivity> activities;
-	private List<DtTouristicDeparture> departures;
+	private ArrayList<DtTouristicDeparture> departures;
 	private List<DtCategory> categories;
 	private JComboBox comboBoxDepartures;
 	
@@ -103,7 +104,7 @@ public class ConsultDeparture extends JFrame implements ListDepartmentListener, 
 						.getId();
 				
 				IController ctrl = ControllerFactory.getIController();
-				departures = ctrl.getListTouristicDeparture(activityId);
+				departures = ctrl.getDeparturesByActivity(activityId);
 				loadDepartures();
 				
 			}

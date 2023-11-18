@@ -2,12 +2,8 @@ package turismouydesktop.gui.panels;
 
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JList;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -17,16 +13,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -34,25 +25,20 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
 import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import com.toedter.calendar.JDateChooser;
 
 import turismouydesktop.gui.frames.FileChooserImage;
 import turismouydesktop.gui.frames.FileChooserImageListener;
 
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.SwingConstants;
 
 
-public class UserDataManagment extends JPanel implements FileChooserImageListener {
-	
+	public class UserDataManagment extends JPanel implements FileChooserImageListener {
+	private static final long serialVersionUID = -7175282714900123789L;
+
 	public 	enum ForWhat{
 		REGISTER,
 		UPDATE
@@ -241,7 +227,7 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 	 */
 	public void loadData(DtUser userData) throws Exception {
 		this.userData = userData;
-		selectedImage = null;
+		selectedImage = userData.getImage();
 
 		// Carga de datos generales:
 		
@@ -463,6 +449,9 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 				password,
 				null,
 				null,
+				null,
+				null,
+				null,
 				null
 				);
 		
@@ -503,7 +492,9 @@ public class UserDataManagment extends JPanel implements FileChooserImageListene
 				textAreaWebSite.getText(),
 				textAreaDescription.getText(),
 				null,
-				password
+				password,
+				null,
+				null
 				);
 		
 		return providerDataOutput;

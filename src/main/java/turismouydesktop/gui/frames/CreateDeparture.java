@@ -148,7 +148,7 @@ public class CreateDeparture extends JFrame implements ListDepartmentListener {
 					
 					LocalDateTime meetingDate = meeting.atTime(scheduleTime);
 
-					DtTouristicDeparture departure = new DtTouristicDeparture(null, name, maxTourists, creationDate, meetingDate, place, selectedImage, activityData, null);
+					DtTouristicDeparture departure = new DtTouristicDeparture(null, name, maxTourists, creationDate, meetingDate, place, selectedImage, activityData, null,null);
 					
 					ctrl.registerTouristicDeparture(departure);
 					

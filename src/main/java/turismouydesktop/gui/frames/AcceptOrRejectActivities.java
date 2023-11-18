@@ -1,16 +1,14 @@
 package turismouydesktop.gui.frames;
 
-import java.awt.EventQueue;
-
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
+import uy.turismo.servidorcentral.logic.enums.ActivityState;
 import javax.swing.event.ListSelectionListener;
 
 import turismouydesktop.gui.panels.ShowActivityData;
@@ -34,12 +32,16 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AcceptOrRejectActivities extends JFrame {
+	public class AcceptOrRejectActivities extends JFrame {
 
+	private static final long serialVersionUID = -467654155511026902L;
+	
 	private JFrame frmAceptarrechazarActividad;
 	private JPanel contentPane;
+	@SuppressWarnings("rawtypes")
 	private JList listActivities;
 	private JLabel lblStatus;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBoxStatus;
 	private JButton btnApply;
 	private PopUpWindow window;
@@ -49,18 +51,19 @@ public class AcceptOrRejectActivities extends JFrame {
 	List<DtTouristicActivity> activities = null;
 	DtTouristicActivity selectedActivity = null;
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void LoadActivities() {
 		IController controller = ControllerFactory.getIController();
 
-		ActivityState state = null;
 
-		activities = controller.getListActivityStated(state.ADDED);
+		activities = controller.getListActivityStated(ActivityState.ADDED);
 		
 		// obtengo nombre de las actividades del paquete..
 		String[] activitiesString = activities.stream().map(DtTouristicActivity::getName).collect(Collectors.toList())
 				.toArray(new String[0]);
 
 		listActivities.setModel(new AbstractListModel() {
+			private static final long serialVersionUID = 1620761936570892555L;
 			String[] values = activitiesString;
 
 			public int getSize() {
@@ -113,6 +116,7 @@ public class AcceptOrRejectActivities extends JFrame {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void LoadStateComboBox() {
 		String[] states = { "Aceptar", "Rechazar" };
 		comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel(states));
@@ -124,20 +128,19 @@ public class AcceptOrRejectActivities extends JFrame {
 			IController controller = ControllerFactory.getIController();
 
 			Long id = selectedActivity.getId();
-			ActivityState state = null;
 			
 			if (comboBoxStatus.getSelectedIndex() == 0) { // accepted
-				controller.changeActivityState(id, state.ACCEPTED);
+				controller.changeActivityState(id, ActivityState.ACCEPTED);
 				window = new PopUpWindow("Exito!", "Cambio de estado a 'Aceptado' con Exito", Color.green);
 				window.setVisible(true);
 				this.setVisible(false);
 			} else if (comboBoxStatus.getSelectedIndex() == 1) {
-				controller.changeActivityState(id, state.REJECTED);
+				controller.changeActivityState(id, ActivityState.REJECTED);
 				window = new PopUpWindow("Exito!", "Cambio de estado a 'Rechazado' con Exito", Color.green);
 				window.setVisible(true);
 				this.setVisible(false);
 			} else {
-				controller.changeActivityState(id, state.ADDED);
+				controller.changeActivityState(id, ActivityState.ADDED);
 				window = new PopUpWindow("ERROR!","Como rompes un combo box de esta manera? sos alto hacker o saca la loteria..., intente nuevamente",Color.BLACK);
 				window.setVisible(true);
 			}
@@ -152,6 +155,7 @@ public class AcceptOrRejectActivities extends JFrame {
 	/**
 	 * Create the application.
 	 */
+	@SuppressWarnings("rawtypes")
 	public AcceptOrRejectActivities() {
 		setTitle("Agregar/Rechazar Actividad");
 		setSize(new Dimension(600, 400));

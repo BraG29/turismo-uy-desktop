@@ -61,6 +61,11 @@ public class UpdateUser extends JFrame implements ListUserListener {
 				if(userData != null) {
 					IController controller = ControllerFactory.getIController();
 					controller.updateUser(userData);
+					PopUpWindow msgWindow = new PopUpWindow(
+							"Exito", 
+							"Se Actualizaron los Cambios", 
+							Color.GREEN);
+					msgWindow.setVisible(true);
 				}else {
 					PopUpWindow msgWindow = new PopUpWindow(
 							"Error", 

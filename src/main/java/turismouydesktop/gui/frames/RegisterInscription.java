@@ -95,7 +95,7 @@ public class RegisterInscription extends JFrame implements ListTouristListener, 
 							.getId();
 					
 					IController controller = ControllerFactory.getIController();
-					departuresData = controller.getListTouristicDeparture(activityId);
+					departuresData = controller.getDeparturesByActivity(activityId);
 					
 					if(!departuresData.isEmpty()) {
 						String[] departureString = departuresData
