@@ -90,7 +90,7 @@ public class MainMenu extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Paquetes Turisticos:");
-		lblNewLabel_1.setBounds(22, 143, 172, 15);
+		lblNewLabel_1.setBounds(22, 137, 172, 15);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnRegisterTuristicBundle = new JButton("Crear Paquete");
@@ -101,7 +101,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnRegisterTuristicBundle.setBounds(22, 170, 200, 25);
+		btnRegisterTuristicBundle.setBounds(22, 160, 200, 25);
 		contentPane.add(btnRegisterTuristicBundle);
 		
 		JButton btnAddActivityToBundle = new JButton("Agregar a Paquete ");
@@ -112,7 +112,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnAddActivityToBundle.setBounds(22, 207, 200, 25);
+		btnAddActivityToBundle.setBounds(22, 197, 200, 25);
 		contentPane.add(btnAddActivityToBundle);
 		
 		JButton btnConsultBundle = new JButton("Consultar Paquete");
@@ -123,11 +123,11 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnConsultBundle.setBounds(22, 244, 200, 25);
+		btnConsultBundle.setBounds(22, 234, 200, 25);
 		contentPane.add(btnConsultBundle);
 		
-		JLabel lblNewLabel_2 = new JLabel("Actividades Turisticas:");
-		lblNewLabel_2.setBounds(246, 5, 182, 15);
+		JLabel lblNewLabel_2 = new JLabel("Actividades/Salidas Turisticas:");
+		lblNewLabel_2.setBounds(246, 5, 232, 15);
 		contentPane.add(lblNewLabel_2);
 		
 		JButton btnRegisterTouristicActivity = new JButton("Alta Actividad ");
@@ -160,7 +160,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnCreateTouristicDeparture.setBounds(246, 207, 232, 25);
+		btnCreateTouristicDeparture.setBounds(246, 180, 232, 25);
 		contentPane.add(btnCreateTouristicDeparture);
 		
 		JButton btnConsultTouristicDeparture = new JButton("Consulta Salida Turistica");
@@ -171,12 +171,8 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnConsultTouristicDeparture.setBounds(246, 244, 232, 25);
+		btnConsultTouristicDeparture.setBounds(246, 217, 232, 25);
 		contentPane.add(btnConsultTouristicDeparture);
-		
-		JLabel lblNewLabel_3 = new JLabel("Salida Turistica:");
-		lblNewLabel_3.setBounds(243, 180, 158, 20);
-		contentPane.add(lblNewLabel_3);
 		
 		JButton btnRegisterTouristicDeparture = new JButton("Inscripcion a Salida ");
 		btnRegisterTouristicDeparture.addActionListener(new ActionListener() {
@@ -186,11 +182,11 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnRegisterTouristicDeparture.setBounds(246, 281, 232, 25);
+		btnRegisterTouristicDeparture.setBounds(246, 254, 232, 25);
 		contentPane.add(btnRegisterTouristicDeparture);
 		
 		JLabel lblNewLabel_4 = new JLabel("Departamentos:");
-		lblNewLabel_4.setBounds(22, 281, 172, 15);
+		lblNewLabel_4.setBounds(22, 268, 172, 15);
 		contentPane.add(lblNewLabel_4);
 		
 		JButton btnRegisterDepartment = new JButton("Declarar independencia");
@@ -201,7 +197,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 		
-		btnRegisterDepartment.setBounds(22, 302, 200, 25);
+		btnRegisterDepartment.setBounds(22, 291, 200, 25);
 		contentPane.add(btnRegisterDepartment);
 		
 		JButton btnCreateCategory = new JButton("Alta Categoria");
@@ -223,5 +219,15 @@ public class MainMenu extends JFrame {
 		});
 		btnAcceptDeparture.setBounds(246, 106, 232, 25);
 		contentPane.add(btnAcceptDeparture);
+		
+		JButton btnMostViewed = new JButton("Actividad/Salida Visitada");
+		btnMostViewed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MostVisitedActivitiesAndDepartures mostVisitedActivitiesAndDeparturesGUI = new MostVisitedActivitiesAndDepartures();
+				mostVisitedActivitiesAndDeparturesGUI.setVisible(rootPaneCheckingEnabled);
+			}
+		});
+		btnMostViewed.setBounds(246, 291, 232, 25);
+		contentPane.add(btnMostViewed);
 	}
 }
