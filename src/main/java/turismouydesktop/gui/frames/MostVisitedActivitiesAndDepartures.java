@@ -4,16 +4,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
-
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
 
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
@@ -26,7 +20,6 @@ import java.awt.event.ActionEvent;
 public class MostVisitedActivitiesAndDepartures extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel model;
 
